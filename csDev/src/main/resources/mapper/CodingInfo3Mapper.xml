@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.CodingInfo3Mapper">
+	<select id="codingInfoSelectOne" resultType="codingInfo3VO" parameterType="codingInfo3VO">
+		SELECT ci_idx
+			 , ci_name
+			 , ci_title
+			 , ci_content
+			 , ci_date
+		FROM coding_info3
+		WHERE ci_idx = #{ciIdx}
+	</select>
+	<select id="codingInfoList" resultType="codingInfo3VO" parameterType="codingInfo3VO">
+		SELECT ci_idx
+			 , ci_name
+			 , ci_title
+			 , ci_content
+			 , ci_date
+		FROM coding_info3
+		<where> 
+			<if test="ciIdx != null and !ciIdx.equals('')">
+				AND ci_idx Like '%' || #{ciIdx} || '%'
+			</if>
+			<if test="ciName != null and !ciName.equals('')">
+				AND ci_name Like '%' || #{ciName} || '%'
+			</if>
+			<if test="ciTitle != null and !ciTitle.equals('')">
+				AND ci_title Like '%' || #{ciTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertcodingInfo" parameterType="codingInfo3VO">
+	        INSERT INTO coding_info3(
+	           ci_idx
+			 , ci_name
+			 , ci_title
+			 , ci_content
+			 , ci_date
+	        ) VALUES (
+	        	#{ciIdx}
+	           ,#{ciName}
+	           ,#{ciTitle}
+	           ,#{ciContent}
+	           ,#{ciDate}
+	           
+	        )
+	</insert>
+	<update id="savecodingInfo" parameterType="codingInfo3VO">
+	        WITH UPSERT AS (
+	        UPDATE coding_info3
+		    SET ci_idx = #{ciIdx}
+			  , ci_name = #{ciName}
+			  , ci_title = #{ciTitle}
+			  , ci_content = #{ciContent}
+			  , ci_date = #{ciDate}
+	        WHERE ci_idx = #{ciIdx} RETURNING *
+	)
+	        INSERT
+	        INTO coding_info3 ( ci_idx
+							 , ci_name
+							 , ci_type
+							 , ci_title
+							 , ci_content
+							 , ci_date)
+	        SELECT#{ciIdx}
+	           ,#{ciName}
+	           ,#{ciTitle}
+	           ,#{ciContent}
+	           ,#{ciDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatecodingInfo" parameterType="codingInfo3VO">
+		UPDATE coding_info3 SET
+			   ci_name = #{ciName}
+			  , ci_title = #{ciTitle}
+			  , ci_content = #{ciContent}
+			  , ci_date = #{ciDate}
+		WHERE  ci_idx = #{ciIdx}
+	</update>
+	<delete id="deletecodingInfo" parameterType="codingInfo3VO">
+	 	DELETE from coding_info3
+	 	WHERE ci_idx = #{ciIdx}
+	</delete>
+</mapper>

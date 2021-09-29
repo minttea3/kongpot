@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.CodingJob5Mapper">
+	<select id="codingJobSelectOne" resultType="codingJob5VO" parameterType="codingJob5VO">
+		SELECT cj_idx
+			 , cj_company
+			 , cj_name
+			 , cj_tel
+			 , cj_email
+			 , cj_title
+			 , cj_content
+			 , cj_date
+		FROM coding_job5
+		WHERE cj_idx = #{cjIdx}
+	</select>
+	<select id="codingJobList" resultType="codingJob5VO" parameterType="codingJob5VO">
+		SELECT cj_idx
+			 , cj_company
+			 , cj_name
+			 , cj_tel
+			 , cj_email
+			 , cj_title
+			 , cj_content
+			 , cj_date
+		FROM coding_job5
+		<where> 
+			<if test="cjIdx != null and !cjIdx.equals('')">
+				AND cj_idx Like '%' || #{cjIdx} || '%'
+			</if>
+			<if test="cjCompany != null and !cjCompany.equals('')">
+				AND cj_company Like '%' || #{cjCompany} || '%'
+			</if>
+			<if test="cjTitle != null and !cjTitle.equals('')">
+				AND cj_title Like '%' || #{cjTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertCodingJob" parameterType="codingJob5VO">
+	        INSERT INTO coding_job5(
+	           cj_idx
+			 , cj_company
+			 , cj_name
+			 , cj_tel
+			 , cj_email
+			 , cj_title
+			 , cj_content
+			 , cj_date
+	        ) VALUES (
+	        	#{cjIdx}
+	           ,#{cjCompany}
+	           ,#{cjName}
+	           ,#{cjTel}
+	           ,#{cjEmail}
+	           ,#{cjTitle}
+	           ,#{cjContent}
+	           ,#{cjDate}
+	           
+	        )
+	</insert>
+	<update id="saveCodingJob" parameterType="codingJob5VO">
+	        WITH UPSERT AS (
+	        UPDATE coding_job5
+		    SET cj_company = #{cjCompany}
+			  , cj_name = #{cjName}
+			  , cj_tel = #{cjTel}
+			  , cj_email = #{cjEmail}
+			  , cj_title = #{cjTitle}
+			  , cj_content = #{cjContent}
+			  , cj_date = #{cjDate}
+	        WHERE cj_idx = #{cjIdx} RETURNING *
+	)
+	        INSERT
+	        INTO coding_job5 ( cj_idx
+							 , cj_company
+							 , cj_name
+							 , cj_tel
+							 , cj_email
+							 , cj_title
+							 , cj_content
+							 , cj_date)
+	        SELECT#{cjIdx}
+	           ,#{cjCompany}
+	           ,#{cjName}
+	           ,#{cjTel}
+	           ,#{cjEmail}
+	           ,#{cjTitle}
+	           ,#{cjContent}
+	           ,#{cjDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateCodingJob" parameterType="codingJob5VO">
+		UPDATE coding_job5 SET
+				  cj_company = #{cjCompany}
+				  , cj_name = #{cjName}
+				  , cj_tel = #{cjTel}
+				  , cj_email = #{cjEmail}
+				  , cj_title = #{cjTitle}
+				  , cj_content = #{cjContent}
+				  , cj_date = #{cjDate}
+        WHERE cj_idx = #{cjIdx}
+	</update>
+	<delete id="deleteCodingJob" parameterType="codingJob5VO">
+	 	DELETE from coding_job5
+	 	WHERE cj_idx = #{cjIdx}
+	</delete>
+</mapper>

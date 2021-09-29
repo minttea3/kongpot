@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookKoreanNovelsInfo6Mapper">
+	<select id="bookKoreanNovelsInfoSelectOne" resultType="BookKoreanNovelsInfo6VO" parameterType="BookKoreanNovelsInfo6VO">
+		SELECT bk_idx
+			 , bk_genre
+			 , bk_title
+			 , bk_writer
+			 , bk_count
+			 , bk_price
+			 , bk_publication_date
+			 , bk_story
+		FROM book_korean_novels_info6
+		WHERE bk_idx = #{bkIdx}
+	</select>
+	<select id="bookKoreanNovelsInfoList" resultType="BookKoreanNovelsInfo6VO" parameterType="BookKoreanNovelsInfo6VO">
+		SELECT bk_idx
+			 , bk_genre
+			 , bk_title
+			 , bk_writer
+			 , bk_count
+			 , bk_price
+			 , bk_publication_date
+			 , bk_story
+		FROM book_korean_novels_info6
+		<where> 
+			<if test="bkIdx != null and !bkIdx.equals('')">
+				AND bk_idx Like '%' || #{bkIdx} || '%'
+			</if>
+			<if test="bkGenre != null and !bkGenre.equals('')">
+				AND bk_genre Like '%' || #{bkGenre} || '%'
+			</if>
+			<if test="bkTitle != null and !bkTitle.equals('')">
+				AND bk_title Like '%' || #{bkTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookKoreanNovelsInfo" parameterType="BookKoreanNovelsInfo6VO">
+	        INSERT INTO book_korean_novels_info6(
+	           bk_idx
+			 , bk_genre
+			 , bk_title
+			 , bk_writer
+			 , bk_count
+			 , bk_price
+			 , bk_publication_date
+			 , bk_story
+	        ) VALUES (
+	        	#{bkIdx}
+	           ,#{bkGenre}
+	           ,#{bkTitle}
+	           ,#{bkWriter}
+	           ,#{bkCount}
+	           ,#{bkPrice}
+	           ,#{bkPublicationDate}
+	           ,#{bkStory}
+	           
+	        )
+	</insert>
+	<update id="saveBookKoreanNovelsInfo" parameterType="BookKoreanNovelsInfo6VO">
+	        WITH UPSERT AS (
+	        UPDATE book_korean_novels_info6
+		    SET bk_genre = #{bkGenre}
+			  , bk_title = #{bkTitle}
+			  , bk_writer = #{bkWriter}
+			  , bk_count = #{bkCount}
+			  , bk_price = #{bkPrice}
+			  , bk_publication_date = #{bkPublicationDate}
+			  , bk_story = #{bkStory}
+	        WHERE bk_idx = #{bkIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_korean_novels_info6 ( bk_idx
+										 , bk_genre
+										 , bk_title
+										 , bk_writer
+										 , bk_count
+										 , bk_price
+										 , bk_publication_date
+										 , bk_story)
+	        SELECT #{bkIdx}
+	           ,#{bkGenre}
+	           ,#{bkTitle}
+	           ,#{bkWriter}
+	           ,#{bkCount}
+	           ,#{bkPrice}
+	           ,#{bkPublicationDate}
+	           ,#{bkStory} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookKoreanNovelsInfo" parameterType="BookKoreanNovelsInfo6VO">
+		UPDATE book_korean_novels_info6 SET
+			  bk_genre = #{bkGenre}
+			  , bk_title = #{bkTitle}
+			  , bk_writer = #{bkWriter}
+			  , bk_count = #{bkCount}
+			  , bk_price = #{bkPrice}
+			  , bk_publication_date = #{bkPublicationDate}
+			  , bk_story = #{bkStory}
+	        WHERE bk_idx = #{bkIdx} 
+	</update>
+	<delete id="deleteBookKoreanNovelsInfo" parameterType="BookKoreanNovelsInfo6VO">
+	 	DELETE from book_korean_novels_info6
+	 	WHERE bk_idx = #{bkIdx} 
+	</delete>
+</mapper>

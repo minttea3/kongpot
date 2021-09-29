@@ -1,0 +1,11 @@
+package com.cs.study.sample.mapper;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import com.cs.study.sample.vo.BsyGameVO;
+
+@Mapper
+public interface BsyGameMapper {
+	public List<BsyGameVO> selectGameList(BsyGameVO gameVO);
+	public int saveGame(BsyGameVO gameVO);
+}

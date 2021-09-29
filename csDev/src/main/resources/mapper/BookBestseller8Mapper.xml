@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookBestseller8Mapper">
+	<select id="bookBestsellerSelectOne" resultType="bookBestseller8VO" parameterType="bookBestseller8VO">
+		SELECT bb_idx
+			 , bb_genre
+			 , bb_title
+			 , bb_writer
+			 , bb_count
+			 , bb_price
+			 , bb_publication_date
+			 , bb_story
+		FROM book_bestseller8
+		WHERE bb_idx = #{bbIdx}
+	</select>
+	<select id="bookBestsellerList" resultType="bookBestseller8VO" parameterType="bookBestseller8VO">
+		SELECT bb_idx
+			 , bb_genre
+			 , bb_title
+			 , bb_writer
+			 , bb_count
+			 , bb_price
+			 , bb_publication_date
+			 , bb_story
+		FROM book_bestseller8
+		<where> 
+			<if test="bbIdx != null and !bbIdx.equals('')">
+				AND bb_idx Like '%' || #{bbIdx} || '%'
+			</if>
+			<if test="bbGenre != null and !bbGenre.equals('')">
+				AND bb_genre Like '%' || #{bbGenre} || '%'
+			</if>
+			<if test="bbTitle != null and !bbTitle.equals('')">
+				AND bb_title Like '%' || #{bbTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookBestseller" parameterType="bookBestseller8VO">
+	        INSERT INTO book_bestseller8(
+	           bb_idx
+			 , bb_genre
+			 , bb_title
+			 , bb_writer
+			 , bb_count
+			 , bb_price
+			 , bb_publication_date
+			 , bb_story
+	        ) VALUES (
+	        	#{bbIdx}
+	           ,#{bbGenre}
+	           ,#{bbTitle}
+	           ,#{bbWriter}
+	           ,#{bbCount}
+	           ,#{bbPrice}
+	           ,#{bbPublicationDate}
+	           ,#{bbStory}
+	           
+	        )
+	</insert>
+	<update id="saveBookBestseller" parameterType="bookBestseller8VO">
+	        WITH UPSERT AS (
+	        UPDATE book_bestseller8
+		    SET bb_genre = #{bbGenre}
+			  , bb_title = #{bbTitle}
+			  , bb_writer = #{bbWriter}
+			  , bb_count = #{bbCount}
+			  , bb_price = #{bbPrice}
+			  , bb_Publication_date = #{bbPublicationDate}
+			  , bb_story = #{bbStory}
+	        WHERE bb_idx = #{bbIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_bestseller8 ( bb_idx
+										 , bb_genre
+										 , bb_title
+										 , bb_writer
+										 , bb_count
+										 , bb_price
+										 , bb_publication_date
+										 , bb_story)
+	        SELECT #{bbIdx}
+	           ,#{bbGenre}
+	           ,#{bbTitle}
+	           ,#{bbWriter}
+	           ,#{bbCount}
+	           ,#{bbPrice}
+	           ,#{bbPublicationDate}
+	           ,#{bbStory} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookBestseller" parameterType="bookBestseller8VO">
+		UPDATE book_bestseller8 SET
+			  bb_genre = #{bbGenre}
+			  , bb_title = #{bbTitle}
+			  , bb_writer = #{bbWriter}
+			  , bb_count = #{bbCount}
+			  , bb_price = #{bbPrice}
+			  , bb_Publication_date = #{bbPublicationDate}
+			  , bb_story = #{bbStory}
+	        WHERE bb_idx = #{bbIdx} 
+	</update>
+	<delete id="deleteBookBestseller" parameterType="bookBestseller8VO">
+	 	DELETE from book_bestseller8
+	 	WHERE bb_idx = #{bbIdx} 
+	</delete>
+</mapper>

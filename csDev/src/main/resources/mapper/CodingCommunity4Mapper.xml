@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.CodingCommunity4Mapper">
+	<select id="codingCommunitySelectOne" resultType="codingCommunityVO" parameterType="codingCommunityVO">
+		SELECT cc_idx
+			 , cc_name
+			 , cc_title
+			 , cc_content
+			 , cc_date
+		FROM coding_community4
+		WHERE cc_idx = #{ccIdx}
+	</select>
+	<select id="codingCommunityList" resultType="codingCommunityVO" parameterType="codingCommunityVO">
+		SELECT cc_idx
+			 , cc_name
+			 , cc_title
+			 , cc_content
+			 , cc_date
+		FROM coding_community4
+		<where> 
+			<if test="ccIdx != null and !ccIdx.equals('')">
+				AND cc_idx Like '%' || #{ccIdx} || '%'
+			</if>
+			<if test="ccName != null and !ccName.equals('')">
+				AND cc_name Like '%' || #{ccName} || '%'
+			</if>
+			<if test="ccTitle != null and !ccTitle.equals('')">
+				AND cc_title Like '%' || #{ccTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertCodingCommunity" parameterType="codingCommunityVO">
+	        INSERT INTO coding_community4(
+	           cc_idx
+			 , cc_name
+			 , cc_title
+			 , cc_content
+			 , cc_date
+	        ) VALUES (
+	        	#{ccIdx}
+	           ,#{ccName}
+	           ,#{ccTitle}
+	           ,#{ccContent}
+	           ,#{ccDate}
+	           
+	        )
+	</insert>
+	<update id="savecodingCommunity" parameterType="codingCommunityVO">
+	        WITH UPSERT AS (
+	        UPDATE coding_community4
+		    SET cc_idx = #{ccIdx}
+			  , cc_name = #{ccName}
+			  , cc_title = #{ccTitle}
+			  , cc_content = #{ccContent}
+			  , cc_date = #{ccDate}
+	        WHERE cc_idx = #{ccIdx} RETURNING *
+	)
+	        INSERT
+	        INTO coding_community4 ( cc_idx
+								  , cc_name
+							  	  , cc_title
+							  	  , cc_content
+							   	  , cc_date)
+	        SELECT#{ccIdx}
+	           ,#{ccName}
+	           ,#{ccTitle}
+	           ,#{ccContent}
+	           ,#{ccDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateCodingCommunity" parameterType="codingCommunityVO">
+		UPDATE coding_community4 SET
+			   cc_name = #{ccName}
+			  , cc_title = #{ccTitle}
+			  , cc_content = #{ccContent}
+			  , cc_date = #{ccDate}
+		WHERE  cc_idx = #{ccIdx}
+	</update>
+	<delete id="deleteCodingCommunity" parameterType="codingCommunityVO">
+	 	DELETE from coding_community4
+	 	WHERE cc_idx = #{ccIdx}
+	</delete>
+</mapper>

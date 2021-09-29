@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookEvent11Mapper">
+	<select id="bookEventSelectOne" resultType="bookEvent11VO" parameterType="bookEvent11VO">
+		SELECT be_idx
+			 , be_Name
+			 , be_title
+			 , be_content
+			 , be_free_gift
+			 , be_date
+		FROM book_event11
+		WHERE be_idx = #{beIdx}
+	</select>
+	<select id="bookEventList" resultType="bookEvent11VO" parameterType="bookEvent11VO">
+		SELECT be_idx
+			 , be_Name
+			 , be_title
+			 , be_content
+			 , be_free_gift
+			 , be_date
+		FROM book_event11
+		<where> 
+			<if test="beIdx != null and !beIdx.equals('')">
+				AND be_idx Like '%' || #{beIdx} || '%'
+			</if>
+			<if test="beTitle != null and !beTitle.equals('')">
+				AND be_title Like '%' || #{beTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookEvent" parameterType="bookEvent11VO">
+	        INSERT INTO book_event11(
+	           be_idx
+			 , be_Name
+			 , be_title
+			 , be_content
+			 , be_free_gift
+			 , be_date
+	        ) VALUES (
+	        	#{beIdx}
+	           ,#{beName}
+	           ,#{beTitle}
+	           ,#{beContent}
+	           ,#{beFreeGift}
+	           ,#{beDate}
+	        )
+	</insert>
+	<update id="saveBookEvent" parameterType="bookEvent11VO">
+	        WITH UPSERT AS (
+	        UPDATE book_event11
+		    SET be_Name = #{beName}
+			  , bb_title = #{beTitle}
+			  , be_content = #{beContent}
+			  , be_free_gift = #{beFreeGift}
+			  , bb_date = #{beDate}
+	        WHERE be_idx = #{beIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_event11 ( be_idx
+							 , be_Name
+							 , be_title
+							 , be_content
+							 , be_free_gift
+							 , be_date)
+	        SELECT #{beIdx}
+	           ,#{beName}
+	           ,#{beTitle}
+	           ,#{beContent}
+	           ,#{beFreeGift}
+	           ,#{beDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookEvent" parameterType="bookEvent11VO">
+		UPDATE book_event11 SET
+			  be_Name = #{beName}
+			  , be_title = #{beTitle}
+			  , be_content = #{beContent}
+			  , be_free_gift = #{beFreeGift}
+			  , be_date = #{beDate}
+	        WHERE be_idx = #{beIdx} 
+	</update>
+	<delete id="deleteBookBestseller" parameterType="bookEvent11VO">
+	 	DELETE from book_event11
+	 	WHERE be_idx = #{beIdx} 
+	</delete>
+</mapper>

@@ -1,0 +1,127 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: kimchangsu
+  Date: 2021. 8. 23.
+  Time: 오후 8:46
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sample
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav1">
+                        <a class="dropdown-item" href="/syncSampleList">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleForm">Sample등록</a>
+                        <a class="dropdown-item" href="/jsstudy/kcs">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        김영준
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav2">
+                        <a class="dropdown-item" href="/syncSampleListKyj">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormKyj">Sample등록</a>
+                        <a class="dropdown-item" href="">과제01 리스트</a>
+                        <a class="dropdown-item" href="">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/kyj">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        방소연
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav3">
+                        <a class="dropdown-item" href="/syncSampleListBsy">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormBsy">Sample등록</a>
+                        <a class="dropdown-item" href="/playGameList">과제01 리스트</a>
+                        <a class="dropdown-item" href="/playGameAdd">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/bsy">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        위인섭
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav4">
+                        <a class="dropdown-item" href="/syncSampleListWis">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormWis">Sample등록</a>
+                        <a class="dropdown-item" href="/01visitlist">과제01 리스트</a>
+                        <a class="dropdown-item" href="/01visitlistadd">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/wis">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        정상우
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav5">
+                        <a class="dropdown-item" href="/syncSampleListJsw">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormJsw">Sample등록</a>
+                        <a class="dropdown-item" href="/syncBaseBallListJsw">과제01 리스트</a>
+                        <a class="dropdown-item" href="/syncBaseBallFormJsw">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/jsw">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        이민규
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav6">
+                        <a class="dropdown-item" href="/syncSampleListLmg">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormLmg">Sample등록</a>
+                        <a class="dropdown-item" href="/syncSampleListLmg2">과제01 리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormLmg2">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/lmg">Js Study</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav7" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        김은진
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav7">
+                        <a class="dropdown-item" href="/syncSampleListKej">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormKej">Sample등록</a>
+                        <a class="dropdown-item" href="/cafeMenuListKej">과제01 리스트</a>
+                        <a class="dropdown-item" href="/cafeMenuFormKej">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/kej">Js Study</a>
+                    </div>
+                </li>
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav8" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        류진환
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav8">
+                        <a class="dropdown-item" href="/syncSampleListRjh">Sample리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormRjh">Sample등록</a>
+                        <a class="dropdown-item" href="/syncSampleListRjh2">과제01 리스트</a>
+                        <a class="dropdown-item" href="/syncSampleFormRjh2">과제01 등록</a>
+                        <a class="dropdown-item" href="/jsstudy/rjh">Js Study</a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="/syncSampleForm">Sample등록 <span class="sr-only">(current)</span></a>
+                </li> -->
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="/asyncSampleList">ASync List <span class="sr-only">(current)</span></a>
+                </li> -->
+            </ul>
+        </div>
+    </nav>
+    <hr />
+</body>
+</html>

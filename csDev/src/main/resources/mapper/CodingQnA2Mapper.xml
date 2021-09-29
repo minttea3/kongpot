@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.CodingQnA2Mapper">
+	<select id="codingQuaSelectOne" resultType="codingQnA2VO" parameterType="codingQnA2VO">
+		SELECT c_idx
+			 , c_name
+			 , c_type
+			 , c_title
+			 , c_content
+			 , c_date
+		FROM coding_qna2
+		WHERE c_idx = #{cIdx}
+	</select>
+	<select id="codingQuaList" resultType="codingQnA2VO" parameterType="codingQnA2VO">
+		SELECT c_idx
+			 , c_name
+			 , c_type
+			 , c_title
+			 , c_content
+			 , c_date
+		FROM coding_qna2
+		<where> 
+			<if test="cIdx != null and !cIdx.equals('')">
+				AND c_idx Like '%' || #{cIdx} || '%'
+			</if>
+			<if test="cName != null and !cName.equals('')">
+				AND c_name Like '%' || #{cName} || '%'
+			</if>
+			<if test="cTitle != null and !cTitle.equals('')">
+				AND c_title Like '%' || #{cTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertcodingQua" parameterType="codingQnA2VO">
+	        INSERT INTO coding_qna2(
+	           c_idx
+			 , c_name
+			 , c_type
+			 , c_title
+			 , c_content
+			 , c_date
+	        ) VALUES (
+	        	#{cIdx}
+	           ,#{cName}
+	           ,#{cType}
+	           ,#{cTitle}
+	           ,#{cContent}
+	           ,#{cDate}
+	           
+	        )
+	</insert>
+	<update id="savecodingQua" parameterType="codingQnA2VO">
+	        WITH UPSERT AS (
+	        UPDATE coding_qna2
+		    SET c_idx = #{cIdx}
+			  , c_name = #{cName}
+			  , c_type = #{cType}
+			  , c_title = #{cTitle}
+			  , c_content = #{cContent}
+			  , c_date = #{cDate}
+	        WHERE c_idx = #{cIdx} RETURNING *
+	)
+	        INSERT
+	        INTO coding_qna2 ( c_idx
+							 , c_name
+							 , c_type
+							 , c_title
+							 , c_content
+							 , c_date)
+	        SELECT#{cIdx}
+	           ,#{cName}
+	           ,#{cType}
+	           ,#{cTitle}
+	           ,#{cContent}
+	           ,#{cDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatecodingQua" parameterType="codingQnA2VO">
+		UPDATE coding_qna2 SET
+			   c_name = #{cName}
+			  , c_type = #{cType}
+			  , c_title = #{cTitle}
+			  , c_content = #{cContent}
+			  , c_date = #{cDate}
+		WHERE  c_idx = #{cIdx}
+	</update>
+	<delete id="deletecodingQua" parameterType="codingQnA2VO">
+	 	DELETE from coding_qna2
+	 	WHERE c_idx = #{cIdx}
+	</delete>
+</mapper>

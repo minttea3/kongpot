@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookUsedMarketplace10Mapper">
+	<select id="bookUsedMarketplaceSelectOne" resultType="bookUsedMarketplace10VO" parameterType="bookUsedMarketplace10VO">
+		SELECT bum_idx
+			 , bum_genre
+			 , bum_book_title
+			 , bum_writer
+			 , bum_name
+			 , bum_title
+			 , bum_content
+			 , bum_price
+			 , bum_date
+		FROM book_used_marketplace10
+		WHERE bum_idx = #{bumIdx}
+	</select>
+	<select id="bookUsedMarketplaceList" resultType="bookUsedMarketplace10VO" parameterType="bookUsedMarketplace10VO">
+		SELECT bum_idx
+			 , bum_genre
+			 , bum_book_title
+			 , bum_writer
+			 , bum_name
+			 , bum_title
+			 , bum_content
+			 , bum_price
+			 , bum_date
+		FROM book_used_marketplace10
+		<where> 
+			<if test="bumIdx != null and !bumIdx.equals('')">
+				AND bum_idx Like '%' || #{bumIdx} || '%'
+			</if>
+			<if test="bumBookTitle != null and !bumBookTitle.equals('')">
+				AND bum_book_title Like '%' || #{bumBookTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookUsedMarketplace" parameterType="bookUsedMarketplace10VO">
+	        INSERT INTO book_used_marketplace10(
+	           bum_idx
+			 , bum_genre
+			 , bum_book_title
+			 , bum_writer
+			 , bum_name
+			 , bum_title
+			 , bum_content
+			 , bum_price
+			 , bum_date
+	        ) VALUES (
+	        	#{bumIdx}
+	           ,#{bumGenre}
+	           ,#{bumBookTitle}
+	           ,#{bumWriter}
+	           ,#{bumName}
+	           ,#{bumTitle}
+	           ,#{bumContent}
+	           ,#{bumPrice}
+	           ,#{bumDate}
+	        )
+	</insert>
+	<update id="saveBookUsedMarketplace" parameterType="bookUsedMarketplace10VO">
+	        WITH UPSERT AS (
+	        UPDATE book_used_marketplace10
+		    SET 
+			  , bum_genre = #{bumGenre}
+			  , bum_book_title = #{bumBookTitle}
+			  , bum_writer = #{bumWriter}
+			  , bum_name = #{bumName}
+			  , bum_Title = #{bumTitle}
+			  , bum_Content = #{bumContent}
+			  , bum_price = #{bumPrice}
+			  , bum_date = #{bumDate}
+	        WHERE bum_idx = #{bumIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_used_marketplace10 ( bum_idx
+										 , bum_genre
+										 , bum_book_title
+										 , bum_writer
+										 , bum_name
+										 , bum_title
+										 , bum_content
+										 , bum_price
+										 , bum_date)
+	        SELECT #{bumIdx}
+	           ,#{bumGenre}
+	           ,#{bumBookTitle}
+	           ,#{bumWriter}
+	           ,#{bumName}
+	           ,#{bumTitle}
+	           ,#{bumContent}
+	           ,#{bumPrice} 
+	           ,#{bumDate}  WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookUsedMarketplace" parameterType="bookUsedMarketplace10VO">
+		UPDATE book_used_marketplace10 SET
+			   bum_genre = #{bumGenre}
+			  , bum_book_title = #{bumBookTitle}
+			  , bum_writer = #{bumWriter}
+			  , bum_name = #{bumName}
+			  , bum_title = #{bumTitle}
+			  , bum_content = #{bumContent}
+			  , bum_price = #{bumPrice}
+			  , bum_date = #{bumDate}
+	        WHERE bum_idx = #{bumIdx} 
+	</update>
+	<delete id="deleteBookUsedMarketplace" parameterType="bookUsedMarketplace10VO">
+	 	DELETE from book_used_marketplace10
+	 	WHERE bum_idx = #{bumIdx} 
+	</delete>
+</mapper>

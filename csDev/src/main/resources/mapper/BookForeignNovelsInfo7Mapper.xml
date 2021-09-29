@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookForeignNovelsInfo7Mapper">
+	<select id="bookForeignNovelsInfoSelectOne" resultType="BookForeignNovelsInfo7VO" parameterType="BookForeignNovelsInfo7VO">
+		SELECT bf_idx
+			 , bf_genre
+			 , bf_title
+			 , bf_writer
+			 , bf_count
+			 , bf_price
+			 , bf_publication_date
+			 , bf_story
+		FROM book_foreign_novels_info7
+		WHERE bf_idx = #{bfIdx}
+	</select>
+	<select id="bookForeignNovelsInfoList" resultType="BookForeignNovelsInfo7VO" parameterType="BookForeignNovelsInfo7VO">
+		SELECT bf_idx
+			 , bf_genre
+			 , bf_title
+			 , bf_writer
+			 , bf_count
+			 , bf_price
+			 , bf_publication_date
+			 , bf_story
+		FROM book_foreign_novels_info7
+		<where> 
+			<if test="bfIdx != null and !bfIdx.equals('')">
+				AND bf_idx Like '%' || #{bfIdx} || '%'
+			</if>
+			<if test="bfGenre != null and !bfGenre.equals('')">
+				AND bf_genre Like '%' || #{bfGenre} || '%'
+			</if>
+			<if test="bfTitle != null and !bfTitle.equals('')">
+				AND bf_title Like '%' || #{bfTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookForeignNovelsInfo" parameterType="BookForeignNovelsInfo7VO">
+	        INSERT INTO book_foreign_novels_info7(
+	           bf_idx
+			 , bf_genre
+			 , bf_title
+			 , bf_writer
+			 , bf_count
+			 , bf_price
+			 , bf_publication_date
+			 , bf_story
+	        ) VALUES (
+	        	#{bfIdx}
+	           ,#{bfGenre}
+	           ,#{bfTitle}
+	           ,#{bfWriter}
+	           ,#{bfCount}
+	           ,#{bfPrice}
+	           ,#{bfPublicationDate}
+	           ,#{bfStory}
+	           
+	        )
+	</insert>
+	<update id="saveBookForeignNovelsInfo" parameterType="BookForeignNovelsInfo7VO">
+	        WITH UPSERT AS (
+	        UPDATE book_foreign_novels_info7
+		    SET bf_genre = #{bfGenre}
+			  , bf_title = #{bfTitle}
+			  , bf_writer = #{bfWriter}
+			  , bf_count = #{bfCount}
+			  , bf_price = #{bfPrice}
+			  , bf_Publication_date = #{bfPublicationDate}
+			  , bf_story = #{bfStory}
+	        WHERE bf_idx = #{bfIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_foreign_novels_info7 ( bf_idx
+										 , bf_genre
+										 , bf_title
+										 , bf_writer
+										 , bf_count
+										 , bf_price
+										 , bf_publication_date
+										 , bf_story)
+	        SELECT #{bfIdx}
+	           ,#{bfGenre}
+	           ,#{bfTitle}
+	           ,#{bfWriter}
+	           ,#{bfCount}
+	           ,#{bfPrice}
+	           ,#{bfPublicationDate}
+	           ,#{bfStory} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookForeignNovelsInfo" parameterType="BookForeignNovelsInfo7VO">
+		UPDATE book_foreign_novels_info7 SET
+			  bf_genre = #{bfGenre}
+			  , bf_title = #{bfTitle}
+			  , bf_writer = #{bfWriter}
+			  , bf_count = #{bfCount}
+			  , bf_price = #{bfPrice}
+			  , bf_Publication_date = #{bfPublicationDate}
+			  , bf_story = #{bfStory}
+	        WHERE bf_idx = #{bfIdx} 
+	</update>
+	<delete id="deleteBookForeignNovelsInfo" parameterType="BookForeignNovelsInfo7VO">
+	 	DELETE from book_foreign_novels_info7
+	 	WHERE bf_idx = #{bfIdx} 
+	</delete>
+</mapper>

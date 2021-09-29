@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.BookCommuntiy9Mapper">
+	<select id="bookCommunitySelectOne" resultType="bookCommunity9VO" parameterType="bookCommunity9VO">
+		SELECT bc_idx
+			 , bc_genre
+			 , bc_book_title
+			 , bc_writer
+			 , bc_count
+			 , bc_name
+			 , bc_title
+			 , bc_content
+			 , bc_date
+		FROM book_community9
+		WHERE bc_idx = #{bcIdx}
+	</select>
+	<select id="bookCommunityList" resultType="bookCommunity9VO" parameterType="bookCommunity9VO">
+		SELECT bc_idx
+			 , bc_genre
+			 , bc_book_title
+			 , bc_writer
+			 , bc_count
+			 , bc_name
+			 , bc_title
+			 , bc_content
+			 , bc_date
+		FROM book_community9
+		<where> 
+			<if test="bcIdx != null and !bcIdx.equals('')">
+				AND bc_idx Like '%' || #{bcIdx} || '%'
+			</if>
+			<if test="bcGenre != null and !bcGenre.equals('')">
+				AND bc_genre Like '%' || #{bcGenre} || '%'
+			</if>
+			<if test="bcTitle != null and !bcTitle.equals('')">
+				AND bc_title Like '%' || #{bcTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertBookCommunity" parameterType="bookCommunity9VO">
+	        INSERT INTO book_community9(
+	           bc_idx
+			 , bc_genre
+			 , bc_book_title
+			 , bc_writer
+			 , bc_count
+			 , bc_name
+			 , bc_title
+			 , bc_content
+			 , bc_date
+	        ) VALUES (
+	        	#{bcIdx}
+	           ,#{bcGenre}
+	           ,#{bcBookTitle}
+	           ,#{bcWriter}
+	           ,#{bcCount}
+	           ,#{bcName}
+	           ,#{bcTitle}
+	           ,#{bcContent}
+	           ,#{bcDate}
+	           
+	        )
+	</insert>
+	<update id="saveBookCommunity" parameterType="bookCommunity9VO">
+	        WITH UPSERT AS (
+	        UPDATE book_community9
+		    SET bc_genre = #{bcGenre}
+			  , bc_title = #{bcBookTitle}
+			  , bc_writer = #{bcWriter}
+			  , bc_count = #{bcCount}
+			  , bc_name = #{bcName}
+			  , bc_title = #{bcTitle}
+			  , bc_content = #{bcContent}
+			  , bc_date = #{bcDate}
+	        WHERE bc_idx = #{bcIdx} RETURNING *
+	)
+	        INSERT
+	        INTO book_community9 ( bc_idx
+						 , bc_genre
+						 , bc_book_title
+						 , bc_writer
+						 , bc_count
+						 , bc_name
+						 , bc_title
+						 , bc_content
+						 , bc_date)
+	        SELECT #{bcIdx}
+	           ,#{bcGenre}
+	           ,#{bcBookTitle}
+	           ,#{bcWriter}
+	           ,#{bcCount}
+	           ,#{bcName}
+	           ,#{bcTitle}
+	           ,#{bcContent}
+	           ,#{bcDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateBookCommunity" parameterType="bookCommunity9VO">
+		UPDATE book_community9 SET
+			  bc_genre = #{bcGenre}
+			  , bc_book_title = #{bcBookTitle}
+			  , bc_writer = #{bcWriter}
+			  , bc_count = #{bcCount}
+			  , bc_name = #{bcName}
+			  , bc_title = #{bcTitle}
+			  , bc_Content = #{bcContent}
+			  , bc_date = #{bcDate}
+	        WHERE bc_idx = #{bcIdx} 
+	</update>
+	<delete id="deleteBookCommunity" parameterType="bookCommunity9VO">
+	 	DELETE from book_community9
+	 	WHERE bc_idx = #{bcIdx} 
+	</delete>
+</mapper>
