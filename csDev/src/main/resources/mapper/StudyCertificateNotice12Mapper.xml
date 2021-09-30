@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StydyCertificateNotice12Mapper">
+	<select id="studyCertificateNoticeSelectOne" resultType="studyCertificateNotice12VO" parameterType="studyCertificateNotice12VO">
+		SELECT scn_idx
+			 , scn_title
+			 , scn_content
+			 , scn_date
+		FROM study_certificate_notice12
+		WHERE scn_idx = #{scnIdx}
+	</select>
+	<select id="studyCertificateNoticeList" resultType="studyCertificateNotice12VO" parameterType="studyCertificateNotice12VO">
+		SELECT scn_idx
+			 , scn_title
+			 , scn_content
+			 , scn_date
+		FROM study_certificate_notice12
+		<where> 
+			<if test="scnIdx != null and !scnIdx.equals('')">
+				AND scn_idx Like '%' || #{scnIdx} || '%'
+			</if>
+			<if test="scnTitle != null and !scnTitle.equals('')">
+				AND scn_title Like '%' || #{scnTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertStudyCertificateNotice" parameterType="studyCertificateNotice12VO">
+	        INSERT INTO study_certificate_notice12(
+	           scn_idx
+			 , scn_title
+			 , scn_content
+			 , scn_date
+	        ) VALUES (
+	        	#{scnIdx}
+	           ,#{scnTitle}
+	           ,#{scnContent}
+	           ,#{scnDate}
+	        )
+	</insert>
+	<update id="saveStudyCertificateNotice" parameterType="studyCertificateNotice12VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_notice12
+		    SET scn_title = #{scnTitle}
+			  , scn_content = #{scnContent}
+			  , scn_date = #{scnDate}
+	        WHERE scn_idx = #{scnIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_notice12 (  scn_idx
+											 , scn_title
+											 , scn_content
+											 , scn_date)
+	        SELECT #{scnIdx}
+	           ,#{scnTitle}
+	           ,#{scnContent}
+	           ,#{scnDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateNotice" parameterType="studyCertificateNotice12VO">
+		UPDATE study_certificate_notice12 SET
+			   scn_title = #{scnTitle}
+			  , scn_content = #{scnContent}
+			  , scn_date = #{scnDate}
+	        WHERE scn_idx = #{scnIdx} 
+	</update>
+	<delete id="deleteStudyCertificateNotice" parameterType="studyCertificateNotice12VO">
+	 	DELETE from study_certificate_notice12
+	 	WHERE scn_idx = #{scnIdx} 
+	</delete>
+</mapper>

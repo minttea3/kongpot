@@ -76,6 +76,15 @@
                         <hr>
                         <a class="dropdown-item" href="bookEventList">이달의 행사 소개 리스트</a>
                         <a class="dropdown-item" href="syncBookEventForm">이달의 행사 소개 등록</a>
+                    </div>
+                </li>
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        공부/자격증
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav2">
+                        <a class="dropdown-item" href="/studyCertificateNoticeList">공지사항 리스트</a>
+                        <a class="dropdown-item" href="/syncStudyCertificateNoticeForm">공지사항 등록</a>
                         
                     </div>
                 </li>
