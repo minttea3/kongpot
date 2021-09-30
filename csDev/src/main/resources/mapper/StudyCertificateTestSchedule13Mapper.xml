@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StudyCertificateTestSchedule13Mapper">
+	<select id="studyCertificateTestScheduleSelectOne" resultType="studyCertificateTestSchedule13VO" parameterType="studyCertificateTestSchedule13VO">
+		SELECT scts_idx
+			 , scts_type
+			 , scts_class
+			 , scts_test_name
+			 , scts_test_period
+			 , scts_testing_day
+		FROM study_certificate_test_schedule13
+		WHERE scts_idx = #{sctsIdx}
+	</select>
+	<select id="studyCertificateTestScheduleList" resultType="studyCertificateTestSchedule13VO" parameterType="studyCertificateTestSchedule13VO">
+		SELECT scts_idx
+			 , scts_type
+			 , scts_class
+			 , scts_test_name
+			 , scts_test_period
+			 , scts_testing_day
+		FROM study_certificate_test_schedule13
+		<where> 
+			<if test="sctsIdx != null and !sctsIdx.equals('')">
+				AND scts_idx Like '%' || #{sctsIdx} || '%'
+			</if>
+			<if test="sctsTestName != null and !sctsTestName.equals('')">
+				AND scts_test_name Like '%' || #{sctsTestName} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertStudyCertificateTestSchedule" parameterType="studyCertificateTestSchedule13VO">
+	        INSERT INTO study_certificate_test_schedule13(
+	           scts_idx
+			 , scts_type
+			 , scts_class
+			 , scts_test_name
+			 , scts_test_period
+			 , scts_testing_day
+	        ) VALUES (
+	        	#{sctsIdx}
+	           ,#{sctsType}
+	           ,#{sctsClass}
+	           ,#{sctsTestName}
+	           ,#{sctsTestPeriod}
+	           ,#{sctsTestingDay}
+	        )
+	</insert>
+	<update id="saveStudyCertificateTestSchedule" parameterType="studyCertificateTestSchedule13VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_test_schedule13
+		    SET scts_type = #{sctsType}
+			  , scts_class = #{sctsClass}
+			  , scts_test_name = #{sctsTestName}
+			  , scts_test_period = #{sctsTestPeriod}
+			  , scts_testing_day = #{sctsTestingDay}
+	        WHERE scts_idx = #{sctsIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_test_schedule13 (  scts_idx
+													 , scts_type
+													 , scts_class
+													 , scts_test_name
+													 , scts_test_period
+													 , scts_testing_day)
+	        SELECT #{sctsIdx}
+	           ,#{sctsType}
+	           ,#{sctsClass}
+	           ,#{sctsTestName}
+	           ,#{sctsTestPeriod}
+	           ,#{sctsTestingDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateTestSchedule" parameterType="studyCertificateTestSchedule13VO">
+		UPDATE study_certificate_test_schedule13 SET
+			  scts_type = #{sctsType}
+			  , scts_class = #{sctsClass}
+			  , scts_test_name = #{sctsTestName}
+			  , scts_test_period = #{sctsTestPeriod}
+			  , scts_testing_day = #{sctsTestingDay}
+			  WHERE scts_idx = #{sctsIdx}
+	</update>
+	<delete id="deleteStudyCertificateTestSchedule" parameterType="studyCertificateTestSchedule13VO">
+	 	DELETE from study_certificate_test_schedule13
+	 	WHERE scts_idx = #{sctsIdx} 
+	</delete>
+</mapper>

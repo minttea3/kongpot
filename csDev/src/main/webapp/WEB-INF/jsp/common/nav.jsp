@@ -85,6 +85,9 @@
                     <div class="dropdown-menu" aria-labelledby="nav2">
                         <a class="dropdown-item" href="/studyCertificateNoticeList">공지사항 리스트</a>
                         <a class="dropdown-item" href="/syncStudyCertificateNoticeForm">공지사항 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/studyCertificateTestScheduleList">시험 일정 리스트</a>
+                        <a class="dropdown-item" href="/syncStudyCertificateTestScheduleForm">시험 일정 등록</a>
                         
                     </div>
                 </li>
