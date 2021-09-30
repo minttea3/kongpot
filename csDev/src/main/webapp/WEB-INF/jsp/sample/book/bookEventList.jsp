@@ -19,7 +19,7 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>book 커뮤니티 리스트</h3>
+<h3>book EVENT 리스트</h3>
 
 <br />
 
@@ -31,7 +31,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="beIdx" placeholder="번호" name="beIdx" value="${studyCertificateNotice12VO.beIdx}">
+                <input type="text" class="form-control" id="beIdx" placeholder="번호" name="beIdx" value="${bookEvent11VO.beIdx}">
             </div>
         </div>
         <div class="col-auto">
@@ -40,7 +40,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">책제목</div>
                 </div>
-                <input type="text" class="form-control" id="beTitle" placeholder="책제목" name="beTitle" value="${studyCertificateNotice12VO.beTitle}">
+                <input type="text" class="form-control" id="beTitle" placeholder="책제목" name="beTitle" value="${bookEvent11VO.beTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -62,7 +62,7 @@
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${studyCertificateNoticeList}" varStatus="status">
+            <c:forEach var="map" items="${bookEventList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
                     <td>${map.beIdx}</td>

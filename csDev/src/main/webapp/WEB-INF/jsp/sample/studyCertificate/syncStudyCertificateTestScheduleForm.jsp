@@ -35,15 +35,15 @@
         </div>
         <div class="form-group">
             <label for="sctsTestName">시험명</label>
-             <input type="text" class="form-control" id="sctsTestName"  name="sctsTestName" value="${studyCertificateTestSchedule13VO.sctsTestName}">
+             <input type="text" class="form-control" id="sctsTestName" placeholder="시험명" name="sctsTestName" value="${studyCertificateTestSchedule13VO.sctsTestName}">
         </div>
         <div class="form-group">
             <label for="sctsTestPeriod">접수기간</label>
-             <input type="text" class="form-control" id="sctsTestPeriod"  name="sctsTestPeriod" value="${studyCertificateTestSchedule13VO.sctsTestPeriod}">
+             <input type="text" class="form-control" id="sctsTestPeriod" placeholder="접수기간" name="sctsTestPeriod" value="${studyCertificateTestSchedule13VO.sctsTestPeriod}">
         </div>
         <div class="form-group">
             <label for="sctsTestingDay">시험일</label>
-             <input type="text" class="form-control" id="sctsTestingDay"  name="sctsTestingDay" value="${studyCertificateTestSchedule13VO.sctsTestingDay}">
+             <input type="text" class="form-control" id="sctsTestingDay" placeholder="시험일" name="sctsTestingDay" value="${studyCertificateTestSchedule13VO.sctsTestingDay}">
         </div>
         
         <c:if test="${studyCertificateTestSchedule13VO.sctsIdx eq null}">
