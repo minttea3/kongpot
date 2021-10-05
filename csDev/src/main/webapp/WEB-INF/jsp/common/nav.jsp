@@ -97,6 +97,9 @@
                         <hr>
                         <a class="dropdown-item" href="/studyCertificateQnAList">공부/시험 Q&A 리스트</a>
                         <a class="dropdown-item" href="/syncStudyCertificateQnAForm">공부/시험 Q&A 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/studyCertificateCommunityList">공부/시험 커뮤니티 리스트</a>
+                        <a class="dropdown-item" href="/syncStudyCertificateCommunityForm">공부/시험 커뮤니티 등록</a>
                         
                     </div>
                 </li>
