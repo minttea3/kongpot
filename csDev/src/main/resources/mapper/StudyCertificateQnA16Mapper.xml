@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StudyCertificateQnA16Mapper">
+	<select id="studyCertifiscteQnASelectOne" resultType="studyCertificateQnA16VO" parameterType="studyCertificateQnA16VO">
+		SELECT scq_idx
+			 , scq_name
+			 , scq_title
+			 , scq_content
+			 , scq_write_day
+		FROM study_certificate_QnA16
+		WHERE scq_idx = #{scqIdx}
+	</select>
+	<select id="studyCertificateQnAList" resultType="studyCertificateQnA16VO" parameterType="studyCertificateQnA16VO">
+		SELECT scq_idx
+			 , scq_name
+			 , scq_title
+			 , scq_content
+			 , scq_write_day
+		FROM study_certificate_QnA16
+		<where> 
+			<if test="scqIdx != null and !scqIdx.equals('')">
+				AND scq_idx Like '%' || #{scqIdx} || '%'
+			</if>
+			<if test="scqName != null and !scqName.equals('')">
+				AND scq_name Like '%' || #{scqName} || '%'
+			</if>
+			<if test="scqTitle != null and !scqTitle.equals('')">
+				AND scq_title Like '%' || #{scqTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertStudyCertificateQnA" parameterType="studyCertificateQnA16VO">
+	        INSERT INTO study_certificate_QnA16(
+	           scq_idx
+			 , scq_name
+			 , scq_title
+			 , scq_content
+			 , scq_write_day
+	        ) VALUES (
+	        	#{scqIdx}
+	           ,#{scqName}
+	           ,#{scqTitle}
+	           ,#{scqContent}
+	           ,#{scqWriteDay}
+	        )
+	</insert>
+	<update id="saveStudyCertificateQnA" parameterType="studyCertificateQnA16VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_QnA16
+		    SET 
+			    scq_name = #{scqName}
+			  , scq_title = #{scqTitle}
+			  , scq_content = #{scqContent}
+			  , scq_write_day = #{scqWriteDay}
+	        WHERE scq_idx = #{scqIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_QnA16 (  scq_idx
+													 , scq_name
+													 , scq_title
+													 , scq_content
+													 , scq_write_day)
+	        SELECT #{scqIdx}
+	           ,#{scqName}
+	           ,#{scqTitle}
+	           ,#{scqContent}
+	           ,#{scqWriteDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateQnA" parameterType="studyCertificateQnA16VO">
+		UPDATE study_certificate_QnA16 SET
+			  	scq_name = #{scqName}
+			  , scq_title = #{scqTitle}
+			  , scq_content = #{scqContent}
+			  , scq_write_day = #{scqWriteDay}
+			  WHERE scq_idx = #{scqIdx}
+	</update>
+	<delete id="deleteStudyCertificateQnA" parameterType="studyCertificateQnA16VO">
+	 	DELETE from study_certificate_QnA16
+	 	WHERE scq_idx = #{scqIdx}
+	</delete>
+</mapper>

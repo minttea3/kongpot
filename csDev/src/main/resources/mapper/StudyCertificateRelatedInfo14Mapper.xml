@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StudyCertificateRealtedInfo14Mapper">
+	<select id="studyCertificateRelatedInfoSelectOne" resultType="studyCertificateRelatedInfo14VO" parameterType="studyCertificateRelatedInfo14VO">
+		SELECT scri_idx
+			 , scri_name
+			 , scri_title
+			 , scri_content
+			 , scri_write_day
+		FROM study_certificate_related_info14
+		WHERE scri_idx = #{scriIdx}
+	</select>
+	<select id="studyCertificateRelatedInfoList" resultType="studyCertificateRelatedInfo14VO" parameterType="studyCertificateRelatedInfo14VO">
+		SELECT scri_idx
+			 , scri_name
+			 , scri_title
+			 , scri_content
+			 , scri_write_day
+		FROM study_certificate_related_info14
+		<where> 
+			<if test="scriIdx != null and !scriIdx.equals('')">
+				AND scri_idx Like '%' || #{scriIdx} || '%'
+			</if>
+			<if test="scriName != null and !scriName.equals('')">
+				AND scri_name Like '%' || #{scriName} || '%'
+			</if>
+			<if test="scriTitle != null and !scriTitle.equals('')">
+				AND scri_title Like '%' || #{scriTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertStudyCertificateRelatedInfo" parameterType="studyCertificateRelatedInfo14VO">
+	        INSERT INTO study_certificate_related_info14(
+	           scri_idx
+			 , scri_name
+			 , scri_title
+			 , scri_content
+			 , scri_write_day
+	        ) VALUES (
+	        	#{scriIdx}
+	           ,#{scriName}
+	           ,#{scriTitle}
+	           ,#{scriContent}
+	           ,#{scriWriteDay}
+	        )
+	</insert>
+	<update id="saveStudyCertificateRelatedInfo" parameterType="studyCertificateRelatedInfo14VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_related_info14
+		    SET 
+			    scri_name = #{scriName}
+			  , scri_title = #{scriTitle}
+			  , scri_content = #{scriContent}
+			  , scri_write_day = #{scriWriteDay}
+	        WHERE scri_idx = #{scriIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_related_info14 (  scri_idx
+													 , scri_name
+													 , scri_title
+													 , scri_content
+													 , scri_write_day)
+	        SELECT #{sctsIdx}
+	           ,#{scriName}
+	           ,#{scriTitle}
+	           ,#{scriContent}
+	           ,#{scriWriteDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateRelatedInfo" parameterType="studyCertificateRelatedInfo14VO">
+		UPDATE study_certificate_related_info14 SET
+			  	scri_name = #{scriName}
+			  , scri_title = #{scriTitle}
+			  , scri_content = #{scriContent}
+			  , scri_write_day = #{scriWriteDay}
+			  WHERE scri_idx = #{scriIdx}
+	</update>
+	<delete id="deleteStudyCertificateRelatedInfo" parameterType="studyCertificateRelatedInfo14VO">
+	 	DELETE from study_certificate_related_info14
+	 	WHERE scri_idx = #{scriIdx}
+	</delete>
+</mapper>
