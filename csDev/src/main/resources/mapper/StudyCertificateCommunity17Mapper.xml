@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StudyCertificateCommunity17Mapper">
+	<select id="studyCertificateCommunitySelectOne" resultType="studyCertificateCommunity17VO" parameterType="studyCertificateCommunity17VO">
+		SELECT scc_idx
+			 , scc_name
+			 , scc_testing_name
+			 , scc_title
+			 , scc_content
+		FROM study_certificate_community17
+		WHERE scc_idx = #{sccIdx}
+	</select>
+	<select id="studyCertificateCommunityList" resultType="studyCertificateCommunity17VO" parameterType="studyCertificateCommunity17VO">
+		SELECT scc_idx
+			 , scc_name
+			 , scc_testing_name
+			 , scc_title
+			 , scc_content
+		FROM study_certificate_community17
+		<where> 
+			<if test="sccIdx != null and !sccIdx.equals('')">
+				AND scc_idx Like '%' || #{sccIdx} || '%'
+			</if>
+			<if test="sccName != null and !sccName.equals('')">
+				AND scc_name Like '%' || #{sccName} || '%'
+			</if>
+			<if test="sccTitle != null and !sccTitle.equals('')">
+				AND scc_title Like '%' || #{sccTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertStudyCertificateCommunity" parameterType="studyCertificateCommunity17VO">
+	        INSERT INTO study_certificate_community17(
+	           scc_idx
+			 , scc_name
+			 , scc_testing_name
+			 , scc_title
+			 , scc_content
+	        ) VALUES (
+	        	#{sccIdx}
+	           ,#{sccName}
+	           ,#{sccTestingName}
+	           ,#{sccTitle}
+	           ,#{sccContent}
+	        )
+	</insert>
+	<update id="saveStudyCertificateCommunity" parameterType="studyCertificateCommunity17VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_community17
+		    SET 
+			    scc_name = #{sccName}
+			    scc_testing_name = #{sccTestingName}
+			  , scc_title = #{sccTitle}
+			  , scc_content = #{sccContent}
+	        WHERE scc_idx = #{sccIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_community17 (  scc_idx
+													 , scc_name
+													 , scc_testing_name
+													 , scc_title
+													 , scc_content)
+	        SELECT #{sccIdx}
+	           ,#{sccName}
+	           ,#{sccTestingName}
+	           ,#{sciTitle}
+	           ,#{sccContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateCommunity" parameterType="studyCertificateCommunity17VO">
+		UPDATE study_certificate_community17 SET
+			  	scc_name = #{sccName}
+			  ,	scc_testing_name = #{sccTestingName}
+			  , scc_title = #{sccTitle}
+			  , scc_content = #{sccContent}
+			  WHERE scc_idx = #{sccIdx}
+	</update>
+	<delete id="deleteStudyCertificateCommunity" parameterType="studyCertificateCommunity17VO">
+	 	DELETE from study_certificate_community17
+	 	WHERE scc_idx = #{sccIdx}
+	</delete>
+</mapper>
