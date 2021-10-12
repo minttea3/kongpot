@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.FoodBlogger21Mapper">
+	<select id="foodBloggerSelectOne" resultType="foodBlogger21VO" parameterType="foodBlogger21VO">
+		SELECT fb_idx
+			 , fb_name
+			 , fb_type
+			 , fb_Title
+			 , fb_content
+		from food_blogger21
+		WHERE fb_idx = #{fbIdx}
+	</select>
+	<select id="foodBloggerList" resultType="foodBlogger21VO" parameterType="foodBlogger21VO">
+		SELECT fb_idx
+			 , fb_name
+			 , fb_type
+			 , fb_Title
+			 , fb_content
+		from food_blogger21
+		<where> 
+			<if test="fbIdx != null and !fbIdx.equals('')">
+				AND fb_idx Like '%' || #{fbIdx} || '%'
+			</if>
+			<if test="fbName != null and !fbName.equals('')">
+				AND fb_name Like '%' || #{fbName} || '%'
+			</if>
+			<if test="fbTitle != null and !fbTitle.equals('')">
+				AND fb_Title Like '%' || #{fbTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertFoodBlogger" parameterType="foodBlogger21VO">
+	        INSERT INTO food_blogger21(
+	           fb_idx
+			 , fb_name
+			 , fb_type
+			 , fb_Title
+			 , fb_content
+	        ) VALUES (
+	        	#{fbIdx}
+	           ,#{fbName}
+	           ,#{fbType}
+	           ,#{fbTitle}
+	           ,#{fbContent}
+	        )
+	</insert>
+	<update id="saveFoodBlogger" parameterType="foodBlogger21VO">
+	        WITH UPSERT AS (
+	        UPDATE food_blogger21
+		    SET fb_name = #{fbName}
+			  , fb_type = #{fbType}
+			  , fb_Title = #{fbTitle}
+			  , fb_content = #{fbContent}
+	        WHERE fb_idx = #{fbIdx} RETURNING *
+	)
+	        INSERT
+	        INTO food_blogger21 ( fb_idx
+								 , fb_name
+								 , fb_type
+								 , fb_Title
+								 , fb_content)
+	        SELECT #{fbIdx}
+		           ,#{fbName}
+		           ,#{fbType}
+		           ,#{fbTitle}
+		           ,#{fbContent} WHERE NOT EXISTS ( SELECT * fbOM UPSERT )
+	</update>
+	<update id="updateFoodBlogger" parameterType="foodBlogger21VO">
+		UPDATE food_blogger21 SET
+			fb_name = #{fbName}
+			  , fb_type = #{fbType}
+			  , fb_Title = #{fbTitle}
+			  , fb_content = #{fbContent}
+	        WHERE fb_idx = #{fbIdx}
+	</update>
+	<delete id="deleteFoodBlogger" parameterType="foodBlogger21VO">
+	 	DELETE from food_blogger21
+	 	WHERE  fb_idx = #{fbIdx}
+	</delete>
+</mapper>

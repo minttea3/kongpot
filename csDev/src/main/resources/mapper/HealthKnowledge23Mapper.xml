@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthKnowledge23Mapper">
+	<select id="healthKnowledgeSelectOne" resultType="healthKnowledge23VO" parameterType="healthKnowledge23VO">
+		SELECT hk_idx
+			 , hk_Name
+			 , hk_title
+			 , hk_content
+			 , hk_date
+		FROM health_knowledge23
+		WHERE hk_idx = #{hkIdx}
+	</select>
+	<select id="healthKnowledgeList" resultType="healthKnowledge23VO" parameterType="healthKnowledge23VO">
+		SELECT hk_idx
+			 , hk_Name
+			 , hk_title
+			 , hk_content
+			 , hk_date
+		FROM health_knowledge23
+		<where> 
+			<if test="hkIdx != null and !hkIdx.equals('')">
+				AND hk_idx Like '%' || #{hkIdx} || '%'
+			</if>
+			<if test="hkName != null and !hkName.equals('')">
+				AND hk_name Like '%' || #{hkName} || '%'
+			</if>
+			<if test="hkTitle != null and !hkTitle.equals('')">
+				AND hk_title Like '%' || #{hkTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertHealthKnowledge" parameterType="healthKnowledge23VO">
+	        INSERT INTO health_knowledge23(
+	           hk_idx
+			 , hk_Name
+			 , hk_title
+			 , hk_content
+			 , hk_date
+	        ) VALUES (
+	        	#{hkIdx}
+	           ,#{hkName}
+	           ,#{hkTitle}
+	           ,#{hkContent}
+	           ,#{hkDate}
+	        )
+	</insert>
+	<update id="saveHealthKnowledge" parameterType="healthKnowledge23VO">
+	        WITH UPSERT AS (
+	        UPDATE health_knowledge23
+		    SET 
+			    hk_Name = #{hkName}
+			  , hk_title = #{hkTitle}
+			  , hk_content = #{hkContent}
+			  , hk_date = #{hkDate}
+	        WHERE hk_idx = #{hkIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_knowledge23 ( hk_idx
+										 , hk_Name
+										 , hk_title
+										 , bb_writer
+										 , hk_content
+										 , hk_date )
+	        SELECT #{hkIdx}
+	           ,#{hkName}
+	           ,#{hkTitle}
+	           ,#{hkContent}
+	           ,#{hkDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthKnowledge" parameterType="healthKnowledge23VO">
+		UPDATE health_knowledge23 SET
+			  hk_Name = #{hkName}
+			  , hk_title = #{hkTitle}
+			  , hk_content = #{hkContent}
+			  , hk_date = #{hkDate}
+	        WHERE hk_idx = #{hkIdx} 
+	</update>
+	<delete id="deleteHealthKnowledge" parameterType="healthKnowledge23VO">
+	 	DELETE from health_knowledge23
+	 	WHERE hk_idx = #{hkIdx} 
+	</delete>
+</mapper>

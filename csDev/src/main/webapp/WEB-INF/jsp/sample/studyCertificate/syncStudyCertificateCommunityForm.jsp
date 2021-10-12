@@ -30,10 +30,6 @@
             <input type="text" class="form-control" id="sccName" placeholder="작성자" name="sccName" value="${StudyCertificateCommunity17VO.sccName}">
         </div>
         <div class="form-group">
-            <label for="sccTestingName">시험명</label>
-            <input type="text" class="form-control" id="sccTestingName" placeholder="시험명" name="sccTestingName" value="${StudyCertificateCommunity17VO.sccTestingName}">
-        </div>
-        <div class="form-group">
             <label for="sccTitle">제목</label>
             <input type="text" class="form-control" id="sccTitle" placeholder="제목" name="sccTitle" value="${StudyCertificateCommunity17VO.sccTitle}">
         </div>
@@ -51,6 +47,32 @@
             <button name="action" value="delete" type="submit" class="btn btn-danger">삭제</button>
         </c:if>
     </form:form>
+    <c:forEach var="map2" items="${studyCertificateCommunityCommentList}" varStatus="status2">
+    <strong>댓글</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="/syncStudyCertificateCommunityCommunitycommentForm?sccIdx=${map2.sccIdx}"> 댓글 등록</a>
+     </c:forEach>
+    <table class="table table-striped">
+    <tr>
+    	<th scope="col">#</th>
+    	<th scope="col">댓글 번호</th>
+    	<th scope="col">커뮤니티 고유번호</th>
+    	<th scope="col">이름</th>
+    	<th scope="col">내용</th>
+    	<th scope="col">날짜</th>
+    </tr>
+     <c:forEach var="map2" items="${studyCertificateCommunityCommentList}" varStatus="status2">
+       	<tr>
+           <td scope="row"><c:out value="${status2.count}" /></td>
+    	   <td>${map2.scccIdx}</td>
+    	   <td>${map2.sccIdx}</td>
+    	     <td><a href="<c:url value='/syncStudyCertificateCommunityCommunitycommentForm?sccIdx=${map2.sccIdx}&&scccIdx=${map2.scccIdx }' />">${map2.scccName}</a></td>
+    	   <td>${map2.scccContent}</td>
+    	   <td>${map2.scccWriteDay}</td>
+       	</tr>
+     </c:forEach>
+    	
+    </table>
+    
+    
 </body>
 
 </html>

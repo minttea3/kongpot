@@ -1,0 +1,22 @@
+package com.cs.study.sample.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.cs.study.sample.vo.StudyCertificateCommunityComment18VO;
+@Mapper
+public interface StudyCertificateCommunityComment18Mapper {
+	
+	public StudyCertificateCommunityComment18VO studyCertificateCommunityCommentSelectOne(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO); 
+
+	public List<StudyCertificateCommunityComment18VO> studyCertificateCommunityCommentList(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO);
+	
+	public int insertStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO); 
+	
+	public int saveStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO); 
+	
+	public int updateStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO); 
+	
+	public int deleteStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO);
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.FoodBestRestaurant22Mapper">
+	<select id="foodBestRestaurantSelectOne" resultType="foodBestRestaurant22VO" parameterType="foodBestRestaurant22VO">
+		SELECT fbr_idx
+			 , fbr_name
+			 , fbr_type
+			 , fbr_Title
+			 , fbr_content
+		from food_best_restaurant22
+		WHERE fbr_idx = #{fbrIdx}
+	</select>
+	<select id="foodBestRestaurantList" resultType="foodBestRestaurant22VO" parameterType="foodBestRestaurant22VO">
+		SELECT fbr_idx
+			 , fbr_name
+			 , fbr_type
+			 , fbr_Title
+			 , fbr_content
+		from food_best_restaurant22
+		<where> 
+			<if test="fbrIdx != null and !fbrIdx.equals('')">
+				AND fbr_idx Like '%' || #{fbrIdx} || '%'
+			</if>
+			<if test="fbrName != null and !fbrName.equals('')">
+				AND fbr_name Like '%' || #{fbrName} || '%'
+			</if>
+			<if test="fbrTitle != null and !fbrTitle.equals('')">
+				AND fbr_Title Like '%' || #{fbrTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertFoodBestRestaurant" parameterType="foodBlogger21VO">
+	        INSERT INTO food_best_restaurant22(
+	           fbr_idx
+			 , fbr_name
+			 , fbr_type
+			 , fbr_Title
+			 , fbr_content
+	        ) VALUES (
+	        	#{fbrIdx}
+	           ,#{fbrName}
+	           ,#{fbrType}
+	           ,#{fbrTitle}
+	           ,#{fbrContent}
+	        )
+	</insert>
+	<update id="saveFoodBestRestaurant" parameterType="foodBestRestaurant22VO">
+	        WITH UPSERT AS (
+	        UPDATE food_blogger21
+		    SET fbr_name = #{fbrName}
+			  , fbr_type = #{fbrType}
+			  , fbr_Title = #{fbrTitle}
+			  , fbr_content = #{fbrContent}
+	        WHERE fbr_idx = #{fbrIdx} RETURNING *
+	)
+	        INSERT
+	        INTO food_best_restaurant22 (  fbr_idx
+										 , fbr_name
+										 , fbr_type
+										 , fbr_Title
+										 , fbr_content)
+	        SELECT #{fbrIdx}
+		           ,#{fbrName}
+		           ,#{fbrType}
+		           ,#{fbrTitle}
+		           ,#{fbrContent} WHERE NOT EXISTS ( SELECT * fbOM UPSERT )
+	</update>
+	<update id="updateFoodBestRestaurant" parameterType="foodBestRestaurant22VO">
+		UPDATE food_best_restaurant22 SET
+			fbr_name = #{fbrName}
+			  , fbr_type = #{fbrType}
+			  , fbr_Title = #{fbrTitle}
+			  , fbr_content = #{fbrContent}
+	        WHERE fbr_idx = #{fbrIdx}
+	</update>
+	<delete id="deleteFoodBestRestaurant" parameterType="foodBestRestaurant22VO">
+	 	DELETE from food_best_restaurant22
+	 	WHERE  fbr_idx = #{fbrIdx}
+	</delete>
+</mapper>

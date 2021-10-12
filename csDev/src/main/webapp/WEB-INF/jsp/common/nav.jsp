@@ -30,10 +30,10 @@
                     </div>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="nav2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         회원 목록
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="nav2">
+                    <div class="dropdown-menu" aria-labelledby="nav1">
                         <a class="dropdown-item" href="/memberList">회원 리스트</a>
                         <a class="dropdown-item" href="/syncMemberForm">회원 등록</a>
                         
@@ -56,10 +56,10 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="nav2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         서적 관련
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="nav2">
+                    <div class="dropdown-menu" aria-labelledby="nav3">
                         <a class="dropdown-item" href="/bookKoreanNovelsList">국내소설 소개 리스트</a>
                         <a class="dropdown-item" href="/syncbookKoreanNovelsForm">국내소설 소개 등록</a>
                         <a class="dropdown-item" href="/bookForeignNovelsList">국외소설 소개 리스트</a>
@@ -79,10 +79,10 @@
                     </div>
                 </li>
                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="nav2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         공부/자격증
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="nav2">
+                    <div class="dropdown-menu" aria-labelledby="nav4">
                         <a class="dropdown-item" href="/studyCertificateNoticeList">공지사항 리스트</a>
                         <a class="dropdown-item" href="/syncStudyCertificateNoticeForm">공지사항 등록</a>
                         <hr>
@@ -101,6 +101,43 @@
                         <a class="dropdown-item" href="/studyCertificateCommunityList">공부/시험 커뮤니티 리스트</a>
                         <a class="dropdown-item" href="/syncStudyCertificateCommunityForm">공부/시험 커뮤니티 등록</a>
                         
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        음식
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav5">
+                        <a class="dropdown-item" href="/FoodSeasonInfoList">계절음식 레시피 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncFoodSeasonInfoForm">계절음식 레시피 소개 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/foodRecipeList">음식 레시피 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncFoodRecipeForm">음식 레시피 소개 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/foodBloggerList">음식 블로거 리스트</a>
+                        <a class="dropdown-item" href="/syncFoodBloggerForm">음식 블로거 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/foodBestRestaurantList">맛집 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncFoodBestRestaurantForm">맛집 소개 등록</a>
+                        
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        건강
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav5">
+                        <a class="dropdown-item" href="/healthKnowledgeList">건강 지식 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncHealthKnowledgeForm">건강 지식 소개 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/healthQuestionList">건강 문의 리스트</a>
+                        <a class="dropdown-item" href="/syncHealthQuestionForm">건강 문의 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/healthNewsList">건강 뉴스 리스트</a>
+                        <a class="dropdown-item" href="/syncHealthNewsForm">건강 뉴스 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/healthDoctorList">건강 탁터 리스트</a>
+                        <a class="dropdown-item" href="/syncHealthDoctorForm">건강 닥터 등록</a>
                     </div>
                 </li>
             </ul>

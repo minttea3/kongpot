@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthNews25Mapper">
+	<select id="healthNewsSelectOne" resultType="healthNews25VO" parameterType="healthNews25VO">
+		SELECT hn_idx
+			 , hn_Name
+			 , hn_title
+			 , hn_content
+			 , hn_date
+		FROM health_News25
+		WHERE hn_idx = #{hnIdx}
+	</select>
+	<select id="healthNewsList" resultType="healthNews25VO" parameterType="healthNews25VO">
+		SELECT hn_idx
+			 , hn_Name
+			 , hn_title
+			 , hn_content
+			 , hn_date
+		FROM health_News25
+		<where> 
+			<if test="hnIdx != null and !hnIdx.equals('')">
+				AND hn_idx Like '%' || #{hnIdx} || '%'
+			</if>
+			<if test="hnName != null and !hnName.equals('')">
+				AND hn_Name Like '%' || #{hnName} || '%'
+			</if>
+			<if test="hnTitle != null and !hnTitle.equals('')">
+				AND hn_title Like '%' || #{hnTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertHealthNews" parameterType="healthNews25VO">
+	        INSERT INTO health_News25(
+	           hn_idx
+			 , hn_Name
+			 , hn_title
+			 , hn_content
+			 , hn_date
+	        ) VALUES (
+	        	#{hnIdx}
+	           ,#{hnName}
+	           ,#{hnTitle}
+	           ,#{hnContent}
+	           ,#{hnDate}
+	        )
+	</insert>
+	<update id="saveHealthNews" parameterType="healthNews25VO">
+	        WITH UPSERT AS (
+	        UPDATE health_News25
+		    SET 
+			    hn_Name = #{hnName}
+			  , hn_title = #{hnTitle}
+			  , hn_content = #{hnContent}
+			  , hn_date = #{hnDate}
+	        WHERE hn_idx = #{hnIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_News25 ( hn_idx
+										 ,  hn_Name
+										 , hn_title
+										 , hn_content
+										 , hn_date )
+	        SELECT #{hnIdx}
+	           ,#{hnName}
+	           ,#{hnTitle}
+	           ,#{hnContent}
+	           ,#{hnDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthNews" parameterType="healthNews25VO">
+		UPDATE health_News25 SET
+			  hn_Name = #{hnName}
+			  , hn_title = #{hnTitle}
+			  , hn_content = #{hnContent}
+			  , hn_date = #{hnDate}
+	        WHERE hn_idx = #{hnIdx}
+	</update>
+	<delete id="deleteHealthNews" parameterType="healthNews25VO">
+	 	DELETE from health_News25
+	 	WHERE hn_idx = #{hnIdx}
+	</delete>
+</mapper>

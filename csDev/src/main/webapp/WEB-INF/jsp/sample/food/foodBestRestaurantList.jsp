@@ -19,37 +19,38 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>공부/자격증 커뮤니티 리스트</h3>
+<h3>맛집 리스트</h3>
 
 <br />
 
-<form:form action="/studyCertificateCommunityList" method="get">
+<form:form action="/foodBestRestaurantList" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccIdx">번호</label>
+            <label class="sr-only" for="fbrIdx">번호</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="sccIdx" placeholder="번호" name="sccIdx" value="${studyCertificateCommunity17VO.sccIdx}">
+                <input type="text" class="form-control" id="fbrIdx" placeholder="번호" name="fbrIdx" value="${foodBestRestaurant22VO.fbrIdx}">
             </div>
         </div>
+    <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccName">작성자</label>
+            <label class="sr-only" for="fbrName">작성자</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">작성자</div>
                 </div>
-                <input type="text" class="form-control" id="sccName" placeholder="작성자" name="sccName" value="${studyCertificateCommunity17VO.sccName}">
+                <input type="text" class="form-control" id="fbrName" placeholder="작성자" name="fbrName" value="${foodBestRestaurant22VO.fbrName}">
             </div>
         </div>
         <div class="col-auto">
-            <label class="sr-only" for="sccTitle">제목</label>
+            <label class="sr-only" for="fbrTitle">제목</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">제목</div>
                 </div>
-                <input type="text" class="form-control" id="sccTitle" placeholder="제목" name="sccTitle" value="${studyCertificateCommunity17VO.sccTitle}">
+                <input type="text" class="form-control" id="fbrTitle" placeholder="제목" name="fbrTitle" value="${foodBestRestaurant22VO.fbrTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -64,26 +65,24 @@
             <th scope="col">#</th>
             <th scope="col">작성번호</th>
             <th scope="col">작성자</th>
-            <th scope="col">시험명</th>
+            <th scope="col">분류</th>
             <th scope="col">제목</th>
             <th scope="col">내용</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${studyCertificateCommunityList}" varStatus="status">
+            <c:forEach var="map" items="${foodBestRestaurantList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
-                    <td>${map.sccIdx}</td>
-                    <td>${map.sccName}</td>
-                    <td>${map.sccTestingName}</td>
-                    <td><a href="<c:url value='/syncStudyCertificateCommunityForm?sccIdx=${map.sccIdx}'/>">${map.sccTitle}</a></td>
-                    <td>${map.sccContent}</td>
+                    <td>${map.fbrIdx}</td>
+                    <td>${map.fbrName}</td>
+                    <td>${map.fbrType}</td>
+                    <td><a href="<c:url value='/syncFoodBestRestaurantForm?fbrIdx=${map.fbrIdx}' />">${map.fbrTitle}</a></td>
+                    <td>${map.fbrContent}</td>
                 </tr>
-           		
             </c:forEach>
         </tbody>
     </table>
-    
 </body>
 
 </html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthQuestion24Mapper">
+	<select id="healthQuestionSelectOne" resultType="healthQuestion24VO" parameterType="healthQuestion24VO">
+		SELECT hq_idx
+			 , hq_Name
+			 , hq_tel
+			 , hq_title
+			 , hq_content
+		FROM health_question24
+		WHERE hq_idx = #{hqIdx}
+	</select>
+	<select id="healthQuestionList" resultType="healthQuestion24VO" parameterType="healthQuestion24VO">
+		SELECT hq_idx
+			 , hq_Name
+			 , hq_tel
+			 , hq_title
+			 , hq_content
+		FROM health_question24
+		<where> 
+			<if test="hqIdx != null and !hqIdx.equals('')">
+				AND hq_idx Like '%' || #{hqIdx} || '%'
+			</if>
+			<if test="hqName != null and !hqName.equals('')">
+				AND hq_Name Like '%' || #{hqName} || '%'
+			</if>
+			<if test="hqTitle != null and !hqTitle.equals('')">
+				AND hq_title Like '%' || #{hqTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertHealthQuestion" parameterType="healthQuestion24VO">
+	        INSERT INTO health_question24(
+	           hq_idx
+			 , hq_Name
+			 , hq_tel
+			 , hq_title
+			 , hq_content
+	        ) VALUES (
+	        	#{hqIdx}
+	           ,#{hqName}
+	           ,#{hqTel}
+	           ,#{hqTitle}
+	           ,#{hqContent}
+	        )
+	</insert>
+	<update id="saveHealthQuestion" parameterType="healthQuestion24VO">
+	        WITH UPSERT AS (
+	        UPDATE health_question24
+		    SET 
+			    hq_Name = #{hqName}
+			  , hq_tel = #{hqTel}
+			  , hq_title = #{hqTitle}
+			  , hq_content = #{hqContent}
+	        WHERE hq_idx = #{hqIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_question24 ( hk_idx
+										 , hk_Name
+										 , hk_title
+										 , bb_writer
+										 , hk_content
+										 , hk_date )
+	        SELECT #{hqIdx}
+	           ,#{hqName}
+	           ,#{hqTel}
+	           ,#{hqTitle}
+	           ,#{hqContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthQuestion" parameterType="healthQuestion24VO">
+		UPDATE health_question24 SET
+			  hq_Name = #{hqName}
+			  , hq_tel = #{hqTel}
+			  , hq_title = #{hqTitle}
+			  , hq_content = #{hqContent}
+	        WHERE hq_idx = #{hqIdx}
+	</update>
+	<delete id="deleteHealthQuestion" parameterType="healthQuestion24VO">
+	 	DELETE from health_question24
+	 	WHERE hq_idx = #{hqIdx}
+	</delete>
+</mapper>

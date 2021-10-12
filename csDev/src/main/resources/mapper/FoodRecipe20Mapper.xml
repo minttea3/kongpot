@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.FoodRecipe20Mapper">
+	<select id="foodRecipeSelectOne" resultType="foodRecipe20VO" parameterType="foodRecipe20VO">
+		SELECT fr_idx
+			 , fr_name
+			 , fr_type
+			 , fr_Title
+			 , fr_content
+		FROM food_recipe20
+		WHERE fr_idx = #{frIdx}
+	</select>
+	<select id="foodRecipeList" resultType="foodRecipe20VO" parameterType="foodRecipe20VO">
+		SELECT fr_idx
+			 , fr_name
+			 , fr_type
+			 , fr_Title
+			 , fr_content
+		FROM food_recipe20
+		<where> 
+			<if test="frIdx != null and !frIdx.equals('')">
+				AND fr_idx Like '%' || #{frIdx} || '%'
+			</if>
+			<if test="frName != null and !frName.equals('')">
+				AND fr_name Like '%' || #{frName} || '%'
+			</if>
+			<if test="frTitle != null and !frTitle.equals('')">
+				AND fr_Title Like '%' || #{frTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertFoodRecipe" parameterType="foodRecipe20VO">
+	        INSERT INTO food_recipe20(
+	           fr_idx
+			 , fr_name
+			 , fr_type
+			 , fr_Title
+			 , fr_content
+	        ) VALUES (
+	        	#{frIdx}
+	           ,#{frName}
+	           ,#{frType}
+	           ,#{frTitle}
+	           ,#{frContent}
+	        )
+	</insert>
+	<update id="saveFoodRecipe" parameterType="foodRecipe20VO">
+	        WITH UPSERT AS (
+	        UPDATE food_recipe20
+		    SET fr_name = #{frName}
+			  , fr_type = #{frType}
+			  , fr_Title = #{frTitle}
+			  , fr_content = #{frContent}
+	        WHERE fr_idx = #{frIdx} RETURNING *
+	)
+	        INSERT
+	        INTO food_recipe20 ( fr_idx
+								 , fr_name
+								 , fr_type
+								 , fr_Title
+								 , fr_content)
+	        SELECT #{frIdx}
+		           ,#{frName}
+		           ,#{frType}
+		           ,#{frTitle}
+		           ,#{frContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateFoodRecipe" parameterType="foodRecipe20VO">
+		UPDATE food_recipe20 SET
+			fr_name = #{frName}
+			  , fr_type = #{frType}
+			  , fr_Title = #{frTitle}
+			  , fr_content = #{frContent}
+	        WHERE fr_idx = #{frIdx}
+	</update>
+	<delete id="deleteFoodRecipe" parameterType="foodRecipe20VO">
+	 	DELETE from food_recipe20
+	 	WHERE  fr_idx = #{frIdx}
+	</delete>
+</mapper>

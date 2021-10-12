@@ -19,37 +19,38 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>공부/자격증 커뮤니티 리스트</h3>
+<h3>건강 지식 소개 리스트</h3>
 
 <br />
 
-<form:form action="/studyCertificateCommunityList" method="get">
+<form:form action="/healthKnowledgeList" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccIdx">번호</label>
+            <label class="sr-only" for="hkIdx">번호</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="sccIdx" placeholder="번호" name="sccIdx" value="${studyCertificateCommunity17VO.sccIdx}">
+                <input type="text" class="form-control" id="hkIdx" placeholder="번호" name="hkIdx" value="${healthKnowledge23VO.hkIdx}">
             </div>
         </div>
+    <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccName">작성자</label>
+            <label class="sr-only" for="hkName">작성자</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">작성자</div>
                 </div>
-                <input type="text" class="form-control" id="sccName" placeholder="작성자" name="sccName" value="${studyCertificateCommunity17VO.sccName}">
+                <input type="text" class="form-control" id="hkName" placeholder="작성자" name="hkName" value="${healthKnowledge23VO.hkName}">
             </div>
         </div>
         <div class="col-auto">
-            <label class="sr-only" for="sccTitle">제목</label>
+            <label class="sr-only" for="hkTitle">제목</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">제목</div>
                 </div>
-                <input type="text" class="form-control" id="sccTitle" placeholder="제목" name="sccTitle" value="${studyCertificateCommunity17VO.sccTitle}">
+                <input type="text" class="form-control" id="hkTitle" placeholder="제목" name="hkTitle" value="${healthKnowledge23VO.hkTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -64,26 +65,24 @@
             <th scope="col">#</th>
             <th scope="col">작성번호</th>
             <th scope="col">작성자</th>
-            <th scope="col">시험명</th>
             <th scope="col">제목</th>
             <th scope="col">내용</th>
+            <th scope="col">날짜</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${studyCertificateCommunityList}" varStatus="status">
+            <c:forEach var="map" items="${healthKnowledgeList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
-                    <td>${map.sccIdx}</td>
-                    <td>${map.sccName}</td>
-                    <td>${map.sccTestingName}</td>
-                    <td><a href="<c:url value='/syncStudyCertificateCommunityForm?sccIdx=${map.sccIdx}'/>">${map.sccTitle}</a></td>
-                    <td>${map.sccContent}</td>
+                    <td>${map.hkIdx}</td>
+                    <td>${map.hkName}</td>
+                    <td><a href="<c:url value='/syncHealthKnowledgeForm?hkIdx=${map.hkIdx}' />">${map.hkTitle}</a></td>
+                    <td>${map.hkContent}</td>
+                    <td>${map.hkDate}</td>
                 </tr>
-           		
             </c:forEach>
         </tbody>
     </table>
-    
 </body>
 
 </html>

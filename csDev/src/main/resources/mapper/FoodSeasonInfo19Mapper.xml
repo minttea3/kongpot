@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.FoodSeasonInfo19Mapper">
+	<select id="foodSeasonInfoSelectOne" resultType="foodSeasonInfo19VO" parameterType="foodSeasonInfo19VO">
+		SELECT fsi_idx
+			 , fsi_name
+			 , fsi_ingredients
+			 , fsi_Title
+			 , fsi_content
+		FROM food_season_info19
+		WHERE fsi_idx = #{fsiIdx}
+	</select>
+	<select id="foodSeasonInfoList" resultType="foodSeasonInfo19VO" parameterType="foodSeasonInfo19VO">
+		SELECT fsi_idx
+			 , fsi_name
+			 , fsi_ingredients
+			 , fsi_Title
+			 , fsi_content
+		FROM food_season_info19
+		<where> 
+			<if test="fsiIdx != null and !fsiIdx.equals('')">
+				AND fsi_idx Like '%' || #{fsiIdx} || '%'
+			</if>
+			<if test="fsiTitle != null and !fsiTitle.equals('')">
+				AND fsi_title Like '%' || #{fsiTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertFoodSeasonInfo" parameterType="foodSeasonInfo19VO">
+	        INSERT INTO food_season_info19(
+	           fsi_idx
+			 , fsi_name
+			 , fsi_ingredients
+			 , fsi_Title
+			 , fsi_content
+	        ) VALUES (
+	        	#{fsiIdx}
+	           ,#{fsiName}
+	           ,#{fsiIngredients}
+	           ,#{fsiTitle}
+	           ,#{fsiContent}
+	        )
+	</insert>
+	<update id="saveFoodSeasonInfo" parameterType="foodSeasonInfo19VO">
+	        WITH UPSERT AS (
+	        UPDATE food_season_info19
+		    SET fsi_name = #{fsiName}
+			  , fsi_ingredients = #{fsiIngredients}
+			  , fsi_Title = #{fsiTitle}
+			  , fsi_content = #{fsiContent}
+	        WHERE fsi_idx = #{fsiIdx} RETURNING *
+	)
+	        INSERT
+	        INTO food_season_info19 ( fsi_idx
+							     , fsi_name
+								 , fsi_ingredients
+								 , fsi_Title
+								 , fsi_content)
+	        SELECT #{fsiIdx}
+		           ,#{fsiName}
+		           ,#{fsiIngredients}
+		           ,#{fsiTitle}
+		           ,#{fsiContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateFoodSeasonInfo" parameterType="foodSeasonInfo19VO">
+		UPDATE food_season_info19 SET
+			 fsi_name = #{fsiName}
+			  , fsi_ingredients = #{fsiIngredients}
+			  , fsi_Title = #{fsiTitle}
+			  , fsi_content = #{fsiContent}
+	        WHERE fsi_idx = #{fsiIdx}
+	</update>
+	<delete id="deleteFoodSeasonInfo" parameterType="foodSeasonInfo19VO">
+	 	DELETE from food_season_info19
+	 	WHERE  fsi_idx = #{fsiIdx}
+	</delete>
+</mapper>

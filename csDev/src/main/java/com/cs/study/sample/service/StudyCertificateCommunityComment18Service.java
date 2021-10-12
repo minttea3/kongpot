@@ -1,0 +1,39 @@
+package com.cs.study.sample.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.cs.study.sample.mapper.StudyCertificateCommunityComment18Mapper;
+import com.cs.study.sample.vo.StudyCertificateCommunityComment18VO;
+import com.cs.study.sample.vo.StudyCertificateQnA16VO;
+
+@Service
+public class StudyCertificateCommunityComment18Service {
+	
+	public final StudyCertificateCommunityComment18Mapper studyCertificateCommunityComment18Mapper;
+	public StudyCertificateCommunityComment18Service(StudyCertificateCommunityComment18Mapper studyCertificateCommunityComment18Mapper) {
+		this.studyCertificateCommunityComment18Mapper = studyCertificateCommunityComment18Mapper;
+	}
+	public StudyCertificateCommunityComment18VO studyCertificateCommunityCommentSelectOne(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO) {
+		return studyCertificateCommunityComment18Mapper.studyCertificateCommunityCommentSelectOne(studyCertificateCommunityComment18VO);
+	}
+	public List<StudyCertificateCommunityComment18VO> studyCertificateCommunityCommentList(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO){
+		return studyCertificateCommunityComment18Mapper.studyCertificateCommunityCommentList(studyCertificateCommunityComment18VO);
+	}
+	public int insertStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO) {
+		return studyCertificateCommunityComment18Mapper.insertStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+	}
+	
+	public int saveStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO) {
+		return studyCertificateCommunityComment18Mapper.saveStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+	} 
+	
+	public int updateStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO) {
+		return studyCertificateCommunityComment18Mapper.updateStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+	} 
+	
+	public int deleteStudyCertificateCommunityComment(StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO) {
+		return studyCertificateCommunityComment18Mapper.deleteStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+	} 
+}

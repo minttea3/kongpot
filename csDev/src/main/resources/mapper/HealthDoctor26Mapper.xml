@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthDoctor26Mapper">
+	<select id="healthDoctorSelectOne" resultType="healthDoctor26VO" parameterType="healthDoctor26VO">
+		SELECT hd_idx
+			 , hd_name
+			 , hd_medical_field
+			 , hd_tel
+			 , hd_date
+		FROM health_Doctor26
+		WHERE hd_idx = #{hdIdx}
+	</select>
+	<select id="healthDoctorList" resultType="healthDoctor26VO" parameterType="healthDoctor26VO">
+		SELECT hd_idx
+			 , hd_name
+			 , hd_medical_field
+			 , hd_tel
+			 , hd_date
+		FROM health_Doctor26
+		<where> 
+			<if test="hdIdx != null and !hdIdx.equals('')">
+				AND hd_idx Like '%' || #{hdIdx} || '%'
+			</if>
+			<if test="hdName != null and !hdName.equals('')">
+				AND hd_name Like '%' || #{hdName} || '%'
+			</if>
+			<if test="hdMedicalField != null and !hdMedicalField.equals('')">
+				AND hd_medical_field Like '%' || #{hdMedicalField} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertHealthDoctor" parameterType="healthDoctor26VO">
+	        INSERT INTO health_Doctor26(
+	           hd_idx
+			 , hd_name
+			 , hd_medical_field
+			 , hd_tel
+			 , hd_date
+	        ) VALUES (
+	        	#{hdIdx}
+	           ,#{hdName}
+	           ,#{hdMedicalField}
+	           ,#{hdTel}
+	           ,#{hdDate}
+	        )
+	</insert>
+	<update id="saveHealthDoctor" parameterType="healthDoctor26VO">
+	        WITH UPSERT AS (
+	        UPDATE health_Doctor26
+		    SET 
+			    hd_Name = #{hdName}
+			  , hd_medical_field = #{hdMedicalField}
+			  , hd_tel = #{hdTel}
+			  , hd_date = #{hdDate}
+	        WHERE hd_idx = #{hdIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_Doctor26 (hd_idx
+								 , hd_name
+								 , hd_medicalField
+								 , hd_tel
+								 , hd_date )
+	        SELECT #{hdIdx}
+	           ,#{hdName}
+	           ,#{hdMedicalField}
+	           ,#{hdTel}
+	           ,#{hdDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthDoctor" parameterType="healthDoctor26VO">
+		UPDATE health_Doctor26 SET
+			  hd_Name = #{hdName}
+			  , hd_medical_field = #{hdMedicalField}
+			  , hd_tel = #{hdTel}
+			  , hd_date = #{hdDate}
+	        WHERE hd_idx = #{hdIdx}
+	</update>
+	<delete id="deleteHealthDoctor" parameterType="healthDoctor26VO">
+	 	DELETE from health_Doctor26
+	 	WHERE hd_idx = #{hdIdx}
+	</delete>
+</mapper>

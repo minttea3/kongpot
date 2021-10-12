@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.StudyCertificateCommunityComment18Mapper">
+	<select id="studyCertificateCommunityCommentSelectOne" resultType="studyCertificateCommunityComment18VO" parameterType="studyCertificateCommunityComment18VO">
+		SELECT sccc_idx
+			 , scc_idx
+			 , sccc_name
+			 , sccc_content
+			 , sccc_write_day
+		FROM study_certificate_community_comment18
+		WHERE scc_idx = #{sccIdx}
+		and sccc_idx =#{scccIdx}
+	</select>
+	<select id="studyCertificateCommunityCommentList" resultType="studyCertificateCommunityComment18VO" parameterType="studyCertificateCommunityComment18VO">
+		SELECT sccc_idx
+			 , scc_idx
+			 , sccc_name
+			 , sccc_content
+			 , sccc_write_day
+		FROM study_certificate_community_comment18
+		WHERE scc_idx = #{sccIdx}
+	</select>
+	<insert id="insertStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
+	        INSERT INTO study_certificate_community_comment18(
+	           sccc_idx
+			 , scc_idx
+			 , sccc_name
+			 , sccc_content
+			 , sccc_write_day
+	        ) VALUES (
+	        	#{scccIdx}
+	           ,#{sccIdx}
+	           ,#{scccName}
+	           ,#{scccContent}
+	           ,#{scccWriteDay}
+	        )
+	</insert>
+	<update id="saveStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
+	        WITH UPSERT AS (
+	        UPDATE study_certificate_community_comment18
+		    SET 
+			    sccc_name = #{scccName}
+			  , sccc_content = #{sccContent}
+			  , sccc_write_day = #{scccWriteDay}
+	        WHERE scc_idx = #{sccIdx}
+	        and sccc_idx = #{scccIdx} RETURNING *
+	)
+	        INSERT
+	        INTO study_certificate_community_comment18 (  INCREMENT BY 1
+													 , scc_idx
+													 , sccc_name
+													 , sccc_content
+													 , sccc_write_day)
+	        SELECT #{scccIdx}
+	           ,#{sccIdx}
+	           ,#{sccName}
+	           ,#{sccContent}
+	           ,#{scccWriteDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
+		UPDATE study_certificate_community_comment18 SET
+			  	sccc_name = #{scccName}
+			  , sccc_content = #{scccContent}
+			  , sccc_write_day = #{scccWriteDay}
+	        WHERE scc_idx = #{sccIdx}
+	        and sccc_idx = #{scccIdx}
+	</update>
+	<delete id="deleteStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
+	 	DELETE from study_certificate_community_comment18
+	 	  WHERE scc_idx = #{sccIdx}
+	      and sccc_idx = #{scccIdx}
+	</delete>
+</mapper>
