@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthCommunityComment28Mapper">
+	<select id="healthCommunityCommentSelectOne" resultType="healthCommunityComment28VO" parameterType="healthCommunityComment28VO">
+		SELECT hc_idx
+			 , hcc_idx
+			 , hcc_Name
+			 , hcc_content
+		FROM health_community_comment28
+		WHERE hc_idx = #{hcIdx}
+		
+		
+	</select>
+	<select id="healthCommunityCommentList" resultType="healthCommunityComment28VO" parameterType="healthCommunityComment28VO">
+		SELECT a.hc_idx
+			 , a.hcc_idx
+			 , a.hcc_Name
+			 , a.hcc_content
+		FROM health_community_comment28 a,
+			health_community27 b
+		where a.hc_idx = b.hc_idx
+	</select>
+	<insert id="insertHealthCommunityComment" parameterType="healthCommunityComment28VO">
+	        INSERT INTO health_community_comment28(
+	           hc_idx
+			 , hcc_idx
+			 , hcc_Name
+			 , hcc_content
+	        ) VALUES (
+	        	#{hcIdx}
+	           ,nextval('hccidx')
+	           ,#{hccName}
+	           ,#{hccContent}
+	        )
+	</insert>
+	<update id="saveHealthCommunityComment" parameterType="healthCommunityComment28VO">
+	        WITH UPSERT AS (
+	        UPDATE health_community_comment28
+		    SET 
+			    hcc_idx = #{hccIdx}
+			  , hcc_Name = #{hccName}
+			  , hcc_content = #{hccContent}
+	        WHERE hc_idx = #{hcIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_community_comment28 ( hc_idx
+											 , hcc_idx
+											 , hcc_Name
+											 , hcc_content )
+	        SELECT #{hcIdx}
+	           ,#{hccIdx}
+	           ,#{hccName}
+	           ,#{hccContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthCommunityComment" parameterType="healthCommunityComment28VO">
+		UPDATE health_community_comment28 SET
+			    hcc_idx = #{hccIdx}
+			  , hcc_Name = #{hccName}
+			  , hcc_content = #{hccContent}
+	        WHERE hc_idx = #{hcIdx}
+	</update>
+	<delete id="deleteHealthCommunityComment" parameterType="healthCommunityComment28VO">
+	 	DELETE from health_community_comment28
+	 	WHERE hc_idx = #{hcIdx}
+	</delete>
+</mapper>

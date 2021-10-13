@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.HealthCommunity27Mapper">
+	<select id="healthCommunitySelectOne" resultType="healthCommunity27VO" parameterType="healthCommunity27VO">
+		SELECT   hc_idx
+			 , hc_Name
+			 , hc_title
+			 , hc_content
+		FROM health_community27
+		WHERE hc_idx = #{hcIdx}
+	</select>
+	<select id="healthCommunityList" resultType="healthCommunity27VO" parameterType="healthCommunity27VO">
+		SELECT hc_idx
+			 , hc_Name
+			 , hc_title
+			 , hc_content
+		FROM health_community27
+		<where> 
+			<if test="hcIdx != null and !hcIdx.equals('')">
+				AND hc_idx Like '%' || #{hcIdx} || '%'
+			</if>
+			<if test="hcName != null and !hcName.equals('')">
+				AND hc_Name Like '%' || #{hcName} || '%'
+			</if>
+			<if test="hcTitle != null and !hcTitle.equals('')">
+				AND hc_title Like '%' || #{hcTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertHealthCommunity" parameterType="healthCommunity27VO">
+	        INSERT INTO health_community27(
+	           hc_idx
+			 , hc_Name
+			 , hc_title
+			 , hc_content
+	        ) VALUES (
+	        	#{hcIdx}
+	           ,#{hcName}
+	           ,#{hcTitle}
+	           ,#{hcContent}
+	        )
+	</insert>
+	<update id="saveHealthCommunity" parameterType="healthCommunity27VO">
+	        WITH UPSERT AS (
+	        UPDATE health_community27
+		    SET 
+			    hc_Name = #{hcName}
+			  , hc_title = #{hcTitle}
+			  , hc_content = #{hcContent}
+	        WHERE hc_idx = #{hcIdx} RETURNING *
+	)
+	        INSERT
+	        INTO health_community27 (  hc_idx
+									 , hc_Name
+									 , hc_title
+									 , hc_content )
+	        SELECT #{hcIdx}
+	           ,#{hcName}
+	           ,#{hcTitle}
+	           ,#{hcContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateHealthCommunity" parameterType="healthCommunity27VO">
+		UPDATE health_community27 SET
+			  hc_Name = #{hcName}
+			  , hc_title = #{hcTitle}
+			  , hc_content = #{hcContent}
+	        WHERE hc_idx = #{hcIdx}
+	</update>
+	<delete id="deleteHealthCommunity" parameterType="healthCommunity27VO">
+	 	DELETE from health_community27
+	 	WHERE hc_idx = #{hcIdx}
+	</delete>
+</mapper>
