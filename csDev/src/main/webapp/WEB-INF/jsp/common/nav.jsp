@@ -138,6 +138,9 @@
                         <hr>
                         <a class="dropdown-item" href="/healthDoctorList">건강 탁터 리스트</a>
                         <a class="dropdown-item" href="/syncHealthDoctorForm">건강 닥터 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/healthCommunityList">건강 커뮤니티 리스트</a>
+                        <a class="dropdown-item" href="/syncHealthCommunityForm">건강 커뮤니티 등록</a>
                     </div>
                 </li>
             </ul>
