@@ -31,7 +31,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="hcIdx" placeholder="번호" name="hcIdx" value="${healthCommunity27VO.hcIdx}">
+                <input type="text" class="form-control" id="hcIdx" placeholder="고유번호" name="hcIdx" value="${healthCommunity27VO.hcIdx}">
             </div>
         </div>
     <div class="form-row align-items-center">

@@ -57,7 +57,7 @@ public class SyncControllerHealthCommunity {
 			  model.addAttribute("healthCommunity27VO", healthCommunitySelectOne); 
 		  }
 		  if (!StringUtils.isEmpty( healthCommunityComment28VO.getHcIdx() )){
-			  List<HealthCommunityComment28VO> healthCommunityCommentSelectOne = healthCommunityComment28Service.healthCommunityCommentSelectOne(healthCommunityComment28VO);
+			  HealthCommunityComment28VO healthCommunityCommentSelectOne = healthCommunityComment28Service.healthCommunityCommentSelectOne(healthCommunityComment28VO);
 			  model.addAttribute("healthCommunityCommentSelectOne", healthCommunityCommentSelectOne); 
 		  }
 	  return "sample/health/syncHealthCommunityForm"; 
@@ -71,16 +71,28 @@ public class SyncControllerHealthCommunity {
        System.out.println("----------");
 		 
 	  if ( "insert".equals(action) ){
+		  // 본문 등록
            int insertCnt = healthCommunity27Service.insertHealthCommunity(healthCommunity27VO);
        }else if ( "update".equals(action) ){
+    	   // 본문 수정
            int updateCnt = healthCommunity27Service.updateHealthCommunity(healthCommunity27VO);
        }else if ( "delete".equals(action) ){
+    	   // 본문 삭제
            int deleteCnt = healthCommunity27Service.deleteHealthCommunity(healthCommunity27VO);
-           //댓글 삭제
+           // 댓글 삭제
            int deleteC = healthCommunityComment28Service.deleteHealthCommunityComment(healthCommunityComment28VO);
-       }else if("insertComment".equals(action)) {
+       }
+       else if("insertComment".equals(action)) {
     	   // 댓글 등록
     	   int insertComment = healthCommunityComment28Service.insertHealthCommunityComment(healthCommunityComment28VO);
+       }
+       else if("updateComment".equals(action)) {
+    	   // 댓글 수정
+    	   int updateC = healthCommunityComment28Service.updateHealthCommunityComment(healthCommunityComment28VO);
+       }
+       else if("deleteComment".equals(action)) {
+    	   // 댓글 삭제
+    	   int deleteC = healthCommunityComment28Service.deleteHealthCommunityComment(healthCommunityComment28VO);
        }
        return "redirect:/healthCommunityList";
 	 }

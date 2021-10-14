@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsBirthFlower29Mapper">
+	<select id="plantsBirthFlowerSelectOne" resultType="plantsBirthFlower29VO" parameterType="plantsBirthFlower29VO">
+		SELECT pbf_idx
+			 , pbf_month
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+		FROM plants_birth_flower29
+		WHERE pbf_idx = #{pbfIdx}
+	</select>
+	<select id="plantsBirthFlowerList" resultType="plantsBirthFlower29VO" parameterType="plantsBirthFlower29VO">
+		SELECT pbf_idx
+			 , pbf_month
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+		FROM plants_birth_flower29
+		<where> 
+			<if test="pbfIdx != null and !pbfIdx.equals('')">
+				AND pbf_idx Like '%' || #{pbfIdx} || '%'
+			</if>
+			<if test="pbfMonth != null and !pbfMonth.equals('')">
+				AND pbf_month Like '%' || #{pbfMonth} || '%'
+			</if>
+			<if test="pbfTitle != null and !pbfTitle.equals('')">
+				AND pbf_title Like '%' || #{pbfTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsBirthFlower" parameterType="plantsBirthFlower29VO">
+	        INSERT INTO plants_birth_flower29(
+	           pbf_idx
+			 , pbf_month
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+	        ) VALUES (
+	        	#{pbfIdx}
+	           ,#{pbfMonth}
+	           ,#{pbfType}
+	           ,#{pbfTitle}
+	           ,#{pbfContent}
+	        )
+	</insert>
+	<update id="savePlantsBirthFlower" parameterType="plantsBirthFlower29VO">
+	        WITH UPSERT AS (
+	        UPDATE plants_birth_flower29
+		    SET pbf_month = #{pbfMonth}
+			  , pbf_type = #{pbfType}
+			  , pbf_title = #{pbfTitle}
+			  , pbf_content = #{pbfContent}
+	        WHERE pbf_idx = #{pbfIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plants_birth_flower29 ( pbf_idx
+										 , pbf_month
+										 , pbf_type
+										 , pbf_title
+										 , pbf_content)
+	        SELECT #{pbfIdx}
+	           ,#{pbfMonth}
+	           ,#{pbfType}
+	           ,#{pbfTitle}
+	           ,#{pbfContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsBirthFlower" parameterType="plantsBirthFlower29VO">
+		UPDATE plants_birth_flower29 SET
+			   pbf_month = #{pbfMonth}
+			  , pbf_type = #{pbfType}
+			  , pbf_title = #{pbfTitle}
+			  , pbf_content = #{pbfContent}
+	        WHERE pbf_idx = #{pbfIdx} 
+	</update>
+	<delete id="deletePlantsBirthFlower" parameterType="plantsBirthFlower29VO">
+	 	DELETE from plants_birth_flower29
+	 	WHERE pbf_idx = #{pbfIdx} 
+	</delete>
+</mapper>

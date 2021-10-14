@@ -126,7 +126,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="nav5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         건강
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="nav5">
+                    <div class="dropdown-menu" aria-labelledby="nav6">
                         <a class="dropdown-item" href="/healthKnowledgeList">건강 지식 소개 리스트</a>
                         <a class="dropdown-item" href="/syncHealthKnowledgeForm">건강 지식 소개 등록</a>
                         <hr>
@@ -141,6 +141,16 @@
                         <hr>
                         <a class="dropdown-item" href="/healthCommunityList">건강 커뮤니티 리스트</a>
                         <a class="dropdown-item" href="/syncHealthCommunityForm">건강 커뮤니티 등록</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        식물
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav7">
+                        <a class="dropdown-item" href="/plantsBirthFlowerList">식물 - 탄생화 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsBirthFlowerForm">식물 - 탄생화 등록</a>
+                        <hr>
                     </div>
                 </li>
             </ul>
