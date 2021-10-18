@@ -156,6 +156,9 @@
                         <hr>
                         <a class="dropdown-item" href="/plantsCareList">식물 - 식물관리 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsCareForm">식물 - 식물관리 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/plantsBloggerList">식물 - 블로거 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsBloggerForm">식물 - 블로거 등록</a>
                     </div>
                 </li>
             </ul>
