@@ -151,6 +151,11 @@
                         <a class="dropdown-item" href="/plantsBirthFlowerList">식물 - 탄생화 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsBirthFlowerForm">식물 - 탄생화 등록</a>
                         <hr>
+                        <a class="dropdown-item" href="/plantsInfoList">식물 - 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsInfoForm">식물 - 소개 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/plantsCareList">식물 - 식물관리 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsCareForm">식물 - 식물관리 등록</a>
                     </div>
                 </li>
             </ul>

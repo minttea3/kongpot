@@ -10,7 +10,6 @@
 			 , sccc_write_day
 		FROM study_certificate_community_comment18
 		WHERE scc_idx = #{sccIdx}
-		and sccc_idx =#{scccIdx}
 	</select>
 	<select id="studyCertificateCommunityCommentList" resultType="studyCertificateCommunityComment18VO" parameterType="studyCertificateCommunityComment18VO">
 		SELECT sccc_idx
@@ -19,7 +18,6 @@
 			 , sccc_content
 			 , sccc_write_day
 		FROM study_certificate_community_comment18
-		WHERE scc_idx = #{sccIdx}
 	</select>
 	<insert id="insertStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
 	        INSERT INTO study_certificate_community_comment18(
@@ -29,7 +27,7 @@
 			 , sccc_content
 			 , sccc_write_day
 	        ) VALUES (
-	        	#{scccIdx}
+	           nextval('sccIdx')
 	           ,#{sccIdx}
 	           ,#{scccName}
 	           ,#{scccContent}
@@ -64,11 +62,9 @@
 			  , sccc_content = #{scccContent}
 			  , sccc_write_day = #{scccWriteDay}
 	        WHERE scc_idx = #{sccIdx}
-	        and sccc_idx = #{scccIdx}
 	</update>
 	<delete id="deleteStudyCertificateCommunityComment" parameterType="studyCertificateCommunityComment18VO">
 	 	DELETE from study_certificate_community_comment18
 	 	  WHERE scc_idx = #{sccIdx}
-	      and sccc_idx = #{scccIdx}
 	</delete>
 </mapper>

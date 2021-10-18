@@ -9,8 +9,6 @@
 			 , hcc_content
 		FROM health_community_comment28
 		WHERE hc_idx = #{hcIdx}
-		
-		
 	</select>
 	<select id="healthCommunityCommentList" resultType="healthCommunityComment28VO" parameterType="healthCommunityComment28VO">
 		SELECT a.hc_idx

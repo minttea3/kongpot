@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsCare31Mapper">
+	<select id="plantsCareSelectOne" resultType="plantsCare31VO" parameterType="plantsCare31VO">
+		SELECT pbf_idx
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+			 , pbf_date
+		FROM plant_care31
+		WHERE pbf_idx = #{pbfIdx}
+	</select>
+	<select id="plantsCareList" resultType="plantsCare31VO" parameterType="plantsCare31VO">
+		SELECT pbf_idx
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+			 , pbf_date
+		FROM plant_care31
+		<where> 
+			<if test="pbfIdx != null and !pbfIdx.equals('')">
+				AND pbf_idx Like '%' || #{pbfIdx} || '%'
+			</if>
+			<if test="pbfTitle != null and !pbfTitle.equals('')">
+				AND pbf_title Like '%' || #{pbfTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsCare" parameterType="plantsCare31VO">
+	        INSERT INTO plant_care31(
+	           pbf_idx
+			 , pbf_type
+			 , pbf_title
+			 , pbf_content
+			 , pbf_date
+	        ) VALUES (
+	        	#{pbfIdx}
+	           ,#{pbfType}
+	           ,#{pbfTitle}
+	           ,#{pbfContent}
+	           ,#{pbfDate}
+	        )
+	</insert>
+	<update id="savePlantsCare" parameterType="plantsCare31VO">
+	        WITH UPSERT AS (
+	        UPDATE plant_care31
+		    SET pbf_type = #{pbfType}
+			  , pbf_title = #{pbfTitle}
+			  , pbf_content = #{pbfContent}
+			  , pbf_date = #{pbfDate}
+	        WHERE pbf_idx = #{pbfIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plant_care31 (    pbf_idx
+								 , pbf_type
+								 , pbf_title
+								 , pbf_content
+								 , pbf_date)
+	        SELECT #{pbfIdx}
+	           ,#{pbfType}
+	           ,#{pbfTitle}
+	           ,#{pbfContent}
+	           ,#{pbfDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsCare" parameterType="plantsCare31VO">
+		UPDATE plant_care31 SET
+			    pbf_type = #{pbfType}
+			  , pbf_title = #{pbfTitle}
+			  , pbf_content = #{pbfContent}
+			  , pbf_date = #{pbfDate}
+	        WHERE pbf_idx = #{pbfIdx}
+	</update>
+	<delete id="deletePlantsCare" parameterType="plantsCare31VO">
+	 	DELETE from plant_care31
+	 	WHERE pbf_idx = #{pbfIdx}
+	</delete>
+</mapper>

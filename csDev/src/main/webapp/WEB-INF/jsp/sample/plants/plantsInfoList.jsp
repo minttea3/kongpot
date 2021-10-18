@@ -19,37 +19,38 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>공부/자격증 커뮤니티 리스트</h3>
+<h3>식물 소개 리스트</h3>
 
 <br />
 
-<form:form action="/studyCertificateCommunityList" method="get">
+<form:form action="/plantsInfoList" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccIdx">번호</label>
+            <label class="sr-only" for="piIdx">번호</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="sccIdx" placeholder="번호" name="sccIdx" value="${studyCertificateCommunity17VO.sccIdx}">
+                <input type="text" class="form-control" id="piIdx" placeholder="고유번호" name="piIdx" value="${plantsInfo30VO.piIdx}">
             </div>
         </div>
+    <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="sccName">작성자</label>
+            <label class="sr-only" for="piName">식물이름</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text">작성자</div>
+                    <div class="input-group-text">식물이름</div>
                 </div>
-                <input type="text" class="form-control" id="sccName" placeholder="작성자" name="sccName" value="${studyCertificateCommunity17VO.sccName}">
+                <input type="text" class="form-control" id="piName" placeholder="식물이름" name="piName" value="${plantsInfo30VO.piName}">
             </div>
         </div>
         <div class="col-auto">
-            <label class="sr-only" for="sccTitle">제목</label>
+            <label class="sr-only" for="piTitle">제목</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">제목</div>
                 </div>
-                <input type="text" class="form-control" id="sccTitle" placeholder="제목" name="sccTitle" value="${studyCertificateCommunity17VO.sccTitle}">
+                <input type="text" class="form-control" id="piTitle" placeholder="제목" name="piTitle" value="${plantsInfo30VO.piTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -62,40 +63,25 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">작성번호</th>
-            <th scope="col">작성자</th>
-            <th scope="col">시험명</th>
+            <th scope="col">타입</th>
+            <th scope="col">식물이름</th>
             <th scope="col">제목</th>
             <th scope="col">내용</th>
-            <th scope="col">날짜</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${studyCertificateCommunityList}" varStatus="status">
+            <c:forEach var="map" items="${plantsInfoList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
-                    <td>${map.sccIdx}</td>
-                    <td>${map.sccName}</td>
-                    <td>${map.sccTestingName}</td>
-                    <td><a href="<c:url value='/syncStudyCertificateCommunityForm?sccIdx=${map.sccIdx}'/>">${map.sccTitle}</a></td>
-                    <td>${map.sccContent}</td>
-                    <td></td>
+                    <td>${map.piIdx}</td>
+                    <td>${map.piType}</td>
+                    <td>${map.piName}</td>
+                    <td><a href="<c:url value='/syncPlantsInfoForm?piIdx=${map.piIdx}' />">${map.piTitle}</a></td>
+                    <td>${map.piContent}</td>
                 </tr>
-           		<c:forEach var="map2" items="${studyCertificateCommunityCommentList }">
-	           		<c:if test="${map2.sccIdx eq map.sccIdx }"> 
-		           		<td>ㄴ></td>
-		           		<td>${map2.scccIdx }</td>
-		           		<td>${map2.scccName }</td>
-		           		<td></td>
-		           		<td></td>
-		           		<td>${map2.scccContent }</td>
-		           		<td>${map2.scccWriteDay }</td>
-		           	</c:if> 
-           		</c:forEach>
             </c:forEach>
         </tbody>
     </table>
-    
 </body>
 
 </html>

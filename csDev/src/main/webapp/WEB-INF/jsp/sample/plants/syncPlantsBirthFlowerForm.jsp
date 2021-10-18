@@ -26,7 +26,20 @@
         </div>
         <div class="form-group">
             <label for="pbfMonth">월</label>
-            <input type="text" class="form-control" id="pbfMonth" placeholder="월" name="pbfMonth" value="${plantsBirthFlower29VO.pbfMonth}">
+       		<select class="form-control" id="pbfMonth" name="pbfMonth">
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '1월' }">selected="selected"</c:if>>1월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '2월' }">selected="selected"</c:if>>2월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '3월' }">selected="selected"</c:if>>3월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '4월' }">selected="selected"</c:if>>4월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '5월' }">selected="selected"</c:if>>5월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '6월' }">selected="selected"</c:if>>6월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '7월' }">selected="selected"</c:if>>7월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '8월' }">selected="selected"</c:if>>8월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '9월' }">selected="selected"</c:if>>9월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '10월' }">selected="selected"</c:if>>10월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '11월' }">selected="selected"</c:if>>11월</option>
+       			<option value="${plantsBirthFlower29VO.pbfMonth}"<c:if test="${plantsBirthFlower29VO.pbfMonth eq '12월' }">selected="selected"</c:if>>12월</option>
+       		</select>
         </div>
         <div class="form-group">
             <label for="userPhone">꽃 종류</label>

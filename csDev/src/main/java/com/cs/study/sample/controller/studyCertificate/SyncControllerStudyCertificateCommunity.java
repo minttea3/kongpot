@@ -35,6 +35,12 @@ public class SyncControllerStudyCertificateCommunity {
 		model.addAttribute("studyCertificateCommunityList",studyCertificateCommunityList);
 		model.addAttribute("studyCertificateCommunity17VO",studyCertificateCommunity17VO);
 		
+		
+		//커뮤니티 댓글 리스트
+		List<StudyCertificateCommunityComment18VO> studyCertificateCommunityCommentList=studyCertificateCommunityComment18Service.studyCertificateCommunityCommentList(studyCertificateCommunityComment18VO);
+		model.addAttribute("studyCertificateCommunityCommentList",studyCertificateCommunityCommentList);
+		model.addAttribute("studyCertificateCommunityComment18VO",studyCertificateCommunityComment18VO);
+		
 		return "sample/studyCertificate/studyCertificateCommunityList";
 	}
 	
@@ -48,24 +54,47 @@ public class SyncControllerStudyCertificateCommunity {
 		  }
 		  
 		  
-		//커뮤니티 댓글 리스트
-			List<StudyCertificateCommunityComment18VO> studyCertificateCommunityCommentList=studyCertificateCommunityComment18Service.studyCertificateCommunityCommentList(studyCertificateCommunityComment18VO);
-			model.addAttribute("studyCertificateCommunityCommentList",studyCertificateCommunityCommentList);
-			System.out.println("ddjdj"+studyCertificateCommunityCommentList);
-			model.addAttribute("studyCertificateCommunityComment18VO",studyCertificateCommunityComment18VO);
+		  //커뮤니티 댓글 리스트
+		  if (!StringUtils.isEmpty( studyCertificateCommunityComment18VO.getSccIdx() )){
+			  
+			  StudyCertificateCommunityComment18VO studyCertificateCommunityCommentSelectOne = studyCertificateCommunityComment18Service.studyCertificateCommunityCommentSelectOne(studyCertificateCommunityComment18VO);
+			  model.addAttribute("studyCertificateCommunityComment18VO", studyCertificateCommunityCommentSelectOne); 
+		  }
+		  
+		  
+//			List<StudyCertificateCommunityComment18VO> studyCertificateCommunityCommentList=studyCertificateCommunityComment18Service.studyCertificateCommunityCommentList(studyCertificateCommunityComment18VO);
+//			model.addAttribute("studyCertificateCommunityCommentList",studyCertificateCommunityCommentList);
+//			System.out.println("ddjdj"+studyCertificateCommunityCommentList);
+//			model.addAttribute("studyCertificateCommunityComment18VO",studyCertificateCommunityComment18VO);
 		  
 	  return "sample/studyCertificate/syncStudyCertificateCommunityForm"; 
 	  }
 	 
 	 @PostMapping("/syncStudyCertificateCommunityFormSave")
-	 public String syncStudyCertificateNewsFormSave(Model model, StudyCertificateCommunity17VO StudyCertificateCommunity17VO, @RequestParam(value="action", required=true) String action){
-       if ( "insert".equals(action) ){
+	 public String syncStudyCertificateNewsFormSave(Model model, StudyCertificateCommunity17VO StudyCertificateCommunity17VO, StudyCertificateCommunityComment18VO studyCertificateCommunityComment18VO, @RequestParam(value="action", required=true) String action){
+		 //커뮤니티 본문글
+		 if ( "insert".equals(action) ){
            int insertCnt = studyCertificateCommunity17Service.insertStudyCertificateCommunity(StudyCertificateCommunity17VO);
        }else if ( "update".equals(action) ){
            int updateCnt = studyCertificateCommunity17Service.updateStudyCertificateCommunity(StudyCertificateCommunity17VO);
        }else if ( "delete".equals(action) ){
            int deleteCnt = studyCertificateCommunity17Service.deleteStudyCertificateCommunity(StudyCertificateCommunity17VO);
+           int deleteC = studyCertificateCommunityComment18Service.deleteStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
        }
+       // 댓글
+       else if("insertComment".equals(action)) {
+    	   // 댓글 등록
+    	   int insertComment = studyCertificateCommunityComment18Service.insertStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+       }
+       else if("updateComment".equals(action)) {
+    	   // 댓글 수정
+    	   int updateC = studyCertificateCommunityComment18Service.updateStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+       }
+       else if("deleteComment".equals(action)) {
+    	   // 댓글 삭제
+    	   int deleteC = studyCertificateCommunityComment18Service.deleteStudyCertificateCommunityComment(studyCertificateCommunityComment18VO);
+       }
+       
        return "redirect:/studyCertificateCommunityList";
 	 }
 	 // 댓글폼

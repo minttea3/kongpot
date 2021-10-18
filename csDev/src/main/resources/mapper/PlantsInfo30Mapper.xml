@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsInfo30Mapper">
+	<select id="plantsInfoSelectOne" resultType="plantsInfo30VO" parameterType="plantsInfo30VO">
+		SELECT pi_idx
+			 , pi_type
+			 , pi_name
+			 , pi_title
+			 , pi_content
+		FROM plants_info30
+		WHERE pi_idx = #{piIdx}
+	</select>
+	<select id="plantsInfoList" resultType="plantsInfo30VO" parameterType="plantsInfo30VO">
+		SELECT pi_idx
+			 , pi_type
+			 , pi_name
+			 , pi_title
+			 , pi_content
+		FROM plants_info30
+		<where> 
+			<if test="piIdx != null and !piIdx.equals('')">
+				AND pi_idx Like '%' || #{piIdx} || '%'
+			</if>
+			<if test="piName != null and !piName.equals('')">
+				AND pi_name Like '%' || #{piName} || '%'
+			</if>
+			<if test="piTitle != null and !piTitle.equals('')">
+				AND pi_title Like '%' || #{piTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsInfo" parameterType="plantsInfo30VO">
+	        INSERT INTO plants_info30(
+	           pi_idx
+			 , pi_type
+			 , pi_name
+			 , pi_title
+			 , pi_content
+	        ) VALUES (
+	        	#{piIdx}
+	           ,#{piType}
+	           ,#{piName}
+	           ,#{piTitle}
+	           ,#{piContent}
+	        )
+	</insert>
+	<update id="savePlantsInfo" parameterType="plantsInfo30VO">
+	        WITH UPSERT AS (
+	        UPDATE plants_info30
+		    SET pi_type = #{piType}
+			  , pi_name = #{piName}
+			  , pi_title = #{piTitle}
+			  , pi_content = #{piContent}
+	        WHERE pi_idx = #{piIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plants_info30 ( pi_idx
+								 , pi_type
+								 , pi_name
+								 , pi_title
+								 , pi_content)
+	        SELECT #{piIdx}
+		           ,#{piType}
+		           ,#{piName}
+		           ,#{piTitle}
+		           ,#{piContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsInfo" parameterType="plantsInfo30VO">
+		UPDATE plants_info30 SET
+			    pi_type = #{piType}
+			  , pi_name = #{piName}
+			  , pi_title = #{piTitle}
+			  , pi_content = #{piContent}
+	        WHERE pi_idx = #{piIdx}
+	</update>
+	<delete id="deletePlantsInfo" parameterType="plantsInfo30VO">
+	 	DELETE from plants_info30
+	 	WHERE pi_idx = #{piIdx}
+	</delete>
+</mapper>

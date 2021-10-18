@@ -46,11 +46,11 @@
        
         
         <c:if test="${studyCertificateCommunityComment18VO.sccIdx eq null}">
-            <button name="action" value="insert" type="submit" class="btn btn-success">등록</button>
+            <button name="action" value="insertComment" type="submit" class="btn btn-success">댓글 등록</button>
         </c:if>
         <c:if test="${studyCertificateCommunityComment18VO.sccIdx ne null}">
-            <button name="action" value="update" type="submit" class="btn btn-success">수정</button>
-            <button name="action" value="delete" type="submit" class="btn btn-danger">삭제</button>
+            <button name="action" value="updateComment" type="submit" class="btn btn-success">댓글 수정</button>
+            <button name="action" value="deleteComment" type="submit" class="btn btn-danger">댓글 삭제</button>
         </c:if>
     </form:form>
   

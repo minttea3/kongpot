@@ -46,8 +46,36 @@
             <button name="action" value="update" type="submit" class="btn btn-success">수정</button>
             <button name="action" value="delete" type="submit" class="btn btn-danger">삭제</button>
         </c:if>
+         <!-- 여기부턴 댓글 -->
+  	 <c:if test="${StudyCertificateCommunity17VO.sccIdx ne null}">   
+    	<div class="form-group"><strong>댓글</strong></div>
+    	<div class="form-group">
+            <label for="hccName">작성자</label>
+            <input type="text" class="form-control" id="scccName" placeholder="작성자" name="scccName" value="${studyCertificateCommunityComment18VO.scccName}">
+            <input type="hidden" class="form-control" id="scccIdx" placeholder="댓 고유번호" name="scccIdx" value="${studyCertificateCommunityComment18VO.scccIdx}">
+        </div>
+       <div class="form-group">
+       <%--  <input type="hidden" id="hcIdx" placeholder="본문 고유번호" name="hcIdx" value="${healthCommunity27VO.hcIdx}"> --%>
+            <label for="scccContent">내용</label>
+            <input type="text" class="form-control" id="scccContent" placeholder="내용" name="scccContent" value="${studyCertificateCommunityComment18VO.scccContent}">
+        </div> 
+       <div class="form-group">
+       <%--  <input type="text" id="hcIdx" placeholder="본문 고유번호" name="hcIdx" value="${healthCommunity27VO.hcIdx}"> --%>
+            <label for="scccWriteDay">작성일자</label>
+            <input type="date" class="form-control" id="scccWriteDay" placeholder="작성일자" name="scccWriteDay" value="${studyCertificateCommunityComment18VO.scccWriteDay}">
+        </div> 
+          <c:if test="${studyCertificateCommunityComment18VO.scccIdx eq null}">
+            <button name="action" value="insertComment" type="submit" class="btn btn-success">댓글 등록</button>
+         </c:if> 
+         <c:if test="${studyCertificateCommunityComment18VO.scccIdx ne null}">
+            <button name="action" value="updateComment" type="submit" class="btn btn-success">댓글 수정</button>
+            <button name="action" value="deleteComment" type="submit" class="btn btn-success">댓글 삭제</button>
+   		 </c:if> 
+   </c:if>
+    <hr>
     </form:form>
-    <c:forEach var="map2" items="${studyCertificateCommunityCommentList}" varStatus="status2">
+    
+    <%-- <c:forEach var="map2" items="${studyCertificateCommunityCommentList}" varStatus="status2">
     <strong>댓글</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="/syncStudyCertificateCommunityCommunitycommentForm?sccIdx=${map2.sccIdx}"> 댓글 등록</a>
      </c:forEach>
     <table class="table table-striped">
@@ -68,7 +96,7 @@
     	   <td>${map2.scccContent}</td>
     	   <td>${map2.scccWriteDay}</td>
        	</tr>
-     </c:forEach>
+     </c:forEach> --%>
     	
     </table>
     
