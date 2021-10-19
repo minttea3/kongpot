@@ -1,70 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cs.study.sample.mapper.PlantsBlogger32Mapper">
-	<select id="plantsBloggerSelectOne" resultType="plantsBlogger32VO" parameterType="plantsBlogger32VO">
-		SELECT pb_idx
-			 , pb_name
-			 , pb_title
-			 , pb_activity_status
-		FROM plant_blogger32
-		WHERE pb_idx = #{pbIdx}
+<mapper namespace="com.cs.study.sample.mapper.PlantsBlog33Mapper">
+	<select id="plantsBlogSelectOne" resultType="plantsBlog33VO" parameterType="plantsBlog33VO">
+		SELECT pbs_idx
+			 , pbs_name
+			 , pbs_title
+			 , pbs_content
+			 , pbs_day
+		FROM plant_blog33
+		WHERE pbs_idx = #{pbsIdx}
 	</select>
-	<select id="plantsBloggerList" resultType="plantsBlogger32VO" parameterType="plantsBlogger32VO">
-		SELECT pb_idx
-			 , pb_name
-			 , pb_title
-			 , pb_activity_status
-		FROM plant_blogger32
+	<select id="plantsBlogList" resultType="plantsBlog33VO" parameterType="plantsBlog33VO">
+		SELECT pbs_idx
+			 , pbs_name
+			 , pbs_title
+			 , pbs_content
+			 , pbs_day
+		FROM plant_blog33
 		<where> 
-			<if test="pbIdx != null and !pbIdx.equals('')">
-				AND pb_idx Like '%' || #{pbIdx} || '%'
+			<if test="pbsIdx != null and !pbsIdx.equals('')">
+				AND pbs_idx Like '%' || #{pbsIdx} || '%'
 			</if>
-			<if test="pbTitle != null and !pbTitle.equals('')">
-				AND pb_title Like '%' || #{pbTitle} || '%'
+			<if test="pbsName != null and !pbsName.equals('')">
+				AND pbs_name Like '%' || #{pbsName} || '%'
+			</if>
+			<if test="pbsTitle != null and !pbsTitle.equals('')">
+				AND pbs_title Like '%' || #{pbsTitle} || '%'
 			</if>
 		</where>
 	</select>
-	<insert id="insertPlantsBlogger" parameterType="plantsBlogger32VO">
-	        INSERT INTO plant_blogger32(
-	           pb_idx
-			 , pb_name
-			 , pb_title
-			 , pb_activity_status
+	<insert id="insertPlantsBlog" parameterType="plantsBlog33VO">
+	        INSERT INTO plant_blog33(
+	           pbs_idx
+			 , pbs_name
+			 , pbs_title
+			 , pbs_content
+			 , pbs_day
 	        ) VALUES (
-	        	#{pbIdx}
-	           ,#{pbName}
-	           ,#{pbTitle}
-	           ,#{pbActivityStatus}
+	        	#{pbsIdx}
+	           ,#{pbsName}
+	           ,#{pbsTitle}
+	           ,#{pbsContent}
+	           ,#{pbsDay}
 	        )
 	</insert>
-	<update id="savePlantsBlogger" parameterType="plantsBlogger32VO">
+	<update id="savePlantsBlog" parameterType="plantsBlog33VO">
 	        WITH UPSERT AS (
-	        UPDATE plant_blogger32
-		    SET pb_name = #{pbName}
-			  , pb_title = #{pbTitle}
-			  , pb_activity_status = #{pbActivityStatus}
-	        WHERE pb_idx = #{pbIdx} RETURNING *
+	        UPDATE plant_blog33
+		    SET pbs_name = #{pbsName}
+			  , pbs_title = #{pbsTitle}
+			  , pbs_content = #{pbsContent}
+			  , pbs_day = #{pbsDay}
+	        WHERE pbs_idx = #{pbsIdx} RETURNING *
 	)
 	        INSERT
-	        INTO plant_blogger32 (     pb_idx
-									 , pb_name
-									 , pb_title
-									 , pb_activity_status)
-	        SELECT #{pbIdx}
-		           ,#{pbName}
-		           ,#{pbTitle}
-		           ,#{pbActivityStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	        INTO plant_blog33 (  pbs_idx
+								 , pbs_name
+								 , pbs_title
+								 , pbs_content
+								 , pbs_day)
+	        SELECT #{pbsIdx}
+		           ,#{pbsName}
+		           ,#{pbsTitle}
+		           ,#{pbsContent}
+		           ,#{pbsDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
 	</update>
-	<update id="updatePlantsBlogger" parameterType="plantsBlogger32VO">
-		UPDATE plant_blogger32 SET
-			    pb_name = #{pbName}
-			  , pb_title = #{pbTitle}
-			  , pb_activity_status = #{pbActivityStatus}
-	        WHERE pb_idx = #{pbIdx}
+	<update id="updatePlantsBlog" parameterType="plantsBlog33VO">
+		UPDATE plant_blog33 SET
+			    pbs_name = #{pbsName}
+			  , pbs_title = #{pbsTitle}
+			  , pbs_content = #{pbsContent}
+			  , pbs_day = #{pbsDay}
+	        WHERE pbs_idx = #{pbsIdx}
 	</update>
-	<delete id="deletePlantsBlogger" parameterType="plantsBlogger32VO">
-	 	DELETE from plant_blogger32
-	 	WHERE pb_idx = #{pbIdx}
+	<delete id="deletePlantsBlog" parameterType="plantsBlog33VO">
+	 	DELETE from plant_blog33
+	 	WHERE pbs_idx = #{pbsIdx}
 	</delete>
 </mapper>

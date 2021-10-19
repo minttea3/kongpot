@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Alias("plantsBlogger32VO")
-// 식물 - 소개
+// 식물 - 블로거
 public class PlantsBlogger32VO {
 	private String pbIdx; 				// 번호
 	private String pbName; 				// 타입

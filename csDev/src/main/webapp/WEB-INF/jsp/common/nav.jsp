@@ -159,6 +159,15 @@
                         <hr>
                         <a class="dropdown-item" href="/plantsBloggerList">식물 - 블로거 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsBloggerForm">식물 - 블로거 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/plantsBlogList">식물 - 블로그 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsBlogForm">식물 - 블로그 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/plantsNewsList">식물 - 뉴스 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsNewsForm">식물 - 뉴스 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/plantsEventList">식물 - 이벤트 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsEventForm">식물 - 이벤트 등록</a>
                     </div>
                 </li>
             </ul>

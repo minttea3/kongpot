@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsEvent35Mapper">
+	<select id="plantsEventSelectOne" resultType="plantsEvent35VO" parameterType="plantsEvent35VO">
+		SELECT pe_idx
+			 , pe_type
+			 , pe_title
+			 , pe_content
+			 , pe_day
+		FROM plant_event35
+		WHERE pe_idx = #{peIdx}
+	</select>
+	<select id="plantsEventList" resultType="plantsEvent35VO" parameterType="plantsEvent35VO">
+		SELECT pe_idx
+			 , pe_type
+			 , pe_title
+			 , pe_content
+			 , pe_day
+		FROM plant_event35
+		<where> 
+			<if test="peIdx != null and !peIdx.equals('')">
+				AND pe_idx Like '%' || #{peIdx} || '%'
+			</if>
+			<if test="peTitle != null and !peTitle.equals('')">
+				AND pe_title Like '%' || #{peTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsEvent" parameterType="plantsEvent35VO">
+	        INSERT INTO plant_event35(
+	           pe_idx
+			 , pe_type
+			 , pe_title
+			 , pe_content
+			 , pe_day
+	        ) VALUES (
+	        	#{peIdx}
+	           ,#{peType}
+	           ,#{peTitle}
+	           ,#{peContent}
+	           ,#{peDay}
+	        )
+	</insert>
+	<update id="savePlantsEvent" parameterType="plantsEvent35VO">
+	        WITH UPSERT AS (
+	        UPDATE plant_event35
+		    SET pe_type = #{peType}
+			  , pe_title = #{peTitle}
+			  , pe_content = #{peContent}
+			  , pe_day = #{peDay}
+	        WHERE pe_idx = #{peIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plant_event35 (    pe_idx
+								 , pe_type
+								 , pe_title
+								 , pe_content
+								 , pe_day)
+	        SELECT #{peIdx}
+		           ,#{peType}
+		           ,#{peTitle}
+		           ,#{peContent}
+		           ,#{peDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsEvent" parameterType="plantsEvent35VO">
+		UPDATE plant_event35 SET
+			    pe_type = #{peType}
+			  , pe_title = #{peTitle}
+			  , pe_content = #{peContent}
+			  , pe_day = #{peDay}
+	        WHERE pe_idx = #{peIdx} 
+	</update>
+	<delete id="deletePlantsEvent" parameterType="plantsEvent35VO">
+	 	DELETE from plant_event35
+	 	WHERE pe_idx = #{peIdx} 
+	</delete>
+</mapper>

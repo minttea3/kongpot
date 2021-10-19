@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsNews34Mapper">
+	<select id="plantsNewsSelectOne" resultType="plantsNews34VO" parameterType="plantsNews34VO">
+		SELECT pn_idx
+			 , pn_type
+			 , pn_title
+			 , pn_content
+			 , pn_day
+		FROM plant_news34
+		WHERE pn_idx = #{pnIdx}
+	</select>
+	<select id="plantsNewsList" resultType="plantsNews34VO" parameterType="plantsNews34VO">
+		SELECT pn_idx
+			 , pn_type
+			 , pn_title
+			 , pn_content
+			 , pn_day
+		FROM plant_news34
+		<where> 
+			<if test="pnIdx != null and !pnIdx.equals('')">
+				AND pn_idx Like '%' || #{pnIdx} || '%'
+			</if>
+			<if test="pnTitle != null and !pnTitle.equals('')">
+				AND pn_title Like '%' || #{pnTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsNews" parameterType="plantsNews34VO">
+	        INSERT INTO plant_news34(
+							           pn_idx
+									 , pn_type
+									 , pn_title
+									 , pn_content
+									 , pn_day
+	        ) VALUES (
+	        	#{pnIdx}
+	           ,#{pnType}
+	           ,#{pnTitle}
+	           ,#{pnContent}
+	           ,#{pnDay}
+	        )
+	</insert>
+	<update id="savePlantsNews" parameterType="plantsNews34VO">
+	        WITH UPSERT AS (
+	        UPDATE plant_news34
+		    SET pn_type = #{pnType}
+			  , pn_title = #{pnTitle}
+			  , pn_content = #{pnContent}
+			  , pn_day = #{pnDay}
+	        WHERE pn_idx = #{pnIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plant_news34 (    pn_idx
+								 , pn_type
+								 , pn_title
+								 , pn_content
+								 , pn_day)
+	        SELECT  #{pnIdx}
+		           ,#{pnType}
+		           ,#{pnTitle}
+		           ,#{pnContent}
+		           ,#{pnDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsNews" parameterType="plantsNews34VO">
+		UPDATE plant_news34 SET
+			    pn_type = #{pnType}
+			  , pn_title = #{pnTitle}
+			  , pn_content = #{pnContent}
+			  , pn_day = #{pnDay}
+		 WHERE pn_idx = #{pnIdx}
+	</update>
+	<delete id="deletePlantsNews" parameterType="plantsNews34VO">
+	 	DELETE from plant_news34
+	 	WHERE pn_idx = #{pnIdx}
+	</delete>
+</mapper>
