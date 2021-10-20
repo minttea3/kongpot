@@ -144,10 +144,10 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="nav1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         식물
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="nav7">
+                    <div class="dropdown-menu" aria-labelledby="nav6">
                         <a class="dropdown-item" href="/plantsBirthFlowerList">식물 - 탄생화 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsBirthFlowerForm">식물 - 탄생화 등록</a>
                         <hr>
@@ -168,8 +168,21 @@
                         <hr>
                         <a class="dropdown-item" href="/plantsEventList">식물 - 이벤트 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsEventForm">식물 - 이벤트 등록</a>
+                        <<c:if test="${aquariumfishInfo37VO.aiType eq '해수어'}">checked="checked" </c:if>hr>
+                        <a class="dropdown-item" href="/plantsFreeSharingList">식물 - 무료 나눔 리스트</a>
+                        <a class="dropdown-item" href="/syncPlantsFreeSharingForm">식물 - 무료 나눔 등록</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="nav7" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      물고기
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="nav7">
+                      <a class="dropdown-item" href="/aquariumfishInfoList">물고기 - 정보 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishInfoForm">물고기 - 정보 등록</a>
+                      
+                  </div>
+              </li>
             </ul>
         </div>
     </nav>

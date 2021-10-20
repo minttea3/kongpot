@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.PlantsFreeSharing36Mapper">
+	<select id="plantsFreeSharingSelectOne" resultType="plantsFreeSharing36VO" parameterType="plantsFreeSharing36VO">
+		SELECT pfs_idx
+			 , pfs_type
+			 , pfs_title
+			 , pfs_content
+			 , pfs_day
+		FROM plant_free_sharing36
+		WHERE pfs_idx = #{pfsIdx}
+	</select>
+	<select id="plantsFreeSharingList" resultType="plantsFreeSharing36VO" parameterType="plantsFreeSharing36VO">
+		SELECT pfs_idx
+			 , pfs_type
+			 , pfs_title
+			 , pfs_content
+			 , pfs_day
+		FROM plant_free_sharing36
+		<where> 
+			<if test="pfsIdx != null and !pfsIdx.equals('')">
+				AND pfs_idx Like '%' || #{pfsIdx} || '%'
+			</if>
+			<if test="pfsTitle != null and !pfsTitle.equals('')">
+				AND pfs_title Like '%' || #{pfsTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertPlantsFreeSharing" parameterType="plantsFreeSharing36VO">
+	        INSERT INTO plant_free_sharing36(
+	           pfs_idx
+			 , pfs_type
+			 , pfs_title
+			 , pfs_content
+			 , pfs_day
+	        ) VALUES (
+	        	#{pfsIdx}
+	           ,#{pfsType}
+	           ,#{pfsTitle}
+	           ,#{pfsContent}
+	           ,#{pfsDay}
+	        )
+	</insert>
+	<update id="savePlantsFreeSharing" parameterType="plantsFreeSharing36VO">
+	        WITH UPSERT AS (
+	        UPDATE plant_free_sharing36
+		    SET pfs_type = #{pfsType}
+			  , pfs_title = #{pfsTitle}
+			  , pfs_content = #{pfsContent}
+			  , pfs_day = #{pfsDay}
+	        WHERE pfs_idx = #{peIdx} RETURNING *
+	)
+	        INSERT
+	        INTO plant_free_sharing36 (    pfs_idx
+										 , pfs_type
+										 , pfs_title
+										 , pfs_content
+										 , pfs_day)
+	        SELECT #{pfsIdx}
+		           ,#{pfsType}
+		           ,#{pfsTitle}
+		           ,#{pfsContent}
+		           ,#{pfsDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updatePlantsFreeSharing" parameterType="plantsFreeSharing36VO">
+		UPDATE plant_free_sharing36 SET
+			    pfs_type = #{pfsType}
+			  , pfs_title = #{pfsTitle}
+			  , pfs_content = #{pfsContent}
+			  , pfs_day = #{pfsDay}
+	        WHERE pfs_idx = #{pfsIdx} 
+	</update>
+	<delete id="deletePlantsFreeSharing" parameterType="plantsFreeSharing36VO">
+	 	DELETE from plant_free_sharing36
+	 	WHERE pfs_idx = #{pfsIdx} 
+	</delete>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishInfo37Mapper">
+	<select id="aquariumfishInfoSelectOne" resultType="aquariumfishInfo37VO" parameterType="aquariumfishInfo37VO">
+		SELECT ai_idx
+			 , ai_type
+			 , ai_writer
+			 , ai_title
+			 , ai_content
+		FROM aquariumfish_info37
+		WHERE ai_idx = #{aiIdx}
+	</select>
+	<select id="aquariumfishInfoList" resultType="aquariumfishInfo37VO" parameterType="aquariumfishInfo37VO">
+		SELECT ai_idx
+			 , ai_type
+			 , ai_writer
+			 , ai_title
+			 , ai_content
+		FROM aquariumfish_info37
+		<where> 
+			<if test="aiIdx != null and !aiIdx.equals('')">
+				AND ai_idx Like '%' || #{aiIdx} || '%'
+			</if>
+			<if test="aiWriter != null and !aiWriter.equals('')">
+				AND ai_writer Like '%' || #{aiWriter} || '%'
+			</if>
+			<if test="aiTitle != null and !aiTitle.equals('')">
+				AND ai_title Like '%' || #{aiTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishInfo" parameterType="aquariumfishInfo37VO">
+	        INSERT INTO aquariumfish_info37(
+	           ai_idx
+			 , ai_type
+			 , ai_writer
+			 , ai_title
+			 , ai_content
+	        ) VALUES (
+	        	#{aiIdx}
+	           ,#{aiType}
+	           ,#{aiWriter}
+	           ,#{aiTitle}
+	           ,#{aiContent}
+	        )
+	</insert>
+	<update id="saveAquariumfishInfo" parameterType="aquariumfishInfo37VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_info37
+		    SET ai_type = #{aiType}
+		    	ai_writer = #{aiWriter}
+			  , ai_title = #{aiTitle}
+			  , ai_content = #{aiContent}
+	        WHERE ai_idx = #{aiIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_info37 ( ai_idx
+									 , ai_type
+									 , ai_writer
+									 , ai_title
+									 , ai_content)
+	        SELECT #{aiIdx}
+		           ,#{aiType}
+		           ,#{aiWriter}
+		           ,#{aiTitle}
+		           ,#{aiContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishInfo" parameterType="aquariumfishInfo37VO">
+		UPDATE aquariumfish_info37 SET
+			    ai_type = #{aiType}
+		      , ai_writer = #{aiWriter}
+			  , ai_title = #{aiTitle}
+			  , ai_content = #{aiContent}
+	        WHERE ai_idx = #{aiIdx} 
+	</update>
+	<delete id="deleteAquariumfishInfo" parameterType="aquariumfishInfo37VO">
+	 	DELETE from aquariumfish_info37
+	 	WHERE ai_idx = #{aiIdx} 
+	</delete>
+</mapper>
