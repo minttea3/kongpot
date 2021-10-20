@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishWaterCandleLayout38Mapper">
+	<select id="aquariumfishWaterCandleLayoutSelectOne" resultType="aquariumfishWaterCandleLayout38VO" parameterType="aquariumfishWaterCandleLayout38VO">
+		SELECT awcl_idx
+			 , awcl_activities
+			 , awcl_title
+			 , awcl_content
+			 , awcl_day
+		FROM aquariumfish_water_candle_layout38
+		WHERE awcl_idx = #{awclIdx}
+	</select>
+	<select id="aquariumfishWaterCandleLayoutList" resultType="aquariumfishWaterCandleLayout38VO" parameterType="aquariumfishWaterCandleLayout38VO">
+		SELECT awcl_idx
+			 , awcl_activities
+			 , awcl_title
+			 , awcl_content
+			 , awcl_day
+		FROM aquariumfish_water_candle_layout38
+		<where> 
+			<if test="awclIdx != null and !awclIdx.equals('')">
+				AND awcl_idx Like '%' || #{awclIdx} || '%'
+			</if>
+			<if test="awclTitle != null and !awclTitle.equals('')">
+				AND awcl_title Like '%' || #{awclTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishWaterCandleLayout" parameterType="aquariumfishWaterCandleLayout38VO">
+	        INSERT INTO aquariumfish_water_candle_layout38(
+	           awcl_idx
+			 , awcl_activities
+			 , awcl_title
+			 , awcl_content
+			 , awcl_day
+	        ) VALUES (
+	        	#{awclIdx}
+	           ,#{awclActivities}
+	           ,#{awclTitle}
+	           ,#{awclContent}
+	           ,#{awclDay}
+	        )
+	</insert>
+	<update id="saveAquariumfishWaterCandleLayout" parameterType="aquariumfishWaterCandleLayout38VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_water_candle_layout38
+		    SET awcl_activities = #{awclActivities}
+		    	awcl_title = #{awclTitle}
+			  , awcl_content = #{awclContent}
+			  , awcl_day = #{awclDay}
+	        WHERE awcl_idx = #{awclIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_water_candle_layout38 ( awcl_idx
+													 , awcl_activities
+													 , awcl_title
+													 , awcl_content
+													 , awcl_day)
+	        SELECT #{awclIdx}
+		           ,#{awclactivities}
+		           ,#{awclTitle}
+		           ,#{awclContent}
+		           ,#{awclDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishWaterCandleLayout" parameterType="aquariumfishWaterCandleLayout38VO">
+		UPDATE aquariumfish_water_candle_layout38 SET
+			    awcl_activities = #{awclActivities}
+		      , awcl_title = #{awclTitle}
+			  , awcl_content = #{awclContent}
+			  , awcl_day = #{awclDay}
+	        WHERE awcl_idx = #{awclIdx} 
+	</update>
+	<delete id="deleteAquariumfishWaterCandleLayout" parameterType="aquariumfishWaterCandleLayout38VO">
+	 	DELETE from aquariumfish_water_candle_layout38
+	 	WHERE awcl_idx = #{awclIdx} 
+	</delete>
+</mapper>

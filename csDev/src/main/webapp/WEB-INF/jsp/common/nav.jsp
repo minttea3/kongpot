@@ -168,7 +168,7 @@
                         <hr>
                         <a class="dropdown-item" href="/plantsEventList">식물 - 이벤트 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsEventForm">식물 - 이벤트 등록</a>
-                        <<c:if test="${aquariumfishInfo37VO.aiType eq '해수어'}">checked="checked" </c:if>hr>
+                        <hr>
                         <a class="dropdown-item" href="/plantsFreeSharingList">식물 - 무료 나눔 리스트</a>
                         <a class="dropdown-item" href="/syncPlantsFreeSharingForm">식물 - 무료 나눔 등록</a>
                     </div>
@@ -180,7 +180,9 @@
                   <div class="dropdown-menu" aria-labelledby="nav7">
                       <a class="dropdown-item" href="/aquariumfishInfoList">물고기 - 정보 리스트</a>
                       <a class="dropdown-item" href="/syncAquariumfishInfoForm">물고기 - 정보 등록</a>
-                      
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishWaterCandleLayoutList">물고기 - 수초 레이아웃 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishWaterCandleLayoutForm">물고기 - 수초 레이아웃 등록</a>
                   </div>
               </li>
             </ul>

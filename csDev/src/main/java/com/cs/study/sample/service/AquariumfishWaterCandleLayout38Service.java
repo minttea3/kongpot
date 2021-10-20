@@ -1,0 +1,38 @@
+package com.cs.study.sample.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.cs.study.sample.mapper.AquariumfishWaterCandleLayout38Mapper;
+import com.cs.study.sample.vo.AquariumfishWaterCandleLayout38VO;
+
+@Service
+public class AquariumfishWaterCandleLayout38Service {
+	
+	public final AquariumfishWaterCandleLayout38Mapper aquariumfishWaterCandleLayout38Mapper;
+	public AquariumfishWaterCandleLayout38Service(AquariumfishWaterCandleLayout38Mapper aquariumfishWaterCandleLayout38Mapper) {
+		this.aquariumfishWaterCandleLayout38Mapper = aquariumfishWaterCandleLayout38Mapper;
+	}
+	public AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayoutSelectOne(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO) {
+		return aquariumfishWaterCandleLayout38Mapper.aquariumfishWaterCandleLayoutSelectOne(aquariumfishWaterCandleLayout38VO);
+	}
+	public List<AquariumfishWaterCandleLayout38VO> aquariumfishWaterCandleLayoutList(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO){
+		return aquariumfishWaterCandleLayout38Mapper.aquariumfishWaterCandleLayoutList(aquariumfishWaterCandleLayout38VO);
+	}
+	public int insertAquariumfishWaterCandleLayout(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO) {
+		return aquariumfishWaterCandleLayout38Mapper.insertAquariumfishWaterCandleLayout(aquariumfishWaterCandleLayout38VO);
+	}
+	
+	public int saveAquariumfishWaterCandleLayout(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO) {
+		return aquariumfishWaterCandleLayout38Mapper.saveAquariumfishWaterCandleLayout(aquariumfishWaterCandleLayout38VO);
+	} 
+	
+	public int updateAquariumfishWaterCandleLayout(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO) {
+		return aquariumfishWaterCandleLayout38Mapper.updateAquariumfishWaterCandleLayout(aquariumfishWaterCandleLayout38VO);
+	} 
+	
+	public int deleteAquariumfishWaterCandleLayout(AquariumfishWaterCandleLayout38VO aquariumfishWaterCandleLayout38VO) {
+		return aquariumfishWaterCandleLayout38Mapper.deleteAquariumfishWaterCandleLayout(aquariumfishWaterCandleLayout38VO);
+	} 
+}
