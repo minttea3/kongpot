@@ -183,8 +183,33 @@
                       <hr>
                       <a class="dropdown-item" href="/aquariumfishWaterCandleLayoutList">물고기 - 수초 레이아웃 리스트</a>
                       <a class="dropdown-item" href="/syncAquariumfishWaterCandleLayoutForm">물고기 - 수초 레이아웃 등록</a>
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishExpoList">물고기 - 박람회 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishExpoForm">물고기 - 박람회 등록</a>
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishExpoGuestbookList">물고기 - 박람회 방명록 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishExpoGuestbookForm">물고기 - 박람회 방명록 등록</a>
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishExpoNewsList">물고기 - 뉴스 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishExpoNewsForm">물고기 - 뉴스 등록</a>
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishStoreInfoList">물고기 - 수족관 정보 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishStoreInfoForm">물고기 - 수족관 정보 등록</a>
+                      <hr>
+                      <a class="dropdown-item" href="/aquariumfishSellInfoList">물고기 - 수족관 정보 리스트</a>
+                      <a class="dropdown-item" href="/syncAquariumfishSellInfoForm">물고기 - 수족관 정보 등록</a>
                   </div>
               </li>
+              <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav8" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        영화
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav8">
+                        <a class="dropdown-item" href="/movieInfoList">영화 개봉일 관련 리스트</a>
+                        <a class="dropdown-item" href="/syncMovieInfoForm">영화 개봉일 관련 등록</a>
+                        
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>

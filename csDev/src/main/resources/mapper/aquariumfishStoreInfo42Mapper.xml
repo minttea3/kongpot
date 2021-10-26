@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishStoreInfo42Mapper">
+	<select id="aquariumfishStoreInfoSelectOne" resultType="aquariumfishStoreInfo42VO" parameterType="aquariumfishStoreInfo42VO">
+		SELECT asi_idx
+			 , asi_store_name
+			 , asi_loc
+			 , asi_tel
+			 , asi_status
+		FROM aquariumfish_store_info42
+		WHERE asi_idx = #{asiIdx}
+	</select>
+	<select id="aquariumfishStoreInfoList" resultType="aquariumfishStoreInfo42VO" parameterType="aquariumfishStoreInfo42VO">
+		SELECT asi_idx
+			 , asi_store_name
+			 , asi_loc
+			 , asi_tel
+			 , asi_status
+		FROM aquariumfish_store_info42
+		<where> 
+			<if test="asiIdx != null and !asiIdx.equals('')">
+				AND asi_idx Like '%' || #{asiIdx} || '%'
+			</if>
+			<if test="asiStoreName != null and !asiStoreName.equals('')">
+				AND asi_store_name Like '%' || #{asiStoreName} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishStoreInfo" parameterType="aquariumfishStoreInfo42VO">
+	        INSERT INTO aquariumfish_store_info42(
+	           asi_idx
+			 , asi_store_name
+			 , asi_loc
+			 , asi_tel
+			 , asi_status
+	        ) VALUES (
+	        	#{asiIdx}
+	           ,#{asiStoreName}
+	           ,#{asiLoc}
+	           ,#{asiTel}
+	           ,#{asiStatus}
+	        )
+	</insert>
+	<update id="saveAquariumfishStoreInfo" parameterType="aquariumfishStoreInfo42VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_store_info42
+		    SET asi_store_name = #{asiStoreName}
+			  , asi_loc = #{asiLoc}
+			  , asi_tel = #{asiTel}
+			  , asi_status = #{asiStatus}
+	        WHERE asi_idx = #{asiIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_store_info42 ( asi_idx
+											 , asi_store_name
+											 , asi_loc
+											 , asi_tel
+											 , asi_status)
+	        SELECT #{asiIdx}
+	           ,#{asiStoreName}
+	           ,#{asiLoc}
+	           ,#{asiTel}
+	           ,#{asiStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishStoreInfo" parameterType="aquariumfishStoreInfo42VO">
+		UPDATE aquariumfish_store_info42
+		    SET asi_store_name = #{asiStoreName}
+			  , asi_loc = #{asiLoc}
+			  , asi_tel = #{asiTel}
+			  , asi_status = #{asiStatus}
+	        WHERE asi_idx = #{asiIdx}
+	</update>
+	<delete id="deleteAquariumfishStoreInfo" parameterType="aquariumfishStoreInfo42VO">
+	 	DELETE from aquariumfish_store_info42
+	 	WHERE asi_idx = #{asiIdx}
+	</delete>
+</mapper>

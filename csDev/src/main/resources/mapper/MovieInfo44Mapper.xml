@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.MovieInfo44Mapper">
+	<select id="movieInfoSelectOne" resultType="movieInfo44VO" parameterType="movieInfo44VO">
+		SELECT mi_idx
+			 , mi_movie_title
+			 , mi_genre
+			 , mi_price
+			 , mi_release_date
+		FROM movie_info44
+		WHERE mi_idx = #{miIdx}
+	</select>
+	<select id="movieInfoList" resultType="movieInfo44VO" parameterType="movieInfo44VO">
+		SELECT mi_idx
+			 , mi_movie_title
+			 , mi_genre
+			 , mi_price
+			 , mi_release_date
+		FROM movie_info44
+		<where> 
+			<if test="miIdx != null and !miIdx.equals('')">
+				AND mi_idx Like '%' || #{miIdx} || '%'
+			</if>
+			<if test="miMovieTitle != null and !miMovieTitle.equals('')">
+				AND mi_movie_title Like '%' || #{miMovieTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertMovieInfo" parameterType="movieInfo44VO">
+	        INSERT INTO movie_info44(
+	           mi_idx
+			 , mi_movie_title
+			 , mi_genre
+			 , mi_price
+			 , mi_release_date
+	        ) VALUES (
+	        	#{miIdx}
+	           ,#{miMovieTitle}
+	           ,#{miGenre}
+	           ,#{miPrice}
+	           ,#{miReleaseDate}
+	           
+	        )
+	</insert>
+	<update id="saveMovieInfo" parameterType="movieInfo44VO">
+	        WITH UPSERT AS (
+	        UPDATE movie_info44
+		    SET mi_idx = #{miIdx}
+			  , mi_movie_title = #{miMovieTitle}
+			  , mi_genre = #{miGenre}
+			  , mi_price = #{miPrice}
+			  , mi_release_date = #{miReleaseDate}
+	        WHERE mi_idx = #{miIdx} RETURNING *
+	)
+	        INSERT
+	        INTO movie_info44 ( mi_idx
+							 , mi_movie_title
+							 , mi_genre
+							 , mi_price
+							 , mi_release_date)
+	        SELECT #{miIdx}
+	           ,#{miMovieTitle}
+	           ,#{miGenre}
+	           ,#{miPrice}
+	           ,#{miReleaseDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateMovieInfo" parameterType="movieInfo44VO">
+		UPDATE movie_info44 SET
+			    mi_idx = #{miIdx}
+			  , mi_movie_title = #{miMovieTitle}
+			  , mi_genre = #{miGenre}
+			  , mi_price = #{miPrice}
+			  , mi_release_date = #{miReleaseDate}
+	        WHERE mi_idx = #{miIdx} 
+	</update>
+	<delete id="deleteMovieInfo" parameterType="movieInfo44VO">
+	 	DELETE from movie_info44
+	 	WHERE  mi_idx = #{miIdx} 
+	</delete>
+</mapper>

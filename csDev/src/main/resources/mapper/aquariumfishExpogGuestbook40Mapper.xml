@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishExpoGuestbook40Mapper">
+	<select id="aquariumfishExpoGuestbookSelectOne" resultType="aquariumfishExpoGuestbook40VO" parameterType="aquariumfishExpoGuestbook40VO">
+		SELECT aeb_idx
+			 , aeb_expo_name
+			 , aeb_writer
+			 , aeb_feeling
+			 , aeb_count
+		FROM aquariumfish_expo_guestbook40
+		WHERE aeb_idx = #{aebIdx}
+	</select>
+	<select id="aquariumfishExpoGuestbookList" resultType="aquariumfishExpoGuestbook40VO" parameterType="aquariumfishExpoGuestbook40VO">
+		SELECT aeb_idx
+			 , aeb_expo_name
+			 , aeb_writer
+			 , aeb_feeling
+			 , aeb_count
+		FROM aquariumfish_expo_guestbook40
+		<where> 
+			<if test="aebIdx != null and !aebIdx.equals('')">
+				AND aeb_idx Like '%' || #{aebIdx} || '%'
+			</if>
+			<if test="aebWriter != null and !aebWriter.equals('')">
+				AND aeb_writer Like '%' || #{aebWriter} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishExpo" parameterType="aquariumfishExpoGuestbook40VO">
+	        INSERT INTO aquariumfish_expo_guestbook40(
+	           aeb_idx
+			 , aeb_expo_name
+			 , aeb_writer
+			 , aeb_feeling
+			 , aeb_count
+	        ) VALUES (
+	        	#{aebIdx}
+	           ,#{aebExpoName}
+	           ,#{aebWriter}
+	           ,#{aebFeeling}
+	           ,#{aebCount}
+	        )
+	</insert>
+	<update id="saveAquariumfishExpoGuestbook" parameterType="aquariumfishExpoGuestbook40VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_expo_guestbook40
+		    SET aeb_Expo_Name = #{aebExpoName}
+			  , aeb_writer = #{aebWriter}
+			  , aeb_feeling = #{aebFeeling}
+			  , aeb_count = #{aebCount}
+	        WHERE aeb_idx = #{aebIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_expo_guestbook40 ( aeb_idx
+												 , aeb_expo_name
+												 , aeb_writer
+												 , aeb_feeling
+												 , aeb_count)
+	        SELECT #{aebIdx}
+	           ,#{aebExpoName}
+	           ,#{aebWriter}
+	           ,#{aebFeeling}
+	           ,#{aebCount} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishExpoGuestbook" parameterType="aquariumfishExpoGuestbook40VO">
+		UPDATE aquariumfish_expo_guestbook40 SET
+			   aeb_Expo_Name = #{aebExpoName}
+			  , aeb_writer = #{aebWriter}
+			  , aeb_feeling = #{aebFeeling}
+			  , aeb_count = #{aebCount}
+	        WHERE aeb_idx = #{aebIdx}
+	</update>
+	<delete id="deleteAquariumfishExpoGuestbook" parameterType="aquariumfishExpoGuestbook40VO">
+	 	DELETE from aquariumfish_expo_guestbook40
+	 	WHERE aeb_idx = #{aebIdx}
+	</delete>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishNews41Mapper">
+	<select id="aquariumfishNewsSelectOne" resultType="aquariumfishNews41VO" parameterType="aquariumfishNews41VO">
+		SELECT an_idx
+			 , an_press
+			 , an_name
+			 , an_title
+			 , an_content
+		FROM aquariumfish_news41
+		WHERE an_idx = #{anIdx}
+	</select>
+	<select id="aquariumfishNewsList" resultType="aquariumfishNews41VO" parameterType="aquariumfishNews41VO">
+		SELECT an_idx
+			 , an_press
+			 , an_name
+			 , an_title
+			 , an_content
+		FROM aquariumfish_news41
+		<where> 
+			<if test="anIdx != null and !anIdx.equals('')">
+				AND an_idx Like '%' || #{anIdx} || '%'
+			</if>
+			<if test="anPress != null and !anPress.equals('')">
+				AND an_press Like '%' || #{anPress} || '%'
+			</if>
+			<if test="anTitle != null and !anTitle.equals('')">
+				AND an_title Like '%' || #{anTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishNews" parameterType="aquariumfishNews41VO">
+	        INSERT INTO aquariumfish_news41(
+	           an_idx
+			 , an_press
+			 , an_name
+			 , an_title
+			 , an_content
+	        ) VALUES (
+	        	#{anIdx}
+	           ,#{anPress}
+	           ,#{anName}
+	           ,#{anTitle}
+	           ,#{anContent}
+	        )
+	</insert>
+	<update id="saveAquariumfishNews" parameterType="aquariumfishNews41VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_news41
+		    SET an_press = #{anPress}
+		      ,	an_name = #{anName}
+			  , an_title = #{anTitle}
+			  , an_content = #{anContent}
+	        WHERE an_idx = #{anIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_news41 ( an_idx
+									 , an_press
+									 , an_name
+									 , an_title
+									 , an_content)
+	        SELECT #{anIdx}
+		           ,#{anPress}
+		           ,#{anName}
+		           ,#{anTitle}
+		           ,#{anContent} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishNews" parameterType="aquariumfishNews41VO">
+		UPDATE aquariumfish_news41 SET
+			    an_press = #{anPress}
+		      ,	an_name = #{anName}
+			  , an_title = #{anTitle}
+			  , an_content = #{anContent}
+	        WHERE an_idx = #{anIdx}
+	</update>
+	<delete id="deleteAquariumfishNews" parameterType="aquariumfishNews41VO">
+	 	DELETE from aquariumfish_news41
+	 	WHERE an_idx = #{anIdx}
+	</delete>
+</mapper>

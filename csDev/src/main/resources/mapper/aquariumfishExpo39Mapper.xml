@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.AquariumfishExpo39Mapper">
+	<select id="aquariumfishExpoSelectOne" resultType="aquariumfishExpo39VO" parameterType="aquariumfishExpo39VO">
+		SELECT ae_idx
+			 , ae_expo_name
+			 , ae_title
+			 , ae_content
+			 , ae_status
+		FROM aquariumfish_expo39
+		WHERE ae_idx = #{aeIdx}
+	</select>
+	<select id="aquariumfishExpoList" resultType="aquariumfishExpo39VO" parameterType="aquariumfishExpo39VO">
+		SELECT ae_idx
+			 , ae_expo_name
+			 , ae_title
+			 , ae_content
+			 , ae_status
+		FROM aquariumfish_expo39
+		<where> 
+			<if test="aeIdx != null and !aeIdx.equals('')">
+				AND ae_idx Like '%' || #{aeIdx} || '%'
+			</if>
+			<if test="aeExpoName != null and !aeExpoName.equals('')">
+				AND ae_expo_name Like '%' || #{aeExpoName} || '%'
+			</if>
+			<if test="aeTitle != null and !aeTitle.equals('')">
+				AND ae_title Like '%' || #{aeTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertAquariumfishExpo" parameterType="aquariumfishExpo39VO">
+	        INSERT INTO aquariumfish_expo39(
+	           ae_idx
+			 , ae_expo_name
+			 , ae_title
+			 , ae_content
+			 , ae_status
+	        ) VALUES (
+	        	#{aeIdx}
+	           ,#{aeExpoName}
+	           ,#{aeTitle}
+	           ,#{aeContent}
+	           ,#{aeStatus}
+	        )
+	</insert>
+	<update id="saveAquariumfishExpo" parameterType="aquariumfishExpo39VO">
+	        WITH UPSERT AS (
+	        UPDATE aquariumfish_expo39
+		    SET ae_Expo_Name = #{aeExpoName}
+			  , ae_title = #{aeTitle}
+			  , ae_content = #{aeContent}
+			  , ae_status = #{aeStatus}
+	        WHERE ae_idx = #{aeIdx} RETURNING *
+	)
+	        INSERT
+	        INTO aquariumfish_expo39 ( ae_idx
+									 , ae_expo_name
+									 , ae_title
+									 , ae_content
+									 , ae_status)
+	        SELECT #{aeIdx}
+	           ,#{aeExpoName}
+	           ,#{aeTitle}
+	           ,#{aeContent}
+	           ,#{aeStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateAquariumfishExpo" parameterType="aquariumfishExpo39VO">
+		UPDATE aquariumfish_expo39 SET
+			   ae_Expo_Name = #{aeExpoName}
+			  , ae_title = #{aeTitle}
+			  , ae_content = #{aeContent}
+			  , ae_status = #{aeStatus}
+	        WHERE ae_idx = #{aeIdx}
+	</update>
+	<delete id="deleteAquariumfishExpo" parameterType="aquariumfishExpo39VO">
+	 	DELETE from aquariumfish_expo39
+	 	WHERE ae_idx = #{aeIdx}
+	</delete>
+</mapper>
