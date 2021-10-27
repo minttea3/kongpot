@@ -207,7 +207,15 @@
                     <div class="dropdown-menu" aria-labelledby="nav8">
                         <a class="dropdown-item" href="/movieInfoList">영화 개봉일 관련 리스트</a>
                         <a class="dropdown-item" href="/syncMovieInfoForm">영화 개봉일 관련 등록</a>
-                        
+                        <hr>
+                        <a class="dropdown-item" href="/movieReviewBloggerList">영화 리뷰 블로거 리스트</a>
+                        <a class="dropdown-item" href="/syncMovieReviewBloggerForm">영화 리뷰 블로거 관련 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/movieChartList">영화 차트 리스트</a>
+                        <a class="dropdown-item" href="/syncMovieChartForm">영화 차트 관련 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/movieComingSoonList">영화 개봉 예정작 리스트</a>
+                        <a class="dropdown-item" href="/syncmovieComingSoonForm">영화 개봉 예정작 관련 등록</a>
                     </div>
                 </li>
             </ul>

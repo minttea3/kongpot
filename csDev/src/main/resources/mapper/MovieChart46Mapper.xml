@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.MovieChart46Mapper">
+	<select id="movieChartSelectOne" resultType="movieChart46VO" parameterType="movieChart46VO">
+		SELECT mc_idx
+			 , mc_movie_title
+			 , mc_reservation_rate
+			 , mc_count
+			 , mc_release_date
+		FROM movie_chart46
+		WHERE mc_idx = #{mcIdx}
+	</select>
+	<select id="movieChartList" resultType="movieChart46VO" parameterType="movieChart46VO">
+		SELECT mc_idx
+			 , mc_movie_title
+			 , mc_reservation_rate
+			 , mc_count
+			 , mc_release_date
+		FROM movie_chart46
+		<where> 
+			<if test="mcIdx != null and !mcIdx.equals('')">
+				AND mc_idx Like '%' || #{mcIdx} || '%'
+			</if>
+			<if test="mcMovieTitle != null and !mcMovieTitle.equals('')">
+				AND mc_movie_title Like '%' || #{mcMovieTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertMovieChart" parameterType="movieChart46VO">
+	        INSERT INTO movie_chart46(
+	           mc_idx
+			 , mc_movie_title
+			 , mc_reservation_rate
+			 , mc_count
+			 , mc_release_date
+	        ) VALUES (
+	        	#{mcIdx}
+	           ,#{mcMovieTitle}
+	           ,#{mcReservationRate}
+	           ,#{mcCount}
+	           ,#{mcReleaseDate}
+	           
+	        )
+	</insert>
+	<update id="saveMovieChart" parameterType="movieChart46VO">
+	        WITH UPSERT AS (
+	        UPDATE movie_chart46
+		    SET mc_idx = #{mcIdx}
+			  , mc_movie_title = #{mcMovieTitle}
+			  , mc_reservation_rate = #{mcReservationRate}
+			  , mc_count = #{mcCount}
+			  , mcReleaseDate = #{mcReleaseDate}
+	        WHERE mc_idx = #{mcIdx}  RETURNING *
+	)
+	        INSERT
+	        INTO movie_chart46 (mc_idx
+							  , mc_movie_title
+						  	  , mc_reservation_rate
+							  , mc_count
+							  , mc_release_date)
+	        SELECT #{mc_idx}
+	           ,#{mcMovieTitle}
+	           ,#{mcReservationRate}
+	           ,#{mcCount}
+	           ,#{mcReleaseDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateMovieChart" parameterType="movieChart46VO">
+		UPDATE movie_chart46 SET
+			    mc_idx = #{mcIdx}
+			  , mc_movie_title = #{mcMovieTitle}
+			  , mc_reservation_rate = #{mcReservationRate}
+			  , mc_count = #{mcCount}
+			  , mc_release_date = #{mcReleaseDate}
+	        WHERE mc_idx = #{mcIdx}
+	</update>
+	<delete id="deleteMovieChart" parameterType="movieChart46VO">
+	 	DELETE from movie_chart46
+	 	WHERE  mc_idx = #{mcIdx} 
+	</delete>
+</mapper>

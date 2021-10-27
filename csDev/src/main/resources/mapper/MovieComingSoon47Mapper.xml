@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.MovieComingSoon47Mapper">
+	<select id="movieComingSoonSelectOne" resultType="movieComingSoon47VO" parameterType="movieComingSoon47VO">
+		SELECT mcs_idx
+			 , mcs_movie_title
+			 , mcs_reservation_rate
+			 , mcs_release_date
+		FROM movie_coming_soon47
+		WHERE mcs_idx = #{mcsIdx}
+	</select>
+	<select id="movieComingSoonList" resultType="movieComingSoon47VO" parameterType="movieComingSoon47VO">
+		SELECT mcs_idx
+			 , mcs_movie_title
+			 , mcs_reservation_rate
+			 , mcs_release_date
+		FROM movie_coming_soon47
+		<where> 
+			<if test="mcsIdx != null and !mcsIdx.equals('')">
+				AND mcs_idx Like '%' || #{mcsIdx} || '%'
+			</if>
+			<if test="mcsMovieTitle != null and !mcsMovieTitle.equals('')">
+				AND mcs_movie_title Like '%' || #{mcsMovieTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertMovieComingSoon" parameterType="movieComingSoon47VO">
+	        INSERT INTO movie_coming_soon47(
+	           mcs_idx
+			 , mcs_movie_title
+			 , mcs_reservation_rate
+			 , mcs_release_date
+	        ) VALUES (
+	        	#{mcsIdx}
+	           ,#{mcsMovieTitle}
+	           ,#{mcsReservationRate}
+	           ,#{mcsReleaseDate}
+	           
+	        )
+	</insert>
+	<update id="saveMovieComingSoon" parameterType="movieComingSoon47VO">
+	        WITH UPSERT AS (
+	        UPDATE movie_coming_soon47
+		    SET mcs_movie_title = #{mcsMovieTitle}
+			  , mcs_reservation_rate = #{mcsReservationRate}
+			  , mcs_release_date = #{mcsReleaseDate}
+	        WHERE mcs_idx = #{mcsIdx} RETURNING *
+	)
+	        INSERT
+	        INTO movie_coming_soon47 ( mcs_idx
+									 , mcs_movie_title
+									 , mcs_reservation_rate
+									 , mcs_release_date)
+	        SELECT #{mcsIdx}
+	           ,#{mcsMovieTitle}
+	           ,#{mcsReservationRate}
+	           ,#{mcsReleaseDate} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateMovieComingSoon" parameterType="movieComingSoon47VO">
+		UPDATE movie_coming_soon47 SET
+			    mcs_movie_title = #{mcsMovieTitle}
+			  , mcs_reservation_rate = #{mcsReservationRate}
+			  , mcs_release_date = #{mcsReleaseDate}
+	        WHERE mcs_idx = #{mcsIdx}
+	</update>
+	<delete id="deleteMovieComingSoon" parameterType="movieComingSoon47VO">
+	 	DELETE from movie_coming_soon47
+	 	WHERE  mcs_idx = #{mcsIdx}
+	</delete>
+</mapper>

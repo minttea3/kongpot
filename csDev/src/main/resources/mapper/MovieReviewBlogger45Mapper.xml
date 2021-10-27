@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.MovieReviewBlogger45Mapper">
+	<select id="movieReviewBloggerSelectOne" resultType="movieReviewBlogger45VO" parameterType="movieReviewBlogger45VO">
+		SELECT mrb_idx
+			 , mrb_movie_title
+			 , mrb_genre
+			 , mrb_content
+			 , mrb_score
+		FROM movie_review_blogger45
+		WHERE mrb_idx = #{mrbIdx}
+	</select>
+	<select id="movieReviewBloggerList" resultType="movieReviewBlogger45VO" parameterType="movieReviewBlogger45VO">
+		SELECT mrb_idx
+			 , mrb_movie_title
+			 , mrb_genre
+			 , mrb_content
+			 , mrb_score
+		FROM movie_review_blogger45
+		<where> 
+			<if test="mrbIdx != null and !mrbIdx.equals('')">
+				AND mrb_idx Like '%' || #{mrbIdx} || '%'
+			</if>
+			<if test="mrbMovieTitle != null and !mrbMovieTitle.equals('')">
+				AND mrb_movie_title Like '%' || #{mrbMovieTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertMovieReviewBlogger" parameterType="movieReviewBlogger45VO">
+	        INSERT INTO movie_review_blogger45(
+	           mrb_idx
+			 , mrb_movie_title
+			 , mrb_genre
+			 , mrb_content
+			 , mrb_score
+	        ) VALUES (
+	        	#{mrbIdx}
+	           ,#{mrbMovieTitle}
+	           ,#{mrbGenre}
+	           ,#{mrbContent}
+	           ,#{mrbScore}
+	           
+	        )
+	</insert>
+	<update id="saveMMovieReviewBlogger" parameterType="movieReviewBlogger45VO">
+	        WITH UPSERT AS (
+	        UPDATE movie_review_blogger45
+		    SET mrb_idx = #{mrbIdx}
+			  , mrb_movie_title = #{miMovieTitle}
+			  , mrb_genre = #{mrbGenre}
+			  , mrb_content = #{mrbContent}
+			  , mrb_score = #{mrbScore}
+	        WHERE mrb_idx = #{mrbIdx}  RETURNING *
+	)
+	        INSERT
+	        INTO movie_review_blogger45 ( mrb_idx
+										 , mrb_movie_title
+										 , mrb_genre
+										 , mrb_content
+										 , mrb_score)
+	        SELECT #{mrbIdx}
+	           ,#{mrbMovieTitle}
+	           ,#{mrbGenre}
+	           ,#{mrbContent}
+	           ,#{mrbScore} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateMovieReviewBlogger" parameterType="movieReviewBlogger45VO">
+		UPDATE movie_review_blogger45 SET
+			    mrb_idx = #{mrbIdx}
+			  , mrb_movie_title = #{mrbMovieTitle}
+			  , mrb_genre = #{mrbGenre}
+			  , mrb_content = #{mrbContent}
+			  , mrb_score = #{mrbScore}
+	        WHERE mrb_idx = #{mrbIdx} 
+	</update>
+	<delete id="deleteMovieReviewBlogger" parameterType="movieReviewBlogger45VO">
+	 	DELETE from movie_review_blogger45
+	 	WHERE  mrb_idx = #{mrbIdx} 
+	</delete>
+</mapper>

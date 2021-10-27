@@ -19,29 +19,29 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>영화관 개봉일 정보 리스트</h3>
+<h3>영화관 차트 리스트</h3>
 
 <br />
 
-<form:form action="/movieInfoList" method="get">
+<form:form action="/movieChartList" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="miIdx">번호</label>
+            <label class="sr-only" for="mcIdx">번호</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="miIdx" placeholder="고유번호" name="miIdx" value="${movieInfo44VO.miIdx}">
+                <input type="text" class="form-control" id="mcIdx" placeholder="고유번호" name="mcIdx" value="${movieChart46VO.mcIdx}">
             </div>
         </div>
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="miMovieTitle">영화 제목</label>
+            <label class="sr-only" for="mcMovieTitle">영화 제목</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">영화 제목</div>
                 </div>
-                <input type="text" class="form-control" id="miMovieTitle" placeholder="영화 제목" name="miMovieTitle" value="${movieInfo44VO.miMovieTitle}">
+                <input type="text" class="form-control" id="mcMovieTitle" placeholder="영화 제목" name="mcMovieTitle" value="${movieChart46VO.mcMovieTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -56,20 +56,26 @@
             <th scope="col">#</th>
             <th scope="col">고유번호</th>
             <th scope="col">영화 제목</th>
-            <th scope="col">장르</th>
-            <th scope="col">가격</th>
+            <th scope="col">예매율</th>
+            <th scope="col">평점</th>
             <th scope="col">개봉일</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${movieInfoList}" varStatus="status">
+            <c:forEach var="map" items="${movieChartList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
-                    <td>${map.miIdx}</td>
-                    <td><a href="<c:url value='/syncMovieInfoForm?miIdx=${map.miIdx}' />">${map.miMovieTitle}</a></td>
-                    <td>${map.miGenre}</td>
-                    <td>${map.miPrice}</td>
-                    <td>${map.miReleaseDate}</td>
+                    <td>${map.mcIdx}</td>
+                    <td><a href="<c:url value='/syncMovieChartForm?mcIdx=${map.mcIdx}' />">${map.mcMovieTitle}</a></td>
+                    <td>${map.mcReservationRate}</td>
+                    <td>
+                    <c:if test="${map.mcCount eq 1}">⭐</c:if>
+                    <c:if test="${map.mcCount eq 2}">⭐⭐</c:if>
+                    <c:if test="${map.mcCount eq 3}">⭐⭐⭐</c:if>
+                    <c:if test="${map.mcCount eq 4}">⭐⭐⭐⭐</c:if>
+                    <c:if test="${map.mcCount eq 5}">⭐⭐⭐⭐⭐</c:if>
+                    </td>
+                    <td>${map.mcReleaseDate}</td>
                 </tr>
             </c:forEach>
         </tbody>

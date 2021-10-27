@@ -19,29 +19,29 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/common/nav.jsp" />
 
-<h3>영화관 개봉일 정보 리스트</h3>
+<h3>영화 블로거 후기 리스트</h3>
 
 <br />
 
-<form:form action="/movieInfoList" method="get">
+<form:form action="/movieReviewBloggerList" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="miIdx">번호</label>
+            <label class="sr-only" for="mrbIdx">번호</label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">번호</div>
                 </div>
-                <input type="text" class="form-control" id="miIdx" placeholder="고유번호" name="miIdx" value="${movieInfo44VO.miIdx}">
+                <input type="text" class="form-control" id="mrbIdx" placeholder="고유번호" name="mrbIdx" value="${movieReviewBlogger45VO.mrbIdx}">
             </div>
         </div>
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <label class="sr-only" for="miMovieTitle">영화 제목</label>
+            <label class="sr-only" for="mrbMovieTitle">영화 제목 </label>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">영화 제목</div>
                 </div>
-                <input type="text" class="form-control" id="miMovieTitle" placeholder="영화 제목" name="miMovieTitle" value="${movieInfo44VO.miMovieTitle}">
+                <input type="text" class="form-control" id="mrbMovieTitle" placeholder="영화 제목" name="mrbMovieTitle" value="${movieReviewBlogger45VO.mrbMovieTitle}">
             </div>
         </div>
         <div class="col-auto">
@@ -57,19 +57,25 @@
             <th scope="col">고유번호</th>
             <th scope="col">영화 제목</th>
             <th scope="col">장르</th>
-            <th scope="col">가격</th>
-            <th scope="col">개봉일</th>
+            <th scope="col">내용</th>
+            <th scope="col">별점</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="map" items="${movieInfoList}" varStatus="status">
+            <c:forEach var="map" items="${movieReviewBloggerList}" varStatus="status">
                 <tr>
                     <td scope="row"><c:out value="${status.count}" /></td>
-                    <td>${map.miIdx}</td>
-                    <td><a href="<c:url value='/syncMovieInfoForm?miIdx=${map.miIdx}' />">${map.miMovieTitle}</a></td>
-                    <td>${map.miGenre}</td>
-                    <td>${map.miPrice}</td>
-                    <td>${map.miReleaseDate}</td>
+                    <td>${map.mrbIdx}</td>
+                    <td><a href="<c:url value='/syncMovieReviewBloggerForm?mrbIdx=${map.mrbIdx}' />">${map.mrbMovieTitle}</a></td>
+                    <td>${map.mrbGenre}</td>
+                    <td>${map.mrbContent}</td>
+                    <td>
+                    	<c:if test="${map.mrbScore eq 1}">⭐</c:if>
+                    	<c:if test="${map.mrbScore eq 2}">⭐⭐</c:if>
+                    	<c:if test="${map.mrbScore eq 3}">⭐⭐⭐</c:if>
+                    	<c:if test="${map.mrbScore eq 4}">⭐⭐⭐⭐</c:if>
+                    	<c:if test="${map.mrbScore eq 5}">⭐⭐⭐⭐⭐</c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
