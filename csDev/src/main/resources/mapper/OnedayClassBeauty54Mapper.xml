@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassBeauty54Mapper">
+	<select id="onedayClassBeautySelectOne" resultType="onedayClassBeauty54VO" parameterType="onedayClassBeauty54VO">
+		SELECT ocbe_idx
+			 , ocbe_store_name
+			 , ocbe_loc
+			 , ocbe_class_info
+			 , ocbe_detail
+			 , ocbe_price
+			 , ocbe_class_status
+		FROM oneday_class_beauty54
+		WHERE ocbe_idx = #{ocbeIdx}
+	</select>
+	<select id="onedayClassBeautyList" resultType="onedayClassBeauty54VO" parameterType="onedayClassBeauty54VO">
+		SELECT ocbe_idx
+			 , ocbe_store_name
+			 , ocbe_loc
+			 , ocbe_class_info
+			 , ocbe_detail
+			 , ocbe_price
+			 , ocbe_class_status
+		FROM oneday_class_beauty54
+		<where> 
+			<if test="ocbeStoreName != null and !ocbeStoreName.equals('')">
+				AND ocbe_store_name Like '%' || #{ocbeStoreName} || '%'
+			</if>
+			<if test="ocbeLoc != null and !ocbeLoc.equals('')">
+				AND ocbe_loc Like '%' || #{ocbeLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassBeauty" parameterType="onedayClassBeauty54VO">
+	        INSERT INTO oneday_class_beauty54(
+			   ocbe_store_name
+			 , ocbe_loc
+			 , ocbe_class_info
+			 , ocbe_detail
+			 , ocbe_price
+			 , ocbe_class_status
+	        ) VALUES (
+	        	
+	            #{ocbeStoreName}
+	           ,#{ocbeLoc}
+	           ,#{ocbeClassInfo}
+	           ,#{ocbeDetail}
+	           ,#{ocbePrice}
+	           ,#{ocbeClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassBeauty" parameterType="onedayClassBeauty54VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_beauty54
+		    SET 
+			    ocbe_store_name = #{ocbeStoreName}
+			  , ocbe_loc = #{ocbeLoc}
+			  , ocbe_class_info = #{ocbeClassInfo}
+			  , ocbe_detail = #{ocbeDetail}
+			  , ocbe_price = #{ocbePrice}
+			  , ocbe_class_status = #{ocbeWriteDay}
+	        WHERE ocbe_idx = #{ocbeIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_beauty54 ( 
+									 , ocbe_store_name
+									 , ocbe_loc
+									 , ocbe_class_info
+									 , ocbe_detail
+									 , ocbe_price
+									 , ocbe_class_status)
+	        SELECT 
+	            #{ocbeStoreName}
+	           ,#{ocbeLoc}
+	           ,#{ocbeClassInfo}
+	           ,#{ocbeDetail}
+	           ,#{ocbePrice}
+	           ,#{ocbeClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassBeauty" parameterType="onedayClassBeauty54VO">
+		UPDATE oneday_class_beauty54 SET
+			   ocbe_store_name = #{ocbeStoreName}
+			  , ocbe_loc = #{ocbeLoc}
+			  , ocbe_class_info = #{ocbeClassInfo}
+			  , ocbe_detail = #{ocbeDetail}
+			  , ocbe_price = #{ocbePrice}
+			  , ocbe_class_status = #{ocbeClassStatus}
+	        WHERE ocbe_idx = #{ocbeIdx}
+	</update>
+	<delete id="deleteOnedayClassBeauty" parameterType="onedayClassBeauty54VO">
+	 	DELETE from oneday_class_beauty54
+	 	WHERE ocbe_idx = #{ocbeIdx}
+	</delete>
+</mapper>

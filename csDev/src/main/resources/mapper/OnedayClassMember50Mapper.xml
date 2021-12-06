@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassMember50Mapper">
+	<select id="onedayClassMemberSelectOne" resultType="onedayClassMember50VO" parameterType="onedayClassMember50VO">
+		SELECT ocm_idx
+			 , ocm_id
+			 , ocm_pw
+			 , ocm_pw_question
+			 , ocm_pw_anwser
+			 , ocm_gender
+			 , ocm_termsinfo_yn
+		FROM oneday_class_member50
+		WHERE ocm_idx = #{ocm_idx}
+	</select>
+	<select id="onedayClassMemberList" resultType="onedayClassMember50VO" parameterType="onedayClassMember50VO">
+		SELECT ocm_idx
+			 , ocm_id
+			 , ocm_pw
+			 , ocm_pw_question
+			 , ocm_pw_answer
+			 , ocm_gender
+			 , ocm_termsinfo_yn
+		FROM oneday_class_member50
+		
+		<where> 
+			<if test="ocmId != null and !ocmId.equals('')">
+				AND ocm_id Like '%' || #{ocmId} || '%'
+			</if>
+			<if test="ocmGender != null and !ocmGender.equals('')">
+				AND ocm_gender Like '%' || #{ocmGender} || '%'
+			</if>
+		</where>
+		order by ocm_idx asc;
+	</select>
+	<insert id="insertOnedayClassMember" parameterType="onedayClassMember50VO">
+	        INSERT INTO oneday_class_member50(
+			   ocm_id
+			 , ocm_pw
+			 , ocm_pw_question
+			 , ocm_pw_answer
+			 , ocm_gender
+			 , ocm_termsinfo_yn
+	        ) VALUES (
+	           #{ocmId}
+	           ,#{ocmPw}
+	           ,#{ocmPwQuestion}
+	           ,#{ocmPwAnswer}
+	           ,#{ocmGender}
+	           ,#{ocmTermsinfoYn}
+	        )
+	</insert>
+	<update id="saveOnedayClassMember" parameterType="onedayClassMember50VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_member50
+		    SET 
+			    ocm_id = #{ocmId}
+			  , ocm_pw = #{ocmPw}
+			  , ocm_pw_question = #{ocmPwQuestion}
+			  , ocm_pw_answer = #{ocmPwAnswer}
+			  , ocm_gender = #{ocmGender}
+			  , ocm_termsinfo_yn = #{ocmTermsinfoYn}
+	        WHERE ocm_idx = #{ocmIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_member50 (
+									   ocm_id
+									 , ocm_pw
+									 , ocm_pw_question
+									 , ocm_pw_answer
+									 , ocm_gender
+									 , ocm_termsinfo_yn)
+	        SELECT onedayClassMember50VO
+	            #{ocmId}
+	           ,#{ocmPw}
+	           ,#{ocmPwQuestion}
+	           ,#{ocmPwAnswer}
+	           ,#{ocmGender}
+	           ,#{ocmTermsinfoYn} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassMember" parameterType="onedayClassMember50VO">
+		UPDATE oneday_class_member50 SET
+			   ocm_id = #{ocmId}
+			  , ocm_pw = #{ocmPw}
+			  , ocm_pw_question = #{ocmPwQuestion}
+			  , ocm_pw_answer = #{ocmPwAnswer}
+			  , ocm_gender = #{ocmGender}
+			  , ocm_termsinfo_yn = #{ocmTermsinfoYn}
+	        WHERE ocm_idx = #{ocmIdx}
+	</update>
+	<delete id="deleteOnedayClassMember" parameterType="onedayClassMember50VO">
+	 	DELETE from oneday_class_member50
+	 	WHERE ocm_idx = #{ocmIdx}
+	</delete>
+</mapper>

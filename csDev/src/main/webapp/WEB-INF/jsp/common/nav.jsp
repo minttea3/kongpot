@@ -216,6 +216,58 @@
                         <hr>
                         <a class="dropdown-item" href="/movieComingSoonList">영화 개봉 예정작 리스트</a>
                         <a class="dropdown-item" href="/syncmovieComingSoonForm">영화 개봉 예정작 관련 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/movieBloggerList">영화 블로거 리스트</a>
+                        <a class="dropdown-item" href="/syncMovieBloggerForm">영화 블로거 등록</a>
+                    </div>
+                </li>
+              <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav9" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        원데이 클래스
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav9">
+                        <a class="dropdown-item" href="/onedayClassInfoList">원데이 클래스 소개 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassInfoForm">원데이 클래스 소개 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassMemberList">원데이 클래스 회원 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassMemberForm">원데이 클래스 회원 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassBreadList">원데이 클래스 베이커리수업 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassBreadForm">원데이 클래스수업 베이커리 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassFlowerList">원데이 클래스 플라워수업  리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassFlowerForm">원데이 클래스 플라워수업 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassArtList">원데이 클래스 미술수업 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassArtForm">원데이 클래스 미술수업 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassBeautyList">원데이 클래스 뷰티수업 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassBeautyForm">원데이 클래스 뷰티수업 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassMusicList">원데이 클래스 음악수업 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassMusicForm">원데이 클래스 음악수업 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassTicketList">원데이 클래스 티켓 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassTicketForm">원데이 클래스 티켓 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassActivityList">원데이 클래스 액티비티 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassActivityForm">원데이 클래스 액티비티 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassLifeStyleList">원데이 클래스 라이프스타일 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassLifeStyleForm">원데이 클래스 라이프스타일 등록</a>
+                        <hr>
+                        <a class="dropdown-item" href="/onedayClassHandcraftList">원데이 클래스 수공예 리스트</a>
+                        <a class="dropdown-item" href="/syncOnedayClassHandcraftForm">원데이 클래스 수공예 등록</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        의류
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="nav1">
+                        <a class="dropdown-item" href="/clothesShoppingmallinfoList">쇼핑몰 정보 리스트</a>
+                        <a class="dropdown-item" href="/syncClothesShoppingmallinfoForm">쇼핑몰 정보 등록</a>
+                        
                     </div>
                 </li>
             </ul>

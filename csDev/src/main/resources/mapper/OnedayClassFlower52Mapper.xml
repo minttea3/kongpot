@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassFlower52Mapper">
+	<select id="onedayClassFlowerSelectOne" resultType="onedayClassFlower52VO" parameterType="onedayClassFlower52VO">
+		SELECT ocf_idx
+			 , ocf_store_name
+			 , ocf_loc
+			 , ocf_class_info
+			 , ocf_detail
+			 , ocf_price
+			 , ocf_class_status
+		FROM oneday_class_flower52
+		WHERE ocf_idx = #{ocfIdx}
+	</select>
+	<select id="onedayClassFlowerList" resultType="onedayClassFlower52VO" parameterType="onedayClassFlower52VO">
+		SELECT ocf_idx
+			 , ocf_store_name
+			 , ocf_loc
+			 , ocf_class_info
+			 , ocf_detail
+			 , ocf_price
+			 , ocf_class_status
+		FROM oneday_class_flower52
+		<where> 
+			<if test="ocfStoreName != null and !ocfStoreName.equals('')">
+				AND ocf_store_name Like '%' || #{ocfStoreName} || '%'
+			</if>
+			<if test="ocfLoc != null and !ocfLoc.equals('')">
+				AND ocf_loc Like '%' || #{ocfLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassFlower" parameterType="onedayClassFlower52VO">
+	        INSERT INTO oneday_class_flower52(
+			   ocf_store_name
+			 , ocf_loc
+			 , ocf_class_info
+			 , ocf_detail
+			 , ocf_price
+			 , ocf_class_status
+	        ) VALUES (
+	        	
+	            #{ocfStoreName}
+	           ,#{ocfLoc}
+	           ,#{ocfClassInfo}
+	           ,#{ocfDetail}
+	           ,#{ocfPrice}
+	           ,#{ocfClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassFlower" parameterType="onedayClassFlower52VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_flower52
+		    SET 
+			    ocf_store_name = #{ocfStoreName}
+			  , ocf_loc = #{ocfLoc}
+			  , ocf_class_info = #{ocfClassInfo}
+			  , ocf_detail = #{ocfDetail}
+			  , ocf_price = #{ocfPrice}
+			  , ocf_class_status = #{ocfWriteDay}
+	        WHERE ocb_idx = #{ocfIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_flower52 ( 
+									 , ocf_store_name
+									 , ocf_loc
+									 , ocf_class_info
+									 , ocf_detail
+									 , ocf_price
+									 , ocf_class_status)
+	        SELECT 
+	            #{ocfStoreName}
+	           ,#{ocfLoc}
+	           ,#{ocfClassInfo}
+	           ,#{ocfDetail}
+	           ,#{ocfPrice}
+	           ,#{ocfClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassFlower" parameterType="onedayClassFlower52VO">
+		UPDATE oneday_class_flower52 SET
+			   ocf_store_name = #{ocfStoreName}
+			  , ocf_loc = #{ocfLoc}
+			  , ocf_class_info = #{ocfClassInfo}
+			  , ocf_detail = #{ocfDetail}
+			  , ocf_price = #{ocfPrice}
+			  , ocf_class_status = #{ocfClassStatus}
+	        WHERE ocf_idx = #{ocfIdx}
+	</update>
+	<delete id="deleteOnedayClassFlower" parameterType="onedayClassFlower52VO">
+	 	DELETE from oneday_class_flower52
+	 	WHERE ocf_idx = #{ocfIdx}
+	</delete>
+</mapper>

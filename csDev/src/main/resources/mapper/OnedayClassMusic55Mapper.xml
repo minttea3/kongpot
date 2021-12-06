@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassMusic55Mapper">
+	<select id="onedayClassMusicSelectOne" resultType="onedayClassMusic55VO" parameterType="onedayClassMusic55VO">
+		SELECT ocm_idx
+			 , ocm_store_name
+			 , ocm_loc
+			 , ocm_class_info
+			 , ocm_detail
+			 , ocm_price
+			 , ocm_class_status
+		FROM oneday_class_music55
+		WHERE ocm_idx = #{ocmIdx}
+	</select>
+	<select id="onedayClassMusicList" resultType="onedayClassMusic55VO" parameterType="onedayClassMusic55VO">
+		SELECT ocm_idx
+			 , ocm_store_name
+			 , ocm_loc
+			 , ocm_class_info
+			 , ocm_detail
+			 , ocm_price
+			 , ocm_class_status
+		FROM oneday_class_music55
+		<where> 
+			<if test="ocmStoreName != null and !ocmStoreName.equals('')">
+				AND ocm_store_name Like '%' || #{ocmStoreName} || '%'
+			</if>
+			<if test="ocmLoc != null and !ocmLoc.equals('')">
+				AND ocm_loc Like '%' || #{ocmLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassMusic" parameterType="onedayClassMusic55VO">
+	        INSERT INTO oneday_class_music55(
+			   ocm_store_name
+			 , ocm_loc
+			 , ocm_class_info
+			 , ocm_detail
+			 , ocm_price
+			 , ocm_class_status
+	        ) VALUES (
+	        	
+	            #{ocmStoreName}
+	           ,#{ocmLoc}
+	           ,#{ocmClassInfo}
+	           ,#{ocmDetail}
+	           ,#{ocmPrice}
+	           ,#{ocmClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassMusic" parameterType="onedayClassMusic55VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_music55
+		    SET 
+			    ocm_store_name = #{ocmStoreName}
+			  , ocm_loc = #{ocmLoc}
+			  , ocm_class_info = #{ocmClassInfo}
+			  , ocm_detail = #{ocmDetail}
+			  , ocm_price = #{ocmPrice}
+			  , ocm_class_status = #{ocmWriteDay}
+	        WHERE ocbe_idx = #{ocmIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_music55 ( 
+									 , ocm_store_name
+									 , ocm_loc
+									 , ocm_class_info
+									 , ocm_detail
+									 , ocm_price
+									 , ocm_class_status)
+	        SELECT 
+	            #{ocmStoreName}
+	           ,#{ocmLoc}
+	           ,#{ocmClassInfo}
+	           ,#{ocmDetail}
+	           ,#{ocmPrice}
+	           ,#{ocmClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassMusic" parameterType="onedayClassMusic55VO">
+		UPDATE oneday_class_music55 SET
+			   ocm_store_name = #{ocmStoreName}
+			  , ocm_loc = #{ocmLoc}
+			  , ocm_class_info = #{ocmClassInfo}
+			  , ocm_detail = #{ocmDetail}
+			  , ocm_price = #{ocmPrice}
+			  , ocm_class_status = #{ocmClassStatus}
+	        WHERE ocm_idx = #{ocmIdx}
+	</update>
+	<delete id="deleteOnedayClassMusic" parameterType="onedayClassMusic55VO">
+	 	DELETE from oneday_class_music55
+	 	WHERE ocm_idx = #{ocmIdx}
+	</delete>
+</mapper>

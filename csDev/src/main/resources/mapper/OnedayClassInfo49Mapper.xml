@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassInfo49Mapper">
+	<select id="onedayClassInfoSelectOne" resultType="onedayClassInfo49VO" parameterType="onedayClassInfo49VO">
+		SELECT oci_idx
+			 , oci_writer
+			 , oci_title
+			 , oci_content
+			 , oci_write_day
+		FROM oneday_class_info49
+		WHERE oci_idx = #{ociIdx}
+	</select>
+	<select id="onedayClassInfoList" resultType="onedayClassInfo49VO" parameterType="onedayClassInfo49VO">
+		SELECT oci_idx
+			 , oci_writer
+			 , oci_title
+			 , oci_content
+			 , oci_write_day
+		FROM oneday_class_info49
+		<where> 
+			<if test="ociIdx != null and !ociIdx.equals('')">
+				AND oci_idx Like '%' || #{ociIdx} || '%'
+			</if>
+			<if test="ociTitle != null and !ociTitle.equals('')">
+				AND oci_title Like '%' || #{ociTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassInfo" parameterType="onedayClassInfo49VO">
+	        INSERT INTO oneday_class_info49(
+	           oci_idx
+			 , oci_writer
+			 , oci_title
+			 , oci_content
+			 , oci_write_day
+	        ) VALUES (
+	        	#{ociIdx}
+	           ,#{ociWriter}
+	           ,#{ociTitle}
+	           ,#{ociContent}
+	           ,#{ociWriteDay}
+	        )
+	</insert>
+	<update id="saveOnedayClassInfo" parameterType="onedayClassInfo49VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_info49
+		    SET 
+			    oci_writer = #{ociWriter}
+			  , oci_title = #{ociTitle}
+			  , oci_content = #{ociContent}
+			  , oci_write_day = #{ociWriteDay}
+	        WHERE oci_idx = #{ociIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_info49 ( oci_idx
+									 , oci_writer
+									 , oci_title
+									 , oci_content
+									 , oci_write_day)
+	        SELECT #{ociIdx}
+	           ,#{ociWriter}
+	           ,#{ociTitle}
+	           ,#{ociContent}
+	           ,#{ociWriteDay} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassInfo" parameterType="onedayClassInfo49VO">
+		UPDATE oneday_class_info49 SET
+			   oci_writer = #{ociWriter}
+			  , oci_title = #{ociTitle}
+			  , oci_content = #{ociContent}
+			  , oci_write_day = #{ociWriteDay}
+	        WHERE oci_idx = #{ociIdx} 
+	</update>
+	<delete id="deleteOnedayClassInfo" parameterType="onedayClassInfo49VO">
+	 	DELETE from oneday_class_info49
+	 	WHERE oci_idx = #{ociIdx}  
+	</delete>
+</mapper>

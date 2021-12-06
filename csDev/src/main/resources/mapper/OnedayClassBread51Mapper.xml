@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassBread51Mapper">
+	<select id="onedayClassBreadSelectOne" resultType="onedayClassBread51VO" parameterType="onedayClassBread51VO">
+		SELECT ocb_idx
+			 , ocb_store_name
+			 , ocb_loc
+			 , ocb_class_info
+			 , ocb_detail
+			 , ocb_price
+			 , ocb_class_status
+		FROM oneday_class_bread51
+		WHERE ocb_idx = #{ocbIdx}
+	</select>
+	<select id="onedayClassBreadList" resultType="onedayClassBread51VO" parameterType="onedayClassBread51VO">
+		SELECT ocb_idx
+			 , ocb_store_name
+			 , ocb_loc
+			 , ocb_class_info
+			 , ocb_detail
+			 , ocb_price
+			 , ocb_class_status
+		FROM oneday_class_bread51
+		<where> 
+			<if test="ocbStoreName != null and !ocbStoreName.equals('')">
+				AND ocb_store_name Like '%' || #{ocbStoreName} || '%'
+			</if>
+			<if test="ocbLoc != null and !ocbLoc.equals('')">
+				AND ocb_loc Like '%' || #{ocbLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassBread" parameterType="onedayClassBread51VO">
+	        INSERT INTO oneday_class_bread51(
+			   ocb_store_name
+			 , ocb_loc
+			 , ocb_class_info
+			 , ocb_detail
+			 , ocb_price
+			 , ocb_class_status
+	        ) VALUES (
+	        	
+	            #{ocbStoreName}
+	           ,#{ocbLoc}
+	           ,#{ocbClassInfo}
+	           ,#{ocbDetail}
+	           ,#{ocbPrice}
+	           ,#{ocbClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassBread" parameterType="onedayClassBread51VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_bread51
+		    SET 
+			    ocb_store_name = #{ocbStoreName}
+			  , ocb_loc = #{ocbLoc}
+			  , ocb_class_info = #{ocbClassInfo}
+			  , ocb_detail = #{ocbDetail}
+			  , ocb_price = #{ocbPrice}
+			  , ocb_class_status = #{ociWriteDay}
+	        WHERE ocb_idx = #{ocbIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_bread51 ( 
+									 , ocb_store_name
+									 , ocb_loc
+									 , ocb_class_info
+									 , ocb_detail
+									 , ocb_price
+									 , ocb_class_status)
+	        SELECT 
+	            #{ocbStoreName}
+	           ,#{ocbLoc}
+	           ,#{ocbClassInfo}
+	           ,#{ocbDetail}
+	           ,#{ocbPrice}
+	           ,#{ocbClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassBread" parameterType="onedayClassBread51VO">
+		UPDATE oneday_class_bread51 SET
+			   ocb_store_name = #{ocbStoreName}
+			  , ocb_loc = #{ocbLoc}
+			  , ocb_class_info = #{ocbClassInfo}
+			  , ocb_detail = #{ocbDetail}
+			  , ocb_price = #{ocbPrice}
+			  , ocb_class_status = #{ocbClassStatus}
+	        WHERE ocb_idx = #{ocbIdx}
+	</update>
+	<delete id="deleteOnedayClassBread" parameterType="onedayClassBread51VO">
+	 	DELETE from oneday_class_bread51
+	 	WHERE ocb_idx = #{ocbIdx}
+	</delete>
+</mapper>

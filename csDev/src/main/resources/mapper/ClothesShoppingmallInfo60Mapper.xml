@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.ClothesShoppingmallInfo60Mapper">
+	<select id="clothesShoppingmallinfoSelectOne" resultType="clothesShoppingmallinfo60VO" parameterType="clothesShoppingmallinfo60VO">
+		SELECT csi_idx
+			 , csi_store_name
+			 , csi_style
+			 , csi_store_status
+			 , csi_count
+		FROM clothes_shoppingmall_info60
+		WHERE csi_idx = #{csiIdx}
+	</select>
+	<select id="clothesShoppingmallinfoList" resultType="clothesShoppingmallinfo60VO" parameterType="clothesShoppingmallinfo60VO">
+		SELECT csi_idx
+			 , csi_store_name
+			 , csi_style
+			 , csi_store_status
+			 , csi_count
+		FROM clothes_shoppingmall_info60
+		<where> 
+			<if test="csiStoreName != null and !csiStoreName.equals('')">
+				AND csi_store_name Like '%' || #{csiStoreName} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertClothesShoppingmallinfo" parameterType="clothesShoppingmallinfo60VO">
+	        INSERT INTO clothes_shoppingmall_info60(
+			  
+			  csi_store_name
+			 , csi_style
+			 , csi_store_status
+			 , csi_count
+	        ) VALUES (
+	          
+	           #{csiStoreName}
+	           ,#{csiStyle}
+	           ,#{csiStoreStatus}
+	           ,#{csiCount}
+	        )
+	</insert>
+	<update id="saveClothesShoppingmallinfo" parameterType="clothesShoppingmallinfo60VO">
+	        WITH UPSERT AS (
+	        UPDATE clothes_shoppingmall_info60
+		    SET 
+			    csi_store_name = #{csiStoreName}
+			  , csi_style = #{csiStyle}
+			  , csi_store_status = #{csiStoreStatus}
+			  , csi_count = #{csiCount}
+	        WHERE csi_idx = #{csiIdx} RETURNING *
+	)
+	        INSERT
+	        INTO clothes_shoppingmall_info60 ( 
+									
+									 csi_store_name
+									 , csi_style
+									 , csi_store_status
+									 , csi_count)
+	        SELECT 
+	            
+	           #{csiStoreName}
+	           ,#{csiStyle}
+	           ,#{csiStoreStatus}
+	           ,#{csiCount} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateClothesShoppingmallinfo" parameterType="clothesShoppingmallinfo60VO">
+		UPDATE clothes_shoppingmall_info60 SET
+			    csi_store_name = #{csiStoreName}
+			  , csi_style = #{csiStyle}
+			  , csi_store_status = #{csiStoreStatus}
+			  , csi_count = #{csiCount}
+	        WHERE csi_idx = #{csiIdx}
+	</update>
+	<delete id="deleteClothesShoppingmallinfo" parameterType="clothesShoppingmallinfo60VO">
+	 	DELETE from clothes_shoppingmall_info60
+	 	WHERE csi_idx = #{csiIdx}
+	</delete>
+</mapper>

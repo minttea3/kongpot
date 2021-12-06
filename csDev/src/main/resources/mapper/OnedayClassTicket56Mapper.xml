@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassTicket56Mapper">
+	<select id="onedayClassTicketSelectOne" resultType="onedayClassTicket56VO" parameterType="onedayClassTicket56VO">
+		SELECT oct_idx
+			 , oct_store_name
+			 , oct_loc
+			 , oct_class_info
+			 , oct_detail
+			 , oct_price
+			 , oct_class_status
+		FROM oneday_class_ticket56
+		WHERE oct_idx = #{octIdx}
+	</select>
+	<select id="onedayClassTicketList" resultType="onedayClassTicket56VO" parameterType="onedayClassTicket56VO">
+		SELECT oct_idx
+			 , oct_store_name
+			 , oct_loc
+			 , oct_class_info
+			 , oct_detail
+			 , oct_price
+			 , oct_class_status
+		FROM oneday_class_ticket56
+		<where> 
+			<if test="octStoreName != null and !octStoreName.equals('')">
+				AND oct_store_name Like '%' || #{octStoreName} || '%'
+			</if>
+			<if test="octLoc != null and !octLoc.equals('')">
+				AND oct_loc Like '%' || #{octLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassTicket" parameterType="onedayClassTicket56VO">
+	        INSERT INTO oneday_class_ticket56(
+			   oct_store_name
+			 , oct_loc
+			 , oct_class_info
+			 , oct_detail
+			 , oct_price
+			 , oct_class_status
+	        ) VALUES (
+	        	
+	            #{octStoreName}
+	           ,#{octLoc}
+	           ,#{octClassInfo}
+	           ,#{octDetail}
+	           ,#{octPrice}
+	           ,#{octClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassTicket" parameterType="onedayClassTicket56VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_ticket56
+		    SET 
+			    oct_store_name = #{octStoreName}
+			  , oct_loc = #{octLoc}
+			  , oct_class_info = #{octClassInfo}
+			  , oct_detail = #{octDetail}
+			  , oct_price = #{octPrice}
+			  , oct_class_status = #{octWriteDay}
+	        WHERE ocbe_idx = #{octIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_ticket56 ( 
+									 , oct_store_name
+									 , oct_loc
+									 , oct_class_info
+									 , oct_detail
+									 , oct_price
+									 , oct_class_status)
+	        SELECT 
+	            #{octStoreName}
+	           ,#{octLoc}
+	           ,#{octClassInfo}
+	           ,#{octDetail}
+	           ,#{octPrice}
+	           ,#{octClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassTicket" parameterType="onedayClassTicket56VO">
+		UPDATE oneday_class_ticket56 SET
+			   oct_store_name = #{octStoreName}
+			  , oct_loc = #{octLoc}
+			  , oct_class_info = #{octClassInfo}
+			  , oct_detail = #{octDetail}
+			  , oct_price = #{octPrice}
+			  , oct_class_status = #{octClassStatus}
+	        WHERE oct_idx = #{octIdx}
+	</update>
+	<delete id="deleteOnedayClassTicket" parameterType="onedayClassTicket56VO">
+	 	DELETE from oneday_class_ticket56
+	 	WHERE oct_idx = #{octIdx}
+	</delete>
+</mapper>

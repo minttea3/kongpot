@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassArt53Mapper">
+	<select id="onedayClassArtSelectOne" resultType="onedayClassArt53VO" parameterType="onedayClassArt53VO">
+		SELECT oca_idx
+			 , oca_store_name
+			 , oca_loc
+			 , oca_class_info
+			 , oca_detail
+			 , oca_price
+			 , oca_class_status
+		FROM oneday_class_art53
+		WHERE oca_idx = #{ocaIdx}
+	</select>
+	<select id="onedayClassArtList" resultType="onedayClassArt53VO" parameterType="onedayClassArt53VO">
+		SELECT oca_idx
+			 , oca_store_name
+			 , oca_loc
+			 , oca_class_info
+			 , oca_detail
+			 , oca_price
+			 , oca_class_status
+		FROM oneday_class_art53
+		<where> 
+			<if test="ocaStoreName != null and !ocaStoreName.equals('')">
+				AND oca_store_name Like '%' || #{ocaStoreName} || '%'
+			</if>
+			<if test="ocaLoc != null and !ocaLoc.equals('')">
+				AND oca_loc Like '%' || #{ocaLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassArt" parameterType="onedayClassArt53VO">
+	        INSERT INTO oneday_class_art53(
+			   oca_store_name
+			 , oca_loc
+			 , oca_class_info
+			 , oca_detail
+			 , oca_price
+			 , oca_class_status
+	        ) VALUES (
+	        	
+	            #{ocaStoreName}
+	           ,#{ocaLoc}
+	           ,#{ocaClassInfo}
+	           ,#{ocaDetail}
+	           ,#{ocaPrice}
+	           ,#{ocaClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassArt" parameterType="onedayClassArt53VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_art53
+		    SET 
+			    oca_store_name = #{ocaStoreName}
+			  , oca_loc = #{ocaLoc}
+			  , oca_class_info = #{ocaClassInfo}
+			  , oca_detail = #{ocaDetail}
+			  , oca_price = #{ocaPrice}
+			  , oca_class_status = #{ocaWriteDay}
+	        WHERE ocb_idx = #{ocaIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_art53 ( 
+									 , oca_store_name
+									 , oca_loc
+									 , oca_class_info
+									 , oca_detail
+									 , oca_price
+									 , oca_class_status)
+	        SELECT 
+	            #{ocaStoreName}
+	           ,#{ocaLoc}
+	           ,#{ocaClassInfo}
+	           ,#{ocaDetail}
+	           ,#{ocaPrice}
+	           ,#{ocaClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassArt" parameterType="onedayClassArt53VO">
+		UPDATE oneday_class_art53 SET
+			   oca_store_name = #{ocaStoreName}
+			  , oca_loc = #{ocaLoc}
+			  , oca_class_info = #{ocaClassInfo}
+			  , oca_detail = #{ocaDetail}
+			  , oca_price = #{ocaPrice}
+			  , oca_class_status = #{ocaClassStatus}
+	        WHERE oca_idx = #{ocaIdx}
+	</update>
+	<delete id="deleteOnedayClassArt" parameterType="onedayClassArt53VO">
+	 	DELETE from oneday_class_art53
+	 	WHERE oca_idx = #{ocaIdx}
+	</delete>
+</mapper>

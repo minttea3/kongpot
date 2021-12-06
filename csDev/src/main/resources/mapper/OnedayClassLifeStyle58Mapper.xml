@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassLifeStyle58Mapper">
+	<select id="onedayClassLifeStyleSelectOne" resultType="onedayClassLifeStyle58VO" parameterType="onedayClassLifeStyle58VO">
+		SELECT ocls_idx
+			 , ocls_store_name
+			 , ocls_loc
+			 , ocls_class_info
+			 , ocls_detail
+			 , ocls_price
+			 , ocls_class_status
+		FROM oneday_class_life_style58
+		WHERE ocls_idx = #{oclsIdx}
+	</select>
+	<select id="onedayClassLifeStyleList" resultType="onedayClassLifeStyle58VO" parameterType="onedayClassLifeStyle58VO">
+		SELECT ocls_idx
+			 , ocls_store_name
+			 , ocls_loc
+			 , ocls_class_info
+			 , ocls_detail
+			 , ocls_price
+			 , ocls_class_status
+		FROM oneday_class_life_style58
+		<where> 
+			<if test="oclsStoreName != null and !oclsStoreName.equals('')">
+				AND ocls_store_name Like '%' || #{oclsStoreName} || '%'
+			</if>
+			<if test="oclsLoc != null and !oclsLoc.equals('')">
+				AND ocls_loc Like '%' || #{oclsLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassLifeStyle" parameterType="onedayClassLifeStyle58VO">
+	        INSERT INTO oneday_class_life_style58(
+			   ocls_store_name
+			 , ocls_loc
+			 , ocls_class_info
+			 , ocls_detail
+			 , ocls_price
+			 , ocls_class_status
+	        ) VALUES (
+	        	
+	            #{oclsStoreName}
+	           ,#{oclsLoc}
+	           ,#{oclsClassInfo}
+	           ,#{oclsDetail}
+	           ,#{oclsPrice}
+	           ,#{oclsClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassLifeStyle" parameterType="onedayClassLifeStyle58VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_life_style58
+		    SET 
+			    ocls_store_name = #{oclsStoreName}
+			  , ocls_loc = #{oclsLoc}
+			  , ocls_class_info = #{oclsClassInfo}
+			  , ocls_detail = #{oclsDetail}
+			  , ocls_price = #{oclsPrice}
+			  , ocls_class_status = #{oclsWriteDay}
+	        WHERE ocls_idx = #{oclsIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_life_style58 ( 
+									 , ocls_store_name
+									 , ocls_loc
+									 , ocls_class_info
+									 , ocls_detail
+									 , ocls_price
+									 , ocls_class_status)
+	        SELECT 
+	            #{oclsStoreName}
+	           ,#{oclsLoc}
+	           ,#{oclsClassInfo}
+	           ,#{oclsDetail}
+	           ,#{oclsPrice}
+	           ,#{oclsClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassLifeStyle" parameterType="onedayClassLifeStyle58VO">
+		UPDATE oneday_class_life_style58 SET
+			   ocls_store_name = #{oclsStoreName}
+			  , ocls_loc = #{oclsLoc}
+			  , ocls_class_info = #{oclsClassInfo}
+			  , ocls_detail = #{oclsDetail}
+			  , ocls_price = #{oclsPrice}
+			  , ocls_class_status = #{oclsClassStatus}
+	        WHERE ocls_idx = #{oclsIdx}
+	</update>
+	<delete id="deleteOnedayClassLifeStyle" parameterType="onedayClassLifeStyle58VO">
+	 	DELETE from oneday_class_life_style58
+	 	WHERE ocls_idx = #{oclsIdx}
+	</delete>
+</mapper>

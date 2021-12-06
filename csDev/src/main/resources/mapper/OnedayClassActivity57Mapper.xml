@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.OnedayClassActivity57Mapper">
+	<select id="onedayClassActivitySelectOne" resultType="onedayClassActivity57VO" parameterType="onedayClassActivity57VO">
+		SELECT ocac_idx
+			 , ocac_store_name
+			 , ocac_loc
+			 , ocac_class_info
+			 , ocac_detail
+			 , ocac_price
+			 , ocac_class_status
+		FROM oneday_class_activity57
+		WHERE ocac_idx = #{ocacIdx}
+	</select>
+	<select id="onedayClassActivityList" resultType="onedayClassActivity57VO" parameterType="onedayClassActivity57VO">
+		SELECT ocac_idx
+			 , ocac_store_name
+			 , ocac_loc
+			 , ocac_class_info
+			 , ocac_detail
+			 , ocac_price
+			 , ocac_class_status
+		FROM oneday_class_activity57
+		<where> 
+			<if test="ocacStoreName != null and !ocacStoreName.equals('')">
+				AND ocac_store_name Like '%' || #{ocacStoreName} || '%'
+			</if>
+			<if test="ocacLoc != null and !ocacLoc.equals('')">
+				AND ocac_loc Like '%' || #{ocacLoc} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertOnedayClassActivity" parameterType="onedayClassActivity57VO">
+	        INSERT INTO oneday_class_activity57(
+			   ocac_store_name
+			 , ocac_loc
+			 , ocac_class_info
+			 , ocac_detail
+			 , ocac_price
+			 , ocac_class_status
+	        ) VALUES (
+	        	
+	            #{ocacStoreName}
+	           ,#{ocacLoc}
+	           ,#{ocacClassInfo}
+	           ,#{ocacDetail}
+	           ,#{ocacPrice}
+	           ,#{ocacClassStatus}
+	        )
+	</insert>
+	<update id="saveOnedayClassActivity" parameterType="onedayClassActivity57VO">
+	        WITH UPSERT AS (
+	        UPDATE oneday_class_activity57
+		    SET 
+			    ocac_store_name = #{ocacStoreName}
+			  , ocac_loc = #{ocacLoc}
+			  , ocac_class_info = #{ocacClassInfo}
+			  , ocac_detail = #{ocacDetail}
+			  , ocac_price = #{ocacPrice}
+			  , ocac_class_status = #{ocacWriteDay}
+	        WHERE ocac_idx = #{ocacIdx} RETURNING *
+	)
+	        INSERT
+	        INTO oneday_class_activity57 ( 
+									 , ocac_store_name
+									 , ocac_loc
+									 , ocac_class_info
+									 , ocac_detail
+									 , ocac_price
+									 , ocac_class_status)
+	        SELECT 
+	            #{ocacStoreName}
+	           ,#{ocacLoc}
+	           ,#{ocacClassInfo}
+	           ,#{ocacDetail}
+	           ,#{ocacPrice}
+	           ,#{ocacClassStatus} WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateOnedayClassActivity" parameterType="onedayClassActivity57VO">
+		UPDATE oneday_class_activity57 SET
+			   ocac_store_name = #{ocacStoreName}
+			  , ocac_loc = #{ocacLoc}
+			  , ocac_class_info = #{ocacClassInfo}
+			  , ocac_detail = #{ocacDetail}
+			  , ocac_price = #{ocacPrice}
+			  , ocac_class_status = #{ocacClassStatus}
+	        WHERE ocac_idx = #{ocacIdx}
+	</update>
+	<delete id="deleteOnedayClassActivity" parameterType="onedayClassActivity57VO">
+	 	DELETE from oneday_class_activity57
+	 	WHERE ocac_idx = #{ocacIdx}
+	</delete>
+</mapper>

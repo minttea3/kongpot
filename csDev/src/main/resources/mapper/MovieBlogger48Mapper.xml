@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.study.sample.mapper.MovieBlogger48Mapper">
+	<select id="movieBloggerSelectOne" resultType="movieBlogger48VO" parameterType="movieBlogger48VO">
+		SELECT mb_idx
+			 , mb_blogger
+			 , mb_movie_title
+			 , mb_count
+			 , mb_status
+		FROM movie_blogger48
+		WHERE mb_idx = #{mbIdx}
+	</select>
+	<select id="movieBloggerList" resultType="movieBlogger48VO" parameterType="movieBlogger48VO">
+		SELECT mb_idx
+			 , mb_blogger
+			 , mb_movie_title
+			 , mb_count
+			 , mb_status
+		FROM movie_blogger48
+		<where> 
+			<if test="mbIdx != null and !mbIdx.equals('')">
+				AND mb_idx Like '%' || #{mbIdx} || '%'
+			</if>
+			<if test="mbBlogger != null and !mbBlogger.equals('')">
+				AND mb_blogger Like '%' || #{mbBlogger} || '%'
+			</if>
+			<if test="mbMovieTitle != null and !mbMovieTitle.equals('')">
+				AND mb_movie_title Like '%' || #{mbMovieTitle} || '%'
+			</if>
+		</where>
+	</select>
+	<insert id="insertMovieBlogger" parameterType="movieBlogger48VO">
+	        INSERT INTO movie_blogger48(
+	           mb_idx
+			 , mb_blogger
+			 , mb_movie_title
+			 , mb_count
+			 , mb_status
+	        ) VALUES (
+	        	#{mbIdx}
+	           ,#{mbBlogger}
+	           ,#{mbMovieTitle}
+	           ,#{mbCount}
+	           ,#{mbStatus}
+	           
+	        )
+	</insert>
+	<update id="saveMovieBlogger" parameterType="movieBlogger48VO">
+	        WITH UPSERT AS (
+	        UPDATE movie_blogger48
+		    SET movie_blogger48 SET
+			    mb_blogger = #{mbBlogger}
+			  , mb_movie_title = #{mbMovieTitle}
+			  , mb_count = #{mbCount}
+			  , mb_status = #{mbCount}
+	        WHERE mb_idx = #{mbIdx} RETURNING *
+	)
+	        INSERT
+	        INTO movie_blogger48 ( mb_idx
+								 , mb_blogger
+								 , mb_movie_title
+								 , mb_count
+								 , mb_status)
+	        SELECT #{mbIdx}
+	        	#{mbBlogger}
+	           ,#{mbMovieTitle}
+	           ,#{mbCount}
+	           ,#{mbStatus}  WHERE NOT EXISTS ( SELECT * FROM UPSERT )
+	</update>
+	<update id="updateMovieBlogger" parameterType="movieBlogger48VO">
+		UPDATE movie_blogger48 SET
+			    mb_blogger = #{mbBlogger}
+			  , mb_movie_title = #{mbMovieTitle}
+			  , mb_count = #{mbCount}
+			  , mb_status = #{mbStatus}
+	        WHERE mb_idx = #{mbIdx}
+	</update>
+	<delete id="deleteMovieBlogger" parameterType="movieBlogger48VO">
+	 	DELETE from movie_blogger48
+	 	WHERE  mb_idx = #{mbIdx}
+	</delete>
+</mapper>
